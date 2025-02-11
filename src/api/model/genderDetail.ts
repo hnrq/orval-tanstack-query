@@ -20,8 +20,8 @@ Created by [**Paul Hallett**](https://github.com/phalt) and other [**PokéAPI co
     
  * OpenAPI spec version: 2.7.0
  */
-import type { GenderDetailPokemonSpeciesDetailsItem } from './genderDetailPokemonSpeciesDetailsItem';
-import type { GenderDetailRequiredForEvolutionItem } from './genderDetailRequiredForEvolutionItem';
+import type { GenderDetailPokemonSpeciesDetailsItem } from "./genderDetailPokemonSpeciesDetailsItem";
+import type { GenderDetailRequiredForEvolutionItem } from "./genderDetailRequiredForEvolutionItem";
 
 export interface GenderDetail {
   readonly id: number;

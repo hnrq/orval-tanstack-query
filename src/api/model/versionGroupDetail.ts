@@ -20,12 +20,12 @@ Created by [**Paul Hallett**](https://github.com/phalt) and other [**PokéAPI co
     
  * OpenAPI spec version: 2.7.0
  */
-import type { VersionGroupDetailOrder } from './versionGroupDetailOrder';
-import type { GenerationSummary } from './generationSummary';
-import type { VersionGroupDetailMoveLearnMethodsItem } from './versionGroupDetailMoveLearnMethodsItem';
-import type { VersionGroupDetailPokedexesItem } from './versionGroupDetailPokedexesItem';
-import type { VersionGroupDetailRegionsItem } from './versionGroupDetailRegionsItem';
-import type { VersionSummary } from './versionSummary';
+import type { VersionGroupDetailOrder } from "./versionGroupDetailOrder";
+import type { GenerationSummary } from "./generationSummary";
+import type { VersionGroupDetailMoveLearnMethodsItem } from "./versionGroupDetailMoveLearnMethodsItem";
+import type { VersionGroupDetailPokedexesItem } from "./versionGroupDetailPokedexesItem";
+import type { VersionGroupDetailRegionsItem } from "./versionGroupDetailRegionsItem";
+import type { VersionSummary } from "./versionSummary";
 
 export interface VersionGroupDetail {
   readonly id: number;

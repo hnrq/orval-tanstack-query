@@ -20,14 +20,14 @@ Created by [**Paul Hallett**](https://github.com/phalt) and other [**PokéAPI co
     
  * OpenAPI spec version: 2.7.0
  */
-import type { PokemonFormDetailOrder } from './pokemonFormDetailOrder';
-import type { PokemonFormDetailFormOrder } from './pokemonFormDetailFormOrder';
-import type { PokemonSummary } from './pokemonSummary';
-import type { PokemonFormDetailSprites } from './pokemonFormDetailSprites';
-import type { VersionGroupSummary } from './versionGroupSummary';
-import type { PokemonFormDetailFormNamesItem } from './pokemonFormDetailFormNamesItem';
-import type { PokemonFormDetailNamesItem } from './pokemonFormDetailNamesItem';
-import type { PokemonFormDetailTypesItem } from './pokemonFormDetailTypesItem';
+import type { PokemonFormDetailOrder } from "./pokemonFormDetailOrder";
+import type { PokemonFormDetailFormOrder } from "./pokemonFormDetailFormOrder";
+import type { PokemonSummary } from "./pokemonSummary";
+import type { PokemonFormDetailSprites } from "./pokemonFormDetailSprites";
+import type { VersionGroupSummary } from "./versionGroupSummary";
+import type { PokemonFormDetailFormNamesItem } from "./pokemonFormDetailFormNamesItem";
+import type { PokemonFormDetailNamesItem } from "./pokemonFormDetailNamesItem";
+import type { PokemonFormDetailTypesItem } from "./pokemonFormDetailTypesItem";
 
 export interface PokemonFormDetail {
   readonly id: number;

@@ -20,8 +20,8 @@ Created by [**Paul Hallett**](https://github.com/phalt) and other [**PokéAPI co
     
  * OpenAPI spec version: 2.7.0
  */
-import type { TypeDetailPastDamageRelationsItemGeneration } from './typeDetailPastDamageRelationsItemGeneration';
-import type { TypeDetailPastDamageRelationsItemDamageRelations } from './typeDetailPastDamageRelationsItemDamageRelations';
+import type { TypeDetailPastDamageRelationsItemGeneration } from "./typeDetailPastDamageRelationsItemGeneration";
+import type { TypeDetailPastDamageRelationsItemDamageRelations } from "./typeDetailPastDamageRelationsItemDamageRelations";
 
 export type TypeDetailPastDamageRelationsItem = {
   generation: TypeDetailPastDamageRelationsItemGeneration;

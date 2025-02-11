@@ -20,8 +20,8 @@ Created by [**Paul Hallett**](https://github.com/phalt) and other [**PokéAPI co
     
  * OpenAPI spec version: 2.7.0
  */
-import type { MoveDetailEffectChangesItemEffectEntriesItem } from './moveDetailEffectChangesItemEffectEntriesItem';
-import type { MoveDetailEffectChangesItemVersionGroup } from './moveDetailEffectChangesItemVersionGroup';
+import type { MoveDetailEffectChangesItemEffectEntriesItem } from "./moveDetailEffectChangesItemEffectEntriesItem";
+import type { MoveDetailEffectChangesItemVersionGroup } from "./moveDetailEffectChangesItemVersionGroup";
 
 export type MoveDetailEffectChangesItem = {
   effect_entries: MoveDetailEffectChangesItemEffectEntriesItem[];

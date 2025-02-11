@@ -22,12 +22,12 @@ Created by [**Paul Hallett**](https://github.com/phalt) and other [**PokéAPI co
  */
 
 export type LocationAreaListParams = {
-/**
- * Number of results to return per page.
- */
-limit?: number;
-/**
- * The initial index from which to return the results.
- */
-offset?: number;
+  /**
+   * Number of results to return per page.
+   */
+  limit?: number;
+  /**
+   * The initial index from which to return the results.
+   */
+  offset?: number;
 };

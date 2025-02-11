@@ -20,10 +20,10 @@ Created by [**Paul Hallett**](https://github.com/phalt) and other [**PokéAPI co
     
  * OpenAPI spec version: 2.7.0
  */
-import type { ItemDetailHeldByPokemonItemPokemon } from './itemDetailHeldByPokemonItemPokemon';
-import type { ItemDetailHeldByPokemonItemVersionDetailsItem } from './itemDetailHeldByPokemonItemVersionDetailsItem';
+import type { ItemDetailHeldByPokemonItemPokemon } from "./itemDetailHeldByPokemonItemPokemon";
+import type { ItemDetailHeldByPokemonItemVersionDetailsItem } from "./itemDetailHeldByPokemonItemVersionDetailsItem";
 
 export type ItemDetailHeldByPokemonItem = {
   pokemon: ItemDetailHeldByPokemonItemPokemon;
-  'version-details': ItemDetailHeldByPokemonItemVersionDetailsItem[];
+  "version-details": ItemDetailHeldByPokemonItemVersionDetailsItem[];
 };

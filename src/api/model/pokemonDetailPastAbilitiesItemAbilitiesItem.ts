@@ -20,7 +20,7 @@ Created by [**Paul Hallett**](https://github.com/phalt) and other [**PokéAPI co
     
  * OpenAPI spec version: 2.7.0
  */
-import type { PokemonDetailPastAbilitiesItemAbilitiesItemAbility } from './pokemonDetailPastAbilitiesItemAbilitiesItemAbility';
+import type { PokemonDetailPastAbilitiesItemAbilitiesItemAbility } from "./pokemonDetailPastAbilitiesItemAbilitiesItemAbility";
 
 export type PokemonDetailPastAbilitiesItemAbilitiesItem = {
   ability: PokemonDetailPastAbilitiesItemAbilitiesItemAbility;

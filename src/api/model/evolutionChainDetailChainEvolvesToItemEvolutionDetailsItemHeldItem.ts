@@ -24,7 +24,8 @@ Created by [**Paul Hallett**](https://github.com/phalt) and other [**PokéAPI co
 /**
  * @nullable
  */
-export type EvolutionChainDetailChainEvolvesToItemEvolutionDetailsItemHeldItem = {
-  name: string;
-  url: string;
-} | null;
+export type EvolutionChainDetailChainEvolvesToItemEvolutionDetailsItemHeldItem =
+  {
+    name: string;
+    url: string;
+  } | null;

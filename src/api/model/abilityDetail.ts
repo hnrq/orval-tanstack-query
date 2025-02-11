@@ -20,12 +20,12 @@ Created by [**Paul Hallett**](https://github.com/phalt) and other [**PokéAPI co
     
  * OpenAPI spec version: 2.7.0
  */
-import type { GenerationSummary } from './generationSummary';
-import type { AbilityName } from './abilityName';
-import type { AbilityEffectText } from './abilityEffectText';
-import type { AbilityChange } from './abilityChange';
-import type { AbilityFlavorText } from './abilityFlavorText';
-import type { AbilityDetailPokemonItem } from './abilityDetailPokemonItem';
+import type { GenerationSummary } from "./generationSummary";
+import type { AbilityName } from "./abilityName";
+import type { AbilityEffectText } from "./abilityEffectText";
+import type { AbilityChange } from "./abilityChange";
+import type { AbilityFlavorText } from "./abilityFlavorText";
+import type { AbilityDetailPokemonItem } from "./abilityDetailPokemonItem";
 
 export interface AbilityDetail {
   readonly id: number;

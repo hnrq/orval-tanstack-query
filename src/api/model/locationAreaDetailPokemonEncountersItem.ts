@@ -20,8 +20,8 @@ Created by [**Paul Hallett**](https://github.com/phalt) and other [**PokéAPI co
     
  * OpenAPI spec version: 2.7.0
  */
-import type { LocationAreaDetailPokemonEncountersItemPokemon } from './locationAreaDetailPokemonEncountersItemPokemon';
-import type { LocationAreaDetailPokemonEncountersItemVersionDetailsItem } from './locationAreaDetailPokemonEncountersItemVersionDetailsItem';
+import type { LocationAreaDetailPokemonEncountersItemPokemon } from "./locationAreaDetailPokemonEncountersItemPokemon";
+import type { LocationAreaDetailPokemonEncountersItemVersionDetailsItem } from "./locationAreaDetailPokemonEncountersItemVersionDetailsItem";
 
 export type LocationAreaDetailPokemonEncountersItem = {
   pokemon: LocationAreaDetailPokemonEncountersItemPokemon;

@@ -20,7 +20,7 @@ Created by [**Paul Hallett**](https://github.com/phalt) and other [**PokéAPI co
     
  * OpenAPI spec version: 2.7.0
  */
-import type { BerryFlavorSummary } from './berryFlavorSummary';
+import type { BerryFlavorSummary } from "./berryFlavorSummary";
 
 export interface PaginatedBerryFlavorSummaryList {
   count?: number;

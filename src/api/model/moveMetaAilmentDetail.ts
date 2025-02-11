@@ -20,8 +20,8 @@ Created by [**Paul Hallett**](https://github.com/phalt) and other [**PokéAPI co
     
  * OpenAPI spec version: 2.7.0
  */
-import type { MoveMetaAilmentDetailMovesItem } from './moveMetaAilmentDetailMovesItem';
-import type { MoveMetaAilmentName } from './moveMetaAilmentName';
+import type { MoveMetaAilmentDetailMovesItem } from "./moveMetaAilmentDetailMovesItem";
+import type { MoveMetaAilmentName } from "./moveMetaAilmentName";
 
 export interface MoveMetaAilmentDetail {
   readonly id: number;

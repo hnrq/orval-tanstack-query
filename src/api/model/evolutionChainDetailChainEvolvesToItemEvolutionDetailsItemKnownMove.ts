@@ -24,4 +24,5 @@ Created by [**Paul Hallett**](https://github.com/phalt) and other [**PokéAPI co
 /**
  * @nullable
  */
-export type EvolutionChainDetailChainEvolvesToItemEvolutionDetailsItemKnownMove = unknown | null;
+export type EvolutionChainDetailChainEvolvesToItemEvolutionDetailsItemKnownMove =
+  unknown | null;

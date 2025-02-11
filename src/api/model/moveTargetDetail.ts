@@ -20,9 +20,9 @@ Created by [**Paul Hallett**](https://github.com/phalt) and other [**PokéAPI co
     
  * OpenAPI spec version: 2.7.0
  */
-import type { MoveTargetDescription } from './moveTargetDescription';
-import type { MoveSummary } from './moveSummary';
-import type { MoveTargetName } from './moveTargetName';
+import type { MoveTargetDescription } from "./moveTargetDescription";
+import type { MoveSummary } from "./moveSummary";
+import type { MoveTargetName } from "./moveTargetName";
 
 export interface MoveTargetDetail {
   readonly id: number;

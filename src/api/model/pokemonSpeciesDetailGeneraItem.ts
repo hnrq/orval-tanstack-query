@@ -20,7 +20,7 @@ Created by [**Paul Hallett**](https://github.com/phalt) and other [**PokéAPI co
     
  * OpenAPI spec version: 2.7.0
  */
-import type { PokemonSpeciesDetailGeneraItemLanguage } from './pokemonSpeciesDetailGeneraItemLanguage';
+import type { PokemonSpeciesDetailGeneraItemLanguage } from "./pokemonSpeciesDetailGeneraItemLanguage";
 
 export type PokemonSpeciesDetailGeneraItem = {
   genus: string;

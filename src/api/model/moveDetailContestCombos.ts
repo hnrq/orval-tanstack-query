@@ -20,8 +20,8 @@ Created by [**Paul Hallett**](https://github.com/phalt) and other [**PokéAPI co
     
  * OpenAPI spec version: 2.7.0
  */
-import type { MoveDetailContestCombosNormal } from './moveDetailContestCombosNormal';
-import type { MoveDetailContestCombosSuper } from './moveDetailContestCombosSuper';
+import type { MoveDetailContestCombosNormal } from "./moveDetailContestCombosNormal";
+import type { MoveDetailContestCombosSuper } from "./moveDetailContestCombosSuper";
 
 export type MoveDetailContestCombos = {
   readonly normal: MoveDetailContestCombosNormal;

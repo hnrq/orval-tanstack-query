@@ -20,10 +20,10 @@ Created by [**Paul Hallett**](https://github.com/phalt) and other [**PokéAPI co
     
  * OpenAPI spec version: 2.7.0
  */
-import type { PalParkAreaDetailPokemonEncountersItemPokemonSpecies } from './palParkAreaDetailPokemonEncountersItemPokemonSpecies';
+import type { PalParkAreaDetailPokemonEncountersItemPokemonSpecies } from "./palParkAreaDetailPokemonEncountersItemPokemonSpecies";
 
 export type PalParkAreaDetailPokemonEncountersItem = {
   base_score: number;
-  'pokemon-species': PalParkAreaDetailPokemonEncountersItemPokemonSpecies;
+  "pokemon-species": PalParkAreaDetailPokemonEncountersItemPokemonSpecies;
   rate: number;
 };

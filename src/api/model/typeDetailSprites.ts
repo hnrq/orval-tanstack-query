@@ -21,6 +21,10 @@ Created by [**Paul Hallett**](https://github.com/phalt) and other [**PokéAPI co
  * OpenAPI spec version: 2.7.0
  */
 
-export type TypeDetailSprites = {[key: string]: {[key: string]: {
-  'name-icon'?: string;
-}}};
+export type TypeDetailSprites = {
+  [key: string]: {
+    [key: string]: {
+      "name-icon"?: string;
+    };
+  };
+};

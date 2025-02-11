@@ -20,7 +20,7 @@ Created by [**Paul Hallett**](https://github.com/phalt) and other [**PokéAPI co
     
  * OpenAPI spec version: 2.7.0
  */
-import type { MoveDetailStatChangesItemStat } from './moveDetailStatChangesItemStat';
+import type { MoveDetailStatChangesItemStat } from "./moveDetailStatChangesItemStat";
 
 export type MoveDetailStatChangesItem = {
   change: number;

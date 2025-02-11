@@ -21,7 +21,8 @@ Created by [**Paul Hallett**](https://github.com/phalt) and other [**PokéAPI co
  * OpenAPI spec version: 2.7.0
  */
 
-export type TypeDetailPastDamageRelationsItemDamageRelationsDoubleDamageFromItem = {
-  name: string;
-  url: string;
-};
+export type TypeDetailPastDamageRelationsItemDamageRelationsDoubleDamageFromItem =
+  {
+    name: string;
+    url: string;
+  };

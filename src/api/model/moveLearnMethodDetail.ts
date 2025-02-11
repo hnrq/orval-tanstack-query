@@ -20,9 +20,9 @@ Created by [**Paul Hallett**](https://github.com/phalt) and other [**PokéAPI co
     
  * OpenAPI spec version: 2.7.0
  */
-import type { MoveLearnMethodName } from './moveLearnMethodName';
-import type { MoveLearnMethodDescription } from './moveLearnMethodDescription';
-import type { MoveLearnMethodDetailVersionGroupsItem } from './moveLearnMethodDetailVersionGroupsItem';
+import type { MoveLearnMethodName } from "./moveLearnMethodName";
+import type { MoveLearnMethodDescription } from "./moveLearnMethodDescription";
+import type { MoveLearnMethodDetailVersionGroupsItem } from "./moveLearnMethodDetailVersionGroupsItem";
 
 export interface MoveLearnMethodDetail {
   readonly id: number;

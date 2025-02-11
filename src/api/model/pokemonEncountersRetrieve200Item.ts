@@ -20,8 +20,8 @@ Created by [**Paul Hallett**](https://github.com/phalt) and other [**PokéAPI co
     
  * OpenAPI spec version: 2.7.0
  */
-import type { PokemonEncountersRetrieve200ItemLocationArea } from './pokemonEncountersRetrieve200ItemLocationArea';
-import type { PokemonEncountersRetrieve200ItemVersionDetailsItem } from './pokemonEncountersRetrieve200ItemVersionDetailsItem';
+import type { PokemonEncountersRetrieve200ItemLocationArea } from "./pokemonEncountersRetrieve200ItemLocationArea";
+import type { PokemonEncountersRetrieve200ItemVersionDetailsItem } from "./pokemonEncountersRetrieve200ItemVersionDetailsItem";
 
 export type PokemonEncountersRetrieve200Item = {
   location_area: PokemonEncountersRetrieve200ItemLocationArea;

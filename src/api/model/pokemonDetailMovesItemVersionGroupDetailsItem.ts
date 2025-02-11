@@ -20,8 +20,8 @@ Created by [**Paul Hallett**](https://github.com/phalt) and other [**PokéAPI co
     
  * OpenAPI spec version: 2.7.0
  */
-import type { PokemonDetailMovesItemVersionGroupDetailsItemMoveLearnMethod } from './pokemonDetailMovesItemVersionGroupDetailsItemMoveLearnMethod';
-import type { PokemonDetailMovesItemVersionGroupDetailsItemVersionGroup } from './pokemonDetailMovesItemVersionGroupDetailsItemVersionGroup';
+import type { PokemonDetailMovesItemVersionGroupDetailsItemMoveLearnMethod } from "./pokemonDetailMovesItemVersionGroupDetailsItemMoveLearnMethod";
+import type { PokemonDetailMovesItemVersionGroupDetailsItemVersionGroup } from "./pokemonDetailMovesItemVersionGroupDetailsItemVersionGroup";
 
 export type PokemonDetailMovesItemVersionGroupDetailsItem = {
   level_learned_at: number;

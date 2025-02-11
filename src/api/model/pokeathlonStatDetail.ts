@@ -20,8 +20,8 @@ Created by [**Paul Hallett**](https://github.com/phalt) and other [**PokéAPI co
     
  * OpenAPI spec version: 2.7.0
  */
-import type { PokeathlonStatDetailAffectingNatures } from './pokeathlonStatDetailAffectingNatures';
-import type { PokeathlonStatName } from './pokeathlonStatName';
+import type { PokeathlonStatDetailAffectingNatures } from "./pokeathlonStatDetailAffectingNatures";
+import type { PokeathlonStatName } from "./pokeathlonStatName";
 
 export interface PokeathlonStatDetail {
   readonly id: number;

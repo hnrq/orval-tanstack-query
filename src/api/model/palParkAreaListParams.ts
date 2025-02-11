@@ -22,17 +22,17 @@ Created by [**Paul Hallett**](https://github.com/phalt) and other [**PokéAPI co
  */
 
 export type PalParkAreaListParams = {
-/**
- * Number of results to return per page.
- */
-limit?: number;
-/**
- * The initial index from which to return the results.
- */
-offset?: number;
-/**
+  /**
+   * Number of results to return per page.
+   */
+  limit?: number;
+  /**
+   * The initial index from which to return the results.
+   */
+  offset?: number;
+  /**
  * > Only available locally and not at [pokeapi.co](https://pokeapi.co/docs/v2)
 Case-insensitive query applied on the `name` property. 
  */
-q?: string;
+  q?: string;
 };

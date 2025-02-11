@@ -20,15 +20,15 @@ Created by [**Paul Hallett**](https://github.com/phalt) and other [**PokéAPI co
     
  * OpenAPI spec version: 2.7.0
  */
-import type { TypeDetailDamageRelations } from './typeDetailDamageRelations';
-import type { TypeDetailPastDamageRelationsItem } from './typeDetailPastDamageRelationsItem';
-import type { TypeGameIndex } from './typeGameIndex';
-import type { GenerationSummary } from './generationSummary';
-import type { MoveDamageClassSummary } from './moveDamageClassSummary';
-import type { AbilityName } from './abilityName';
-import type { TypeDetailPokemonItem } from './typeDetailPokemonItem';
-import type { MoveSummary } from './moveSummary';
-import type { TypeDetailSprites } from './typeDetailSprites';
+import type { TypeDetailDamageRelations } from "./typeDetailDamageRelations";
+import type { TypeDetailPastDamageRelationsItem } from "./typeDetailPastDamageRelationsItem";
+import type { TypeGameIndex } from "./typeGameIndex";
+import type { GenerationSummary } from "./generationSummary";
+import type { MoveDamageClassSummary } from "./moveDamageClassSummary";
+import type { AbilityName } from "./abilityName";
+import type { TypeDetailPokemonItem } from "./typeDetailPokemonItem";
+import type { MoveSummary } from "./moveSummary";
+import type { TypeDetailSprites } from "./typeDetailSprites";
 
 /**
  * Serializer for the Type resource

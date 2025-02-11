@@ -20,8 +20,8 @@ Created by [**Paul Hallett**](https://github.com/phalt) and other [**PokéAPI co
     
  * OpenAPI spec version: 2.7.0
  */
-import type { MoveMetaCategoryDescription } from './moveMetaCategoryDescription';
-import type { MoveMetaCategoryDetailMovesItem } from './moveMetaCategoryDetailMovesItem';
+import type { MoveMetaCategoryDescription } from "./moveMetaCategoryDescription";
+import type { MoveMetaCategoryDetailMovesItem } from "./moveMetaCategoryDetailMovesItem";
 
 export interface MoveMetaCategoryDetail {
   readonly id: number;

@@ -20,9 +20,9 @@ Created by [**Paul Hallett**](https://github.com/phalt) and other [**PokéAPI co
     
  * OpenAPI spec version: 2.7.0
  */
-import type { BerryFlavorDetailBerriesItem } from './berryFlavorDetailBerriesItem';
-import type { ContestTypeSummary } from './contestTypeSummary';
-import type { BerryFlavorName } from './berryFlavorName';
+import type { BerryFlavorDetailBerriesItem } from "./berryFlavorDetailBerriesItem";
+import type { ContestTypeSummary } from "./contestTypeSummary";
+import type { BerryFlavorName } from "./berryFlavorName";
 
 export interface BerryFlavorDetail {
   readonly id: number;

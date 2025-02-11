@@ -20,18 +20,18 @@ Created by [**Paul Hallett**](https://github.com/phalt) and other [**PokéAPI co
     
  * OpenAPI spec version: 2.7.0
  */
-import type { MoveMetaAilmentSummary } from './moveMetaAilmentSummary';
-import type { MoveMetaCategorySummary } from './moveMetaCategorySummary';
-import type { MoveMetaMinHits } from './moveMetaMinHits';
-import type { MoveMetaMaxHits } from './moveMetaMaxHits';
-import type { MoveMetaMinTurns } from './moveMetaMinTurns';
-import type { MoveMetaMaxTurns } from './moveMetaMaxTurns';
-import type { MoveMetaDrain } from './moveMetaDrain';
-import type { MoveMetaHealing } from './moveMetaHealing';
-import type { MoveMetaCritRate } from './moveMetaCritRate';
-import type { MoveMetaAilmentChance } from './moveMetaAilmentChance';
-import type { MoveMetaFlinchChance } from './moveMetaFlinchChance';
-import type { MoveMetaStatChance } from './moveMetaStatChance';
+import type { MoveMetaAilmentSummary } from "./moveMetaAilmentSummary";
+import type { MoveMetaCategorySummary } from "./moveMetaCategorySummary";
+import type { MoveMetaMinHits } from "./moveMetaMinHits";
+import type { MoveMetaMaxHits } from "./moveMetaMaxHits";
+import type { MoveMetaMinTurns } from "./moveMetaMinTurns";
+import type { MoveMetaMaxTurns } from "./moveMetaMaxTurns";
+import type { MoveMetaDrain } from "./moveMetaDrain";
+import type { MoveMetaHealing } from "./moveMetaHealing";
+import type { MoveMetaCritRate } from "./moveMetaCritRate";
+import type { MoveMetaAilmentChance } from "./moveMetaAilmentChance";
+import type { MoveMetaFlinchChance } from "./moveMetaFlinchChance";
+import type { MoveMetaStatChance } from "./moveMetaStatChance";
 
 export interface MoveMeta {
   ailment: MoveMetaAilmentSummary;

@@ -20,8 +20,8 @@ Created by [**Paul Hallett**](https://github.com/phalt) and other [**PokéAPI co
     
  * OpenAPI spec version: 2.7.0
  */
-import type { VersionName } from './versionName';
-import type { VersionGroupSummary } from './versionGroupSummary';
+import type { VersionName } from "./versionName";
+import type { VersionGroupSummary } from "./versionGroupSummary";
 
 /**
  * Should have a link to Version Group info but the Circular

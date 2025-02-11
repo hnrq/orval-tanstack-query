@@ -20,14 +20,8 @@ Created by [**Paul Hallett**](https://github.com/phalt) and other [**PokéAPI co
     
  * OpenAPI spec version: 2.7.0
  */
-import {
-  faker
-} from '@faker-js/faker'
-import {
-  HttpResponse,
-  delay,
-  http
-} from 'msw'
+import { faker } from "@faker-js/faker";
+import { HttpResponse, delay, http } from "msw";
 import type {
   AbilityDetail,
   BerryDetail,
@@ -125,1371 +119,5471 @@ import type {
   SuperContestEffectDetail,
   TypeDetail,
   VersionDetail,
-  VersionGroupDetail
-} from './model'
-
-export const getAbilityListResponseMock = (overrideResponse: Partial< PaginatedAbilitySummaryList > = {}): PaginatedAbilitySummaryList => ({count: faker.helpers.arrayElement([faker.number.int({min: undefined, max: undefined}), undefined]), next: faker.helpers.arrayElement([faker.helpers.arrayElement([faker.internet.url(), null]), undefined]), previous: faker.helpers.arrayElement([faker.helpers.arrayElement([faker.internet.url(), null]), undefined]), results: faker.helpers.arrayElement([Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({name: faker.string.alpha(20), url: faker.internet.url()})), undefined]), ...overrideResponse})
-
-export const getAbilityRetrieveResponseMock = (overrideResponse: Partial< AbilityDetail > = {}): AbilityDetail => ({id: faker.number.int({min: undefined, max: undefined}), name: faker.string.alpha(20), is_main_series: faker.helpers.arrayElement([faker.datatype.boolean(), undefined]), generation: {name: faker.string.alpha(20), url: faker.internet.url()}, names: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({name: faker.string.alpha(20), language: {name: faker.string.alpha(20), url: faker.internet.url()}})), effect_entries: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({effect: faker.string.alpha(20), short_effect: faker.string.alpha(20), language: {name: faker.string.alpha(20), url: faker.internet.url()}})), effect_changes: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({version_group: {name: faker.string.alpha(20), url: faker.internet.url()}, effect_entries: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({effect: faker.string.alpha(20), language: {name: faker.string.alpha(20), url: faker.internet.url()}}))})), flavor_text_entries: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({flavor_text: faker.string.alpha(20), language: {name: faker.string.alpha(20), url: faker.internet.url()}, version_group: {name: faker.string.alpha(20), url: faker.internet.url()}})), pokemon: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({is_hidden: faker.datatype.boolean(), slot: faker.number.int({min: undefined, max: undefined}), pokemon: {name: faker.string.alpha(20), url: faker.internet.url()}})), ...overrideResponse})
-
-export const getBerryListResponseMock = (overrideResponse: Partial< PaginatedBerrySummaryList > = {}): PaginatedBerrySummaryList => ({count: faker.helpers.arrayElement([faker.number.int({min: undefined, max: undefined}), undefined]), next: faker.helpers.arrayElement([faker.helpers.arrayElement([faker.internet.url(), null]), undefined]), previous: faker.helpers.arrayElement([faker.helpers.arrayElement([faker.internet.url(), null]), undefined]), results: faker.helpers.arrayElement([Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({name: faker.string.alpha(20), url: faker.internet.url()})), undefined]), ...overrideResponse})
-
-export const getBerryRetrieveResponseMock = (overrideResponse: Partial< BerryDetail > = {}): BerryDetail => ({id: faker.number.int({min: undefined, max: undefined}), name: faker.string.alpha(20), growth_time: faker.number.int({min: undefined, max: undefined}), max_harvest: faker.number.int({min: undefined, max: undefined}), natural_gift_power: faker.number.int({min: undefined, max: undefined}), size: faker.number.int({min: undefined, max: undefined}), smoothness: faker.number.int({min: undefined, max: undefined}), soil_dryness: faker.number.int({min: undefined, max: undefined}), firmness: {name: faker.string.alpha(20), url: faker.internet.url()}, flavors: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({potency: faker.number.int({min: undefined, max: undefined}), flavor: {name: faker.helpers.arrayElement([faker.string.alpha(20), undefined]), url: faker.helpers.arrayElement([faker.internet.url(), undefined])}})), item: {name: faker.string.alpha(20), url: faker.internet.url()}, natural_gift_type: {name: faker.string.alpha(20), url: faker.internet.url()}, ...overrideResponse})
-
-export const getBerryFirmnessListResponseMock = (overrideResponse: Partial< PaginatedBerryFirmnessSummaryList > = {}): PaginatedBerryFirmnessSummaryList => ({count: faker.helpers.arrayElement([faker.number.int({min: undefined, max: undefined}), undefined]), next: faker.helpers.arrayElement([faker.helpers.arrayElement([faker.internet.url(), null]), undefined]), previous: faker.helpers.arrayElement([faker.helpers.arrayElement([faker.internet.url(), null]), undefined]), results: faker.helpers.arrayElement([Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({name: faker.string.alpha(20), url: faker.internet.url()})), undefined]), ...overrideResponse})
-
-export const getBerryFirmnessRetrieveResponseMock = (overrideResponse: Partial< BerryFirmnessDetail > = {}): BerryFirmnessDetail => ({id: faker.number.int({min: undefined, max: undefined}), name: faker.string.alpha(20), berries: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({name: faker.string.alpha(20), url: faker.internet.url()})), names: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({name: faker.string.alpha(20), language: {name: faker.string.alpha(20), url: faker.internet.url()}})), ...overrideResponse})
-
-export const getBerryFlavorListResponseMock = (overrideResponse: Partial< PaginatedBerryFlavorSummaryList > = {}): PaginatedBerryFlavorSummaryList => ({count: faker.helpers.arrayElement([faker.number.int({min: undefined, max: undefined}), undefined]), next: faker.helpers.arrayElement([faker.helpers.arrayElement([faker.internet.url(), null]), undefined]), previous: faker.helpers.arrayElement([faker.helpers.arrayElement([faker.internet.url(), null]), undefined]), results: faker.helpers.arrayElement([Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({name: faker.string.alpha(20), url: faker.internet.url()})), undefined]), ...overrideResponse})
-
-export const getBerryFlavorRetrieveResponseMock = (overrideResponse: Partial< BerryFlavorDetail > = {}): BerryFlavorDetail => ({id: faker.number.int({min: undefined, max: undefined}), name: faker.string.alpha(20), berries: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({potency: faker.number.int({min: undefined, max: undefined}), berry: {name: faker.helpers.arrayElement([faker.string.alpha(20), undefined]), url: faker.helpers.arrayElement([faker.internet.url(), undefined])}})), contest_type: {name: faker.string.alpha(20), url: faker.internet.url()}, names: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({name: faker.string.alpha(20), language: {name: faker.string.alpha(20), url: faker.internet.url()}})), ...overrideResponse})
-
-export const getCharacteristicListResponseMock = (overrideResponse: Partial< PaginatedCharacteristicSummaryList > = {}): PaginatedCharacteristicSummaryList => ({count: faker.helpers.arrayElement([faker.number.int({min: undefined, max: undefined}), undefined]), next: faker.helpers.arrayElement([faker.helpers.arrayElement([faker.internet.url(), null]), undefined]), previous: faker.helpers.arrayElement([faker.helpers.arrayElement([faker.internet.url(), null]), undefined]), results: faker.helpers.arrayElement([Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({url: faker.internet.url()})), undefined]), ...overrideResponse})
-
-export const getCharacteristicRetrieveResponseMock = (overrideResponse: Partial< CharacteristicDetail > = {}): CharacteristicDetail => ({id: faker.number.int({min: undefined, max: undefined}), gene_modulo: faker.number.int({min: undefined, max: undefined}), possible_values: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => (faker.number.int({min: undefined, max: undefined}))), highest_stat: {name: faker.string.alpha(20), url: faker.internet.url()}, descriptions: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({description: faker.helpers.arrayElement([faker.string.alpha(20), undefined]), language: {name: faker.string.alpha(20), url: faker.internet.url()}})), ...overrideResponse})
-
-export const getContestTypeListResponseMock = (overrideResponse: Partial< PaginatedContestTypeSummaryList > = {}): PaginatedContestTypeSummaryList => ({count: faker.helpers.arrayElement([faker.number.int({min: undefined, max: undefined}), undefined]), next: faker.helpers.arrayElement([faker.helpers.arrayElement([faker.internet.url(), null]), undefined]), previous: faker.helpers.arrayElement([faker.helpers.arrayElement([faker.internet.url(), null]), undefined]), results: faker.helpers.arrayElement([Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({name: faker.string.alpha(20), url: faker.internet.url()})), undefined]), ...overrideResponse})
-
-export const getContestTypeRetrieveResponseMock = (overrideResponse: Partial< ContestTypeDetail > = {}): ContestTypeDetail => ({id: faker.number.int({min: undefined, max: undefined}), name: faker.string.alpha(20), berry_flavor: {name: faker.string.alpha(20), url: faker.internet.url(),}, names: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({name: faker.string.alpha(20), color: faker.string.alpha(20), language: {name: faker.string.alpha(20), url: faker.internet.url()}})), ...overrideResponse})
-
-export const getContestEffectListResponseMock = (overrideResponse: Partial< PaginatedContestEffectSummaryList > = {}): PaginatedContestEffectSummaryList => ({count: faker.helpers.arrayElement([faker.number.int({min: undefined, max: undefined}), undefined]), next: faker.helpers.arrayElement([faker.helpers.arrayElement([faker.internet.url(), null]), undefined]), previous: faker.helpers.arrayElement([faker.helpers.arrayElement([faker.internet.url(), null]), undefined]), results: faker.helpers.arrayElement([Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({url: faker.internet.url()})), undefined]), ...overrideResponse})
-
-export const getContestEffectRetrieveResponseMock = (overrideResponse: Partial< ContestEffectDetail > = {}): ContestEffectDetail => ({id: faker.number.int({min: undefined, max: undefined}), appeal: faker.number.int({min: undefined, max: undefined}), jam: faker.number.int({min: undefined, max: undefined}), effect_entries: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({effect: faker.string.alpha(20), language: {name: faker.string.alpha(20), url: faker.internet.url()}})), flavor_text_entries: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({flavor_text: faker.string.alpha(20), language: {name: faker.string.alpha(20), url: faker.internet.url()}})), ...overrideResponse})
-
-export const getEggGroupListResponseMock = (overrideResponse: Partial< PaginatedEggGroupSummaryList > = {}): PaginatedEggGroupSummaryList => ({count: faker.helpers.arrayElement([faker.number.int({min: undefined, max: undefined}), undefined]), next: faker.helpers.arrayElement([faker.helpers.arrayElement([faker.internet.url(), null]), undefined]), previous: faker.helpers.arrayElement([faker.helpers.arrayElement([faker.internet.url(), null]), undefined]), results: faker.helpers.arrayElement([Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({name: faker.string.alpha(20), url: faker.internet.url()})), undefined]), ...overrideResponse})
-
-export const getEggGroupRetrieveResponseMock = (overrideResponse: Partial< EggGroupDetail > = {}): EggGroupDetail => ({id: faker.number.int({min: undefined, max: undefined}), name: faker.string.alpha(20), names: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({name: faker.string.alpha(20), language: {name: faker.string.alpha(20), url: faker.internet.url()}})), pokemon_species: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({name: faker.helpers.arrayElement([faker.string.alpha(20), undefined]), url: faker.helpers.arrayElement([faker.internet.url(), undefined])})), ...overrideResponse})
-
-export const getEncounterMethodListResponseMock = (overrideResponse: Partial< PaginatedEncounterMethodSummaryList > = {}): PaginatedEncounterMethodSummaryList => ({count: faker.helpers.arrayElement([faker.number.int({min: undefined, max: undefined}), undefined]), next: faker.helpers.arrayElement([faker.helpers.arrayElement([faker.internet.url(), null]), undefined]), previous: faker.helpers.arrayElement([faker.helpers.arrayElement([faker.internet.url(), null]), undefined]), results: faker.helpers.arrayElement([Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({name: faker.string.alpha(20), url: faker.internet.url()})), undefined]), ...overrideResponse})
-
-export const getEncounterMethodRetrieveResponseMock = (overrideResponse: Partial< EncounterMethodDetail > = {}): EncounterMethodDetail => ({id: faker.number.int({min: undefined, max: undefined}), name: faker.string.alpha(20), order: faker.helpers.arrayElement([faker.helpers.arrayElement([faker.number.int({min: undefined, max: undefined}),null,]), undefined]), names: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({name: faker.string.alpha(20), language: {name: faker.string.alpha(20), url: faker.internet.url()}})), ...overrideResponse})
-
-export const getEncounterConditionListResponseMock = (overrideResponse: Partial< PaginatedEncounterConditionSummaryList > = {}): PaginatedEncounterConditionSummaryList => ({count: faker.helpers.arrayElement([faker.number.int({min: undefined, max: undefined}), undefined]), next: faker.helpers.arrayElement([faker.helpers.arrayElement([faker.internet.url(), null]), undefined]), previous: faker.helpers.arrayElement([faker.helpers.arrayElement([faker.internet.url(), null]), undefined]), results: faker.helpers.arrayElement([Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({name: faker.string.alpha(20), url: faker.internet.url()})), undefined]), ...overrideResponse})
-
-export const getEncounterConditionRetrieveResponseMock = (overrideResponse: Partial< EncounterConditionDetail > = {}): EncounterConditionDetail => ({id: faker.number.int({min: undefined, max: undefined}), name: faker.string.alpha(20), values: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({name: faker.string.alpha(20), url: faker.internet.url()})), names: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({name: faker.string.alpha(20), language: {name: faker.string.alpha(20), url: faker.internet.url()}})), ...overrideResponse})
-
-export const getEncounterConditionValueListResponseMock = (overrideResponse: Partial< PaginatedEncounterConditionValueSummaryList > = {}): PaginatedEncounterConditionValueSummaryList => ({count: faker.helpers.arrayElement([faker.number.int({min: undefined, max: undefined}), undefined]), next: faker.helpers.arrayElement([faker.helpers.arrayElement([faker.internet.url(), null]), undefined]), previous: faker.helpers.arrayElement([faker.helpers.arrayElement([faker.internet.url(), null]), undefined]), results: faker.helpers.arrayElement([Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({name: faker.string.alpha(20), url: faker.internet.url()})), undefined]), ...overrideResponse})
-
-export const getEncounterConditionValueRetrieveResponseMock = (overrideResponse: Partial< EncounterConditionValueDetail > = {}): EncounterConditionValueDetail => ({id: faker.number.int({min: undefined, max: undefined}), name: faker.string.alpha(20), condition: {name: faker.string.alpha(20), url: faker.internet.url()}, names: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({name: faker.string.alpha(20), language: {name: faker.string.alpha(20), url: faker.internet.url()}})), ...overrideResponse})
-
-export const getEvolutionChainListResponseMock = (overrideResponse: Partial< PaginatedEvolutionChainSummaryList > = {}): PaginatedEvolutionChainSummaryList => ({count: faker.helpers.arrayElement([faker.number.int({min: undefined, max: undefined}), undefined]), next: faker.helpers.arrayElement([faker.helpers.arrayElement([faker.internet.url(), null]), undefined]), previous: faker.helpers.arrayElement([faker.helpers.arrayElement([faker.internet.url(), null]), undefined]), results: faker.helpers.arrayElement([Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({url: faker.internet.url()})), undefined]), ...overrideResponse})
-
-export const getEvolutionChainRetrieveResponseMock = (overrideResponse: Partial< EvolutionChainDetail > = {}): EvolutionChainDetail => ({id: faker.number.int({min: undefined, max: undefined}), baby_trigger_item: {name: faker.string.alpha(20), url: faker.internet.url()}, chain: {evolution_details: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({})), evolves_to: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({evolution_details: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({gender: {name: faker.string.alpha(20), url: faker.internet.url()}, held_item: {name: faker.string.alpha(20), url: faker.internet.url()}, item: {name: faker.string.alpha(20), url: faker.internet.url()}, known_move: {}, known_move_type: {}, location: {name: faker.string.alpha(20), url: faker.internet.url()}, min_affection: faker.helpers.arrayElement([faker.number.int({min: undefined, max: undefined}), null]), min_beauty: faker.helpers.arrayElement([faker.number.int({min: undefined, max: undefined}), null]), min_happiness: faker.helpers.arrayElement([faker.number.int({min: undefined, max: undefined}), null]), min_level: faker.helpers.arrayElement([faker.number.int({min: undefined, max: undefined}), null]), needs_overworld_rain: faker.datatype.boolean(), party_species: faker.helpers.arrayElement([faker.string.alpha(20), null]), party_type: faker.helpers.arrayElement([faker.string.alpha(20), null]), relative_physical_stats: faker.helpers.arrayElement([faker.string.alpha(20), null]), time_of_day: faker.string.alpha(20), trade_species: faker.helpers.arrayElement([faker.string.alpha(20), null]), trigger: {name: faker.string.alpha(20), url: faker.internet.url()}, turn_upside_down: faker.datatype.boolean()})), is_baby: faker.datatype.boolean(), species: {name: faker.string.alpha(20), url: faker.internet.url()}})), is_baby: faker.datatype.boolean(), species: {name: faker.string.alpha(20), url: faker.internet.url()}}, ...overrideResponse})
-
-export const getEvolutionTriggerListResponseMock = (overrideResponse: Partial< PaginatedEvolutionTriggerSummaryList > = {}): PaginatedEvolutionTriggerSummaryList => ({count: faker.helpers.arrayElement([faker.number.int({min: undefined, max: undefined}), undefined]), next: faker.helpers.arrayElement([faker.helpers.arrayElement([faker.internet.url(), null]), undefined]), previous: faker.helpers.arrayElement([faker.helpers.arrayElement([faker.internet.url(), null]), undefined]), results: faker.helpers.arrayElement([Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({name: faker.string.alpha(20), url: faker.internet.url()})), undefined]), ...overrideResponse})
-
-export const getEvolutionTriggerRetrieveResponseMock = (overrideResponse: Partial< EvolutionTriggerDetail > = {}): EvolutionTriggerDetail => ({id: faker.number.int({min: undefined, max: undefined}), name: faker.string.alpha(20), names: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({name: faker.string.alpha(20), language: {name: faker.string.alpha(20), url: faker.internet.url()}})), pokemon_species: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({name: faker.string.alpha(20), url: faker.internet.url()})), ...overrideResponse})
-
-export const getGenerationListResponseMock = (overrideResponse: Partial< PaginatedGenerationSummaryList > = {}): PaginatedGenerationSummaryList => ({count: faker.helpers.arrayElement([faker.number.int({min: undefined, max: undefined}), undefined]), next: faker.helpers.arrayElement([faker.helpers.arrayElement([faker.internet.url(), null]), undefined]), previous: faker.helpers.arrayElement([faker.helpers.arrayElement([faker.internet.url(), null]), undefined]), results: faker.helpers.arrayElement([Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({name: faker.string.alpha(20), url: faker.internet.url()})), undefined]), ...overrideResponse})
-
-export const getGenerationRetrieveResponseMock = (overrideResponse: Partial< GenerationDetail > = {}): GenerationDetail => ({id: faker.number.int({min: undefined, max: undefined}), name: faker.string.alpha(20), abilities: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({name: faker.string.alpha(20), url: faker.internet.url()})), main_region: {name: faker.string.alpha(20), url: faker.internet.url()}, moves: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({name: faker.string.alpha(20), url: faker.internet.url()})), names: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({name: faker.string.alpha(20), language: {name: faker.string.alpha(20), url: faker.internet.url()}})), pokemon_species: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({name: faker.string.alpha(20), url: faker.internet.url()})), types: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({name: faker.string.alpha(20), url: faker.internet.url()})), version_groups: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({name: faker.string.alpha(20), url: faker.internet.url()})), ...overrideResponse})
-
-export const getGenderListResponseMock = (overrideResponse: Partial< PaginatedGenderSummaryList > = {}): PaginatedGenderSummaryList => ({count: faker.helpers.arrayElement([faker.number.int({min: undefined, max: undefined}), undefined]), next: faker.helpers.arrayElement([faker.helpers.arrayElement([faker.internet.url(), null]), undefined]), previous: faker.helpers.arrayElement([faker.helpers.arrayElement([faker.internet.url(), null]), undefined]), results: faker.helpers.arrayElement([Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({name: faker.string.alpha(20), url: faker.internet.url()})), undefined]), ...overrideResponse})
-
-export const getGenderRetrieveResponseMock = (overrideResponse: Partial< GenderDetail > = {}): GenderDetail => ({id: faker.number.int({min: undefined, max: undefined}), name: faker.string.alpha(20), pokemon_species_details: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({rate: faker.number.int({min: undefined, max: undefined}), pokemon_species: {name: faker.string.alpha(20), url: faker.internet.url()}})), required_for_evolution: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({name: faker.string.alpha(20), url: faker.internet.url()})), ...overrideResponse})
-
-export const getGrowthRateListResponseMock = (overrideResponse: Partial< PaginatedGrowthRateSummaryList > = {}): PaginatedGrowthRateSummaryList => ({count: faker.helpers.arrayElement([faker.number.int({min: undefined, max: undefined}), undefined]), next: faker.helpers.arrayElement([faker.helpers.arrayElement([faker.internet.url(), null]), undefined]), previous: faker.helpers.arrayElement([faker.helpers.arrayElement([faker.internet.url(), null]), undefined]), results: faker.helpers.arrayElement([Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({name: faker.string.alpha(20), url: faker.internet.url()})), undefined]), ...overrideResponse})
-
-export const getGrowthRateRetrieveResponseMock = (overrideResponse: Partial< GrowthRateDetail > = {}): GrowthRateDetail => ({id: faker.number.int({min: undefined, max: undefined}), name: faker.string.alpha(20), formula: faker.string.alpha(20), descriptions: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({description: faker.helpers.arrayElement([faker.string.alpha(20), undefined]), language: {name: faker.string.alpha(20), url: faker.internet.url()}})), levels: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({level: faker.number.int({min: undefined, max: undefined}), experience: faker.number.int({min: undefined, max: undefined})})), pokemon_species: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({name: faker.string.alpha(20), url: faker.internet.url()})), ...overrideResponse})
-
-export const getItemListResponseMock = (overrideResponse: Partial< PaginatedItemSummaryList > = {}): PaginatedItemSummaryList => ({count: faker.helpers.arrayElement([faker.number.int({min: undefined, max: undefined}), undefined]), next: faker.helpers.arrayElement([faker.helpers.arrayElement([faker.internet.url(), null]), undefined]), previous: faker.helpers.arrayElement([faker.helpers.arrayElement([faker.internet.url(), null]), undefined]), results: faker.helpers.arrayElement([Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({name: faker.string.alpha(20), url: faker.internet.url()})), undefined]), ...overrideResponse})
-
-export const getItemRetrieveResponseMock = (overrideResponse: Partial< ItemDetail > = {}): ItemDetail => ({id: faker.number.int({min: undefined, max: undefined}), name: faker.string.alpha(20), cost: faker.helpers.arrayElement([faker.helpers.arrayElement([faker.number.int({min: undefined, max: undefined}),null,]), undefined]), fling_power: faker.helpers.arrayElement([faker.helpers.arrayElement([faker.number.int({min: undefined, max: undefined}),null,]), undefined]), fling_effect: {name: faker.string.alpha(20), url: faker.internet.url()}, attributes: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({name: faker.string.alpha(20), url: faker.internet.url()})), category: {name: faker.string.alpha(20), url: faker.internet.url()}, effect_entries: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({effect: faker.string.alpha(20), short_effect: faker.string.alpha(20), language: {name: faker.string.alpha(20), url: faker.internet.url()}})), flavor_text_entries: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({text: faker.string.alpha(20), version_group: {name: faker.string.alpha(20), url: faker.internet.url()}, language: {name: faker.string.alpha(20), url: faker.internet.url()}})), game_indices: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({game_index: faker.number.int({min: undefined, max: undefined}), generation: {name: faker.string.alpha(20), url: faker.internet.url()}})), names: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({name: faker.string.alpha(20), language: {name: faker.string.alpha(20), url: faker.internet.url()}})), held_by_pokemon: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({pokemon: {name: faker.string.alpha(20), url: faker.internet.url()}, 'version-details': Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({rarity: faker.number.int({min: undefined, max: undefined}), version: {name: faker.string.alpha(20), url: faker.internet.url()}}))})), sprites: {default: faker.internet.url()}, baby_trigger_for: {url: faker.internet.url()}, machines: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({machine: faker.internet.url(), version_group: {name: faker.string.alpha(20), url: faker.internet.url()}})), ...overrideResponse})
-
-export const getItemCategoryListResponseMock = (overrideResponse: Partial< PaginatedItemCategorySummaryList > = {}): PaginatedItemCategorySummaryList => ({count: faker.helpers.arrayElement([faker.number.int({min: undefined, max: undefined}), undefined]), next: faker.helpers.arrayElement([faker.helpers.arrayElement([faker.internet.url(), null]), undefined]), previous: faker.helpers.arrayElement([faker.helpers.arrayElement([faker.internet.url(), null]), undefined]), results: faker.helpers.arrayElement([Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({name: faker.string.alpha(20), url: faker.internet.url()})), undefined]), ...overrideResponse})
-
-export const getItemCategoryRetrieveResponseMock = (overrideResponse: Partial< ItemCategoryDetail > = {}): ItemCategoryDetail => ({id: faker.number.int({min: undefined, max: undefined}), name: faker.string.alpha(20), items: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({name: faker.string.alpha(20), url: faker.internet.url()})), names: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({name: faker.string.alpha(20), language: {name: faker.string.alpha(20), url: faker.internet.url()}})), pocket: {name: faker.string.alpha(20), url: faker.internet.url()}, ...overrideResponse})
-
-export const getItemAttributeListResponseMock = (overrideResponse: Partial< PaginatedItemAttributeSummaryList > = {}): PaginatedItemAttributeSummaryList => ({count: faker.helpers.arrayElement([faker.number.int({min: undefined, max: undefined}), undefined]), next: faker.helpers.arrayElement([faker.helpers.arrayElement([faker.internet.url(), null]), undefined]), previous: faker.helpers.arrayElement([faker.helpers.arrayElement([faker.internet.url(), null]), undefined]), results: faker.helpers.arrayElement([Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({name: faker.string.alpha(20), url: faker.internet.url()})), undefined]), ...overrideResponse})
-
-export const getItemAttributeRetrieveResponseMock = (overrideResponse: Partial< ItemAttributeDetail > = {}): ItemAttributeDetail => ({id: faker.number.int({min: undefined, max: undefined}), name: faker.string.alpha(20), descriptions: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({description: faker.helpers.arrayElement([faker.string.alpha(20), undefined]), language: {name: faker.string.alpha(20), url: faker.internet.url()}})), items: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({name: faker.string.alpha(20), url: faker.internet.url()})), names: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({name: faker.string.alpha(20), language: {name: faker.string.alpha(20), url: faker.internet.url()}})), ...overrideResponse})
-
-export const getItemFlingEffectListResponseMock = (overrideResponse: Partial< PaginatedItemFlingEffectSummaryList > = {}): PaginatedItemFlingEffectSummaryList => ({count: faker.helpers.arrayElement([faker.number.int({min: undefined, max: undefined}), undefined]), next: faker.helpers.arrayElement([faker.helpers.arrayElement([faker.internet.url(), null]), undefined]), previous: faker.helpers.arrayElement([faker.helpers.arrayElement([faker.internet.url(), null]), undefined]), results: faker.helpers.arrayElement([Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({name: faker.string.alpha(20), url: faker.internet.url()})), undefined]), ...overrideResponse})
-
-export const getItemFlingEffectRetrieveResponseMock = (overrideResponse: Partial< ItemFlingEffectDetail > = {}): ItemFlingEffectDetail => ({id: faker.number.int({min: undefined, max: undefined}), name: faker.string.alpha(20), effect_entries: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({effect: faker.string.alpha(20), language: {name: faker.string.alpha(20), url: faker.internet.url()}})), items: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({name: faker.string.alpha(20), url: faker.internet.url()})), ...overrideResponse})
-
-export const getItemPocketListResponseMock = (overrideResponse: Partial< PaginatedItemPocketSummaryList > = {}): PaginatedItemPocketSummaryList => ({count: faker.helpers.arrayElement([faker.number.int({min: undefined, max: undefined}), undefined]), next: faker.helpers.arrayElement([faker.helpers.arrayElement([faker.internet.url(), null]), undefined]), previous: faker.helpers.arrayElement([faker.helpers.arrayElement([faker.internet.url(), null]), undefined]), results: faker.helpers.arrayElement([Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({name: faker.string.alpha(20), url: faker.internet.url()})), undefined]), ...overrideResponse})
-
-export const getItemPocketRetrieveResponseMock = (overrideResponse: Partial< ItemPocketDetail > = {}): ItemPocketDetail => ({id: faker.number.int({min: undefined, max: undefined}), name: faker.string.alpha(20), categories: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({name: faker.string.alpha(20), url: faker.internet.url()})), names: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({name: faker.string.alpha(20), language: {name: faker.string.alpha(20), url: faker.internet.url()}})), ...overrideResponse})
-
-export const getLanguageListResponseMock = (overrideResponse: Partial< PaginatedLanguageSummaryList > = {}): PaginatedLanguageSummaryList => ({count: faker.helpers.arrayElement([faker.number.int({min: undefined, max: undefined}), undefined]), next: faker.helpers.arrayElement([faker.helpers.arrayElement([faker.internet.url(), null]), undefined]), previous: faker.helpers.arrayElement([faker.helpers.arrayElement([faker.internet.url(), null]), undefined]), results: faker.helpers.arrayElement([Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({name: faker.string.alpha(20), url: faker.internet.url()})), undefined]), ...overrideResponse})
-
-export const getLanguageRetrieveResponseMock = (overrideResponse: Partial< LanguageDetail > = {}): LanguageDetail => ({id: faker.number.int({min: undefined, max: undefined}), name: faker.string.alpha(20), official: faker.helpers.arrayElement([faker.datatype.boolean(), undefined]), iso639: faker.string.alpha(20), iso3166: faker.string.alpha(20), names: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({name: faker.string.alpha(20), language: {name: faker.string.alpha(20), url: faker.internet.url()}})), ...overrideResponse})
-
-export const getLocationListResponseMock = (overrideResponse: Partial< PaginatedLocationSummaryList > = {}): PaginatedLocationSummaryList => ({count: faker.helpers.arrayElement([faker.number.int({min: undefined, max: undefined}), undefined]), next: faker.helpers.arrayElement([faker.helpers.arrayElement([faker.internet.url(), null]), undefined]), previous: faker.helpers.arrayElement([faker.helpers.arrayElement([faker.internet.url(), null]), undefined]), results: faker.helpers.arrayElement([Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({name: faker.string.alpha(20), url: faker.internet.url()})), undefined]), ...overrideResponse})
-
-export const getLocationRetrieveResponseMock = (overrideResponse: Partial< LocationDetail > = {}): LocationDetail => ({id: faker.number.int({min: undefined, max: undefined}), name: faker.string.alpha(20), region: {name: faker.string.alpha(20), url: faker.internet.url()}, names: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({name: faker.string.alpha(20), language: {name: faker.string.alpha(20), url: faker.internet.url()}})), game_indices: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({game_index: faker.number.int({min: undefined, max: undefined}), generation: {name: faker.string.alpha(20), url: faker.internet.url()}})), areas: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({name: faker.string.alpha(20), url: faker.internet.url()})), ...overrideResponse})
-
-export const getLocationAreaListResponseMock = (overrideResponse: Partial< PaginatedLocationAreaSummaryList > = {}): PaginatedLocationAreaSummaryList => ({count: faker.helpers.arrayElement([faker.number.int({min: undefined, max: undefined}), undefined]), next: faker.helpers.arrayElement([faker.helpers.arrayElement([faker.internet.url(), null]), undefined]), previous: faker.helpers.arrayElement([faker.helpers.arrayElement([faker.internet.url(), null]), undefined]), results: faker.helpers.arrayElement([Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({name: faker.string.alpha(20), url: faker.internet.url()})), undefined]), ...overrideResponse})
-
-export const getLocationAreaRetrieveResponseMock = (overrideResponse: Partial< LocationAreaDetail > = {}): LocationAreaDetail => ({id: faker.number.int({min: undefined, max: undefined}), name: faker.string.alpha(20), game_index: faker.number.int({min: undefined, max: undefined}), encounter_method_rates: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({encounter_method: {name: faker.string.alpha(20), url: faker.internet.url()}, version_details: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({rate: faker.number.int({min: undefined, max: undefined}), version: {name: faker.string.alpha(20), url: faker.internet.url()}}))})), location: {name: faker.string.alpha(20), url: faker.internet.url()}, names: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({name: faker.string.alpha(20), language: {name: faker.string.alpha(20), url: faker.internet.url()}})), pokemon_encounters: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({pokemon: {name: faker.string.alpha(20), url: faker.internet.url()}, version_details: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({version: {name: faker.string.alpha(20), url: faker.internet.url()}, max_chance: faker.number.int({min: undefined, max: undefined}), encounter_details: {min_level: faker.number.int({min: undefined, max: undefined}), max_level: faker.number.int({min: undefined, max: undefined}), condition_values: faker.helpers.arrayElement([{name: faker.string.alpha(20), url: faker.internet.url()}, undefined]), chance: faker.number.int({min: undefined, max: undefined}), method: {name: faker.string.alpha(20), url: faker.internet.url()}}}))})), ...overrideResponse})
-
-export const getMachineListResponseMock = (overrideResponse: Partial< PaginatedMachineSummaryList > = {}): PaginatedMachineSummaryList => ({count: faker.helpers.arrayElement([faker.number.int({min: undefined, max: undefined}), undefined]), next: faker.helpers.arrayElement([faker.helpers.arrayElement([faker.internet.url(), null]), undefined]), previous: faker.helpers.arrayElement([faker.helpers.arrayElement([faker.internet.url(), null]), undefined]), results: faker.helpers.arrayElement([Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({url: faker.internet.url()})), undefined]), ...overrideResponse})
-
-export const getMachineRetrieveResponseMock = (overrideResponse: Partial< MachineDetail > = {}): MachineDetail => ({id: faker.number.int({min: undefined, max: undefined}), item: {name: faker.string.alpha(20), url: faker.internet.url()}, version_group: {name: faker.string.alpha(20), url: faker.internet.url()}, move: {name: faker.string.alpha(20), url: faker.internet.url()}, ...overrideResponse})
-
-export const getMoveListResponseMock = (overrideResponse: Partial< PaginatedMoveSummaryList > = {}): PaginatedMoveSummaryList => ({count: faker.helpers.arrayElement([faker.number.int({min: undefined, max: undefined}), undefined]), next: faker.helpers.arrayElement([faker.helpers.arrayElement([faker.internet.url(), null]), undefined]), previous: faker.helpers.arrayElement([faker.helpers.arrayElement([faker.internet.url(), null]), undefined]), results: faker.helpers.arrayElement([Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({name: faker.string.alpha(20), url: faker.internet.url()})), undefined]), ...overrideResponse})
-
-export const getMoveRetrieveResponseMock = (overrideResponse: Partial< MoveDetail > = {}): MoveDetail => ({id: faker.number.int({min: undefined, max: undefined}), name: faker.string.alpha(20), accuracy: faker.helpers.arrayElement([faker.helpers.arrayElement([faker.number.int({min: undefined, max: undefined}),null,]), undefined]), effect_chance: faker.number.int({min: undefined, max: undefined}), pp: faker.helpers.arrayElement([faker.helpers.arrayElement([faker.number.int({min: undefined, max: undefined}),null,]), undefined]), priority: faker.helpers.arrayElement([faker.helpers.arrayElement([faker.number.int({min: undefined, max: undefined}),null,]), undefined]), power: faker.helpers.arrayElement([faker.helpers.arrayElement([faker.number.int({min: undefined, max: undefined}),null,]), undefined]), contest_combos: {normal: {use_before: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({name: faker.string.alpha(20), url: faker.internet.url()})), use_after: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({name: faker.string.alpha(20), url: faker.internet.url()}))}, super: {use_before: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({name: faker.string.alpha(20), url: faker.internet.url()})), use_after: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({name: faker.string.alpha(20), url: faker.internet.url()}))}}, contest_type: {name: faker.string.alpha(20), url: faker.internet.url()}, contest_effect: {url: faker.internet.url()}, damage_class: {name: faker.string.alpha(20), url: faker.internet.url()}, effect_entries: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({effect: faker.string.alpha(20), short_effect: faker.string.alpha(20), language: {name: faker.string.alpha(20), url: faker.internet.url()}})), effect_changes: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({effect_entries: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({effect: faker.string.alpha(20), language: {name: faker.string.alpha(20), url: faker.internet.url()}})), version_group: {name: faker.string.alpha(20), url: faker.internet.url()}})), generation: {name: faker.string.alpha(20), url: faker.internet.url()}, meta: {ailment: {name: faker.string.alpha(20), url: faker.internet.url()}, category: {name: faker.string.alpha(20), url: faker.internet.url()}, min_hits: faker.helpers.arrayElement([faker.helpers.arrayElement([faker.number.int({min: undefined, max: undefined}),null,]), undefined]), max_hits: faker.helpers.arrayElement([faker.helpers.arrayElement([faker.number.int({min: undefined, max: undefined}),null,]), undefined]), min_turns: faker.helpers.arrayElement([faker.helpers.arrayElement([faker.number.int({min: undefined, max: undefined}),null,]), undefined]), max_turns: faker.helpers.arrayElement([faker.helpers.arrayElement([faker.number.int({min: undefined, max: undefined}),null,]), undefined]), drain: faker.helpers.arrayElement([faker.helpers.arrayElement([faker.number.int({min: undefined, max: undefined}),null,]), undefined]), healing: faker.helpers.arrayElement([faker.helpers.arrayElement([faker.number.int({min: undefined, max: undefined}),null,]), undefined]), crit_rate: faker.helpers.arrayElement([faker.helpers.arrayElement([faker.number.int({min: undefined, max: undefined}),null,]), undefined]), ailment_chance: faker.helpers.arrayElement([faker.helpers.arrayElement([faker.number.int({min: undefined, max: undefined}),null,]), undefined]), flinch_chance: faker.helpers.arrayElement([faker.helpers.arrayElement([faker.number.int({min: undefined, max: undefined}),null,]), undefined]), stat_chance: faker.helpers.arrayElement([faker.helpers.arrayElement([faker.number.int({min: undefined, max: undefined}),null,]), undefined]),}, names: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({name: faker.string.alpha(20), language: {name: faker.string.alpha(20), url: faker.internet.url()}})), past_values: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({accuracy: faker.helpers.arrayElement([faker.helpers.arrayElement([faker.number.int({min: undefined, max: undefined}),null,]), undefined]), power: faker.helpers.arrayElement([faker.helpers.arrayElement([faker.number.int({min: undefined, max: undefined}),null,]), undefined]), pp: faker.helpers.arrayElement([faker.helpers.arrayElement([faker.number.int({min: undefined, max: undefined}),null,]), undefined]), effect_chance: faker.number.int({min: undefined, max: undefined}), effect_entries: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({effect: faker.string.alpha(20), short_effect: faker.string.alpha(20), language: {name: faker.string.alpha(20), url: faker.internet.url()}})), type: {name: faker.string.alpha(20), url: faker.internet.url()}, version_group: {name: faker.string.alpha(20), url: faker.internet.url()}})), stat_changes: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({change: faker.number.int({min: undefined, max: undefined}), stat: {name: faker.string.alpha(20), url: faker.internet.url()}})), super_contest_effect: {url: faker.internet.url()}, target: {name: faker.string.alpha(20), url: faker.internet.url()}, type: {name: faker.string.alpha(20), url: faker.internet.url()}, machines: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({machine: {url: faker.internet.url()}, version_group: {name: faker.string.alpha(20), url: faker.internet.url()}})), flavor_text_entries: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({flavor_text: faker.string.alpha(20), language: {name: faker.string.alpha(20), url: faker.internet.url()}, version_group: {name: faker.string.alpha(20), url: faker.internet.url()}})), learned_by_pokemon: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({name: faker.string.alpha(20), url: faker.internet.url()})), ...overrideResponse})
-
-export const getMoveAilmentListResponseMock = (overrideResponse: Partial< PaginatedMoveMetaAilmentSummaryList > = {}): PaginatedMoveMetaAilmentSummaryList => ({count: faker.helpers.arrayElement([faker.number.int({min: undefined, max: undefined}), undefined]), next: faker.helpers.arrayElement([faker.helpers.arrayElement([faker.internet.url(), null]), undefined]), previous: faker.helpers.arrayElement([faker.helpers.arrayElement([faker.internet.url(), null]), undefined]), results: faker.helpers.arrayElement([Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({name: faker.string.alpha(20), url: faker.internet.url()})), undefined]), ...overrideResponse})
-
-export const getMoveAilmentRetrieveResponseMock = (overrideResponse: Partial< MoveMetaAilmentDetail > = {}): MoveMetaAilmentDetail => ({id: faker.number.int({min: undefined, max: undefined}), name: faker.string.alpha(20), moves: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({name: faker.string.alpha(20), url: faker.internet.url()})), names: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({name: faker.string.alpha(20), language: {name: faker.string.alpha(20), url: faker.internet.url()}})), ...overrideResponse})
-
-export const getMoveBattleStyleListResponseMock = (overrideResponse: Partial< PaginatedMoveBattleStyleSummaryList > = {}): PaginatedMoveBattleStyleSummaryList => ({count: faker.helpers.arrayElement([faker.number.int({min: undefined, max: undefined}), undefined]), next: faker.helpers.arrayElement([faker.helpers.arrayElement([faker.internet.url(), null]), undefined]), previous: faker.helpers.arrayElement([faker.helpers.arrayElement([faker.internet.url(), null]), undefined]), results: faker.helpers.arrayElement([Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({name: faker.string.alpha(20), url: faker.internet.url()})), undefined]), ...overrideResponse})
-
-export const getMoveBattleStyleRetrieveResponseMock = (overrideResponse: Partial< MoveBattleStyleDetail > = {}): MoveBattleStyleDetail => ({id: faker.number.int({min: undefined, max: undefined}), name: faker.string.alpha(20), names: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({name: faker.string.alpha(20), language: {name: faker.string.alpha(20), url: faker.internet.url()}})), ...overrideResponse})
-
-export const getMoveCategoryListResponseMock = (overrideResponse: Partial< PaginatedMoveMetaCategorySummaryList > = {}): PaginatedMoveMetaCategorySummaryList => ({count: faker.helpers.arrayElement([faker.number.int({min: undefined, max: undefined}), undefined]), next: faker.helpers.arrayElement([faker.helpers.arrayElement([faker.internet.url(), null]), undefined]), previous: faker.helpers.arrayElement([faker.helpers.arrayElement([faker.internet.url(), null]), undefined]), results: faker.helpers.arrayElement([Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({name: faker.string.alpha(20), url: faker.internet.url()})), undefined]), ...overrideResponse})
-
-export const getMoveCategoryRetrieveResponseMock = (overrideResponse: Partial< MoveMetaCategoryDetail > = {}): MoveMetaCategoryDetail => ({id: faker.number.int({min: undefined, max: undefined}), name: faker.string.alpha(20), descriptions: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({description: faker.helpers.arrayElement([faker.string.alpha(20), undefined]), language: {name: faker.string.alpha(20), url: faker.internet.url()}})), moves: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({name: faker.string.alpha(20), url: faker.internet.url()})), ...overrideResponse})
-
-export const getMoveDamageClassListResponseMock = (overrideResponse: Partial< PaginatedMoveDamageClassSummaryList > = {}): PaginatedMoveDamageClassSummaryList => ({count: faker.helpers.arrayElement([faker.number.int({min: undefined, max: undefined}), undefined]), next: faker.helpers.arrayElement([faker.helpers.arrayElement([faker.internet.url(), null]), undefined]), previous: faker.helpers.arrayElement([faker.helpers.arrayElement([faker.internet.url(), null]), undefined]), results: faker.helpers.arrayElement([Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({name: faker.string.alpha(20), url: faker.internet.url()})), undefined]), ...overrideResponse})
-
-export const getMoveDamageClassRetrieveResponseMock = (overrideResponse: Partial< MoveDamageClassDetail > = {}): MoveDamageClassDetail => ({id: faker.number.int({min: undefined, max: undefined}), name: faker.string.alpha(20), descriptions: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({description: faker.helpers.arrayElement([faker.string.alpha(20), undefined]), language: {name: faker.string.alpha(20), url: faker.internet.url()}})), moves: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({name: faker.string.alpha(20), url: faker.internet.url()})), names: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({name: faker.string.alpha(20), language: {name: faker.string.alpha(20), url: faker.internet.url()}})), ...overrideResponse})
-
-export const getMoveLearnMethodListResponseMock = (overrideResponse: Partial< PaginatedMoveLearnMethodSummaryList > = {}): PaginatedMoveLearnMethodSummaryList => ({count: faker.helpers.arrayElement([faker.number.int({min: undefined, max: undefined}), undefined]), next: faker.helpers.arrayElement([faker.helpers.arrayElement([faker.internet.url(), null]), undefined]), previous: faker.helpers.arrayElement([faker.helpers.arrayElement([faker.internet.url(), null]), undefined]), results: faker.helpers.arrayElement([Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({name: faker.string.alpha(20), url: faker.internet.url()})), undefined]), ...overrideResponse})
-
-export const getMoveLearnMethodRetrieveResponseMock = (overrideResponse: Partial< MoveLearnMethodDetail > = {}): MoveLearnMethodDetail => ({id: faker.number.int({min: undefined, max: undefined}), name: faker.string.alpha(20), names: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({name: faker.string.alpha(20), language: {name: faker.string.alpha(20), url: faker.internet.url()}})), descriptions: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({description: faker.helpers.arrayElement([faker.string.alpha(20), undefined]), language: {name: faker.string.alpha(20), url: faker.internet.url()}})), version_groups: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({name: faker.string.alpha(20), url: faker.internet.url()})), ...overrideResponse})
-
-export const getMoveTargetListResponseMock = (overrideResponse: Partial< PaginatedMoveTargetSummaryList > = {}): PaginatedMoveTargetSummaryList => ({count: faker.helpers.arrayElement([faker.number.int({min: undefined, max: undefined}), undefined]), next: faker.helpers.arrayElement([faker.helpers.arrayElement([faker.internet.url(), null]), undefined]), previous: faker.helpers.arrayElement([faker.helpers.arrayElement([faker.internet.url(), null]), undefined]), results: faker.helpers.arrayElement([Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({name: faker.string.alpha(20), url: faker.internet.url()})), undefined]), ...overrideResponse})
-
-export const getMoveTargetRetrieveResponseMock = (overrideResponse: Partial< MoveTargetDetail > = {}): MoveTargetDetail => ({id: faker.number.int({min: undefined, max: undefined}), name: faker.string.alpha(20), descriptions: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({description: faker.helpers.arrayElement([faker.string.alpha(20), undefined]), language: {name: faker.string.alpha(20), url: faker.internet.url()}})), moves: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({name: faker.string.alpha(20), url: faker.internet.url()})), names: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({name: faker.string.alpha(20), language: {name: faker.string.alpha(20), url: faker.internet.url()}})), ...overrideResponse})
-
-export const getNatureListResponseMock = (overrideResponse: Partial< PaginatedNatureSummaryList > = {}): PaginatedNatureSummaryList => ({count: faker.helpers.arrayElement([faker.number.int({min: undefined, max: undefined}), undefined]), next: faker.helpers.arrayElement([faker.helpers.arrayElement([faker.internet.url(), null]), undefined]), previous: faker.helpers.arrayElement([faker.helpers.arrayElement([faker.internet.url(), null]), undefined]), results: faker.helpers.arrayElement([Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({name: faker.string.alpha(20), url: faker.internet.url()})), undefined]), ...overrideResponse})
-
-export const getNatureRetrieveResponseMock = (overrideResponse: Partial< NatureDetail > = {}): NatureDetail => ({id: faker.number.int({min: undefined, max: undefined}), name: faker.string.alpha(20), decreased_stat: {name: faker.string.alpha(20), url: faker.internet.url()}, increased_stat: {name: faker.string.alpha(20), url: faker.internet.url()}, likes_flavor: {name: faker.string.alpha(20), url: faker.internet.url()}, hates_flavor: {name: faker.string.alpha(20), url: faker.internet.url()}, berries: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({name: faker.string.alpha(20), url: faker.internet.url()})), pokeathlon_stat_changes: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({max_change: faker.number.int({min: undefined, max: undefined}), pokeathlon_stat: {name: faker.string.alpha(20), url: faker.internet.url()}})), move_battle_style_preferences: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({low_hp_preference: faker.number.int({min: undefined, max: undefined}), high_hp_preference: faker.number.int({min: undefined, max: undefined}), move_battle_style: {name: faker.string.alpha(20), url: faker.internet.url()}})), names: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({name: faker.string.alpha(20), language: {name: faker.string.alpha(20), url: faker.internet.url()}})), ...overrideResponse})
-
-export const getPalParkAreaListResponseMock = (overrideResponse: Partial< PaginatedPalParkAreaSummaryList > = {}): PaginatedPalParkAreaSummaryList => ({count: faker.helpers.arrayElement([faker.number.int({min: undefined, max: undefined}), undefined]), next: faker.helpers.arrayElement([faker.helpers.arrayElement([faker.internet.url(), null]), undefined]), previous: faker.helpers.arrayElement([faker.helpers.arrayElement([faker.internet.url(), null]), undefined]), results: faker.helpers.arrayElement([Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({name: faker.string.alpha(20), url: faker.internet.url()})), undefined]), ...overrideResponse})
-
-export const getPalParkAreaRetrieveResponseMock = (overrideResponse: Partial< PalParkAreaDetail > = {}): PalParkAreaDetail => ({id: faker.number.int({min: undefined, max: undefined}), name: faker.string.alpha(20), names: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({name: faker.string.alpha(20), language: {name: faker.string.alpha(20), url: faker.internet.url()}})), pokemon_encounters: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({base_score: faker.number.int({min: undefined, max: undefined}), 'pokemon-species': {name: faker.string.alpha(20), url: faker.internet.url()}, rate: faker.number.int({min: undefined, max: undefined})})), ...overrideResponse})
-
-export const getPokedexListResponseMock = (overrideResponse: Partial< PaginatedPokedexSummaryList > = {}): PaginatedPokedexSummaryList => ({count: faker.helpers.arrayElement([faker.number.int({min: undefined, max: undefined}), undefined]), next: faker.helpers.arrayElement([faker.helpers.arrayElement([faker.internet.url(), null]), undefined]), previous: faker.helpers.arrayElement([faker.helpers.arrayElement([faker.internet.url(), null]), undefined]), results: faker.helpers.arrayElement([Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({name: faker.string.alpha(20), url: faker.internet.url()})), undefined]), ...overrideResponse})
-
-export const getPokedexRetrieveResponseMock = (overrideResponse: Partial< PokedexDetail > = {}): PokedexDetail => ({id: faker.number.int({min: undefined, max: undefined}), name: faker.string.alpha(20), is_main_series: faker.helpers.arrayElement([faker.datatype.boolean(), undefined]), descriptions: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({description: faker.helpers.arrayElement([faker.string.alpha(20), undefined]), language: {name: faker.string.alpha(20), url: faker.internet.url()}})), names: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({name: faker.string.alpha(20), language: {name: faker.string.alpha(20), url: faker.internet.url()}})), pokemon_entries: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({entry_number: faker.number.int({min: undefined, max: undefined}), pokemon_species: {name: faker.string.alpha(20), url: faker.internet.url()}})), region: {name: faker.string.alpha(20), url: faker.internet.url()}, version_groups: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({name: faker.string.alpha(20), url: faker.internet.url()})), ...overrideResponse})
-
-export const getPokemonListResponseMock = (overrideResponse: Partial< PaginatedPokemonSummaryList > = {}): PaginatedPokemonSummaryList => ({count: faker.helpers.arrayElement([faker.number.int({min: undefined, max: undefined}), undefined]), next: faker.helpers.arrayElement([faker.helpers.arrayElement([faker.internet.url(), null]), undefined]), previous: faker.helpers.arrayElement([faker.helpers.arrayElement([faker.internet.url(), null]), undefined]), results: faker.helpers.arrayElement([Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({name: faker.string.alpha(20), url: faker.internet.url()})), undefined]), ...overrideResponse})
-
-export const getPokemonRetrieveResponseMock = (overrideResponse: Partial< PokemonDetail > = {}): PokemonDetail => ({id: faker.number.int({min: undefined, max: undefined}), name: faker.string.alpha(20), base_experience: faker.helpers.arrayElement([faker.helpers.arrayElement([faker.number.int({min: undefined, max: undefined}),null,]), undefined]), height: faker.helpers.arrayElement([faker.helpers.arrayElement([faker.number.int({min: undefined, max: undefined}),null,]), undefined]), is_default: faker.helpers.arrayElement([faker.datatype.boolean(), undefined]), order: faker.helpers.arrayElement([faker.helpers.arrayElement([faker.number.int({min: undefined, max: undefined}),null,]), undefined]), weight: faker.helpers.arrayElement([faker.helpers.arrayElement([faker.number.int({min: undefined, max: undefined}),null,]), undefined]), abilities: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({ability: {name: faker.string.alpha(20), url: faker.internet.url()}, is_hidden: faker.datatype.boolean(), slot: faker.number.int({min: undefined, max: undefined})})), past_abilities: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({abilities: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({ability: {name: faker.string.alpha(20), url: faker.internet.url()}, is_hidden: faker.datatype.boolean(), slot: faker.number.int({min: undefined, max: undefined})})), generation: {name: faker.string.alpha(20), url: faker.internet.url()}})), forms: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({name: faker.string.alpha(20), url: faker.internet.url()})), game_indices: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({game_index: faker.number.int({min: undefined, max: undefined}), version: {name: faker.string.alpha(20), url: faker.internet.url()}})), held_items: {item: {name: faker.string.alpha(20), url: faker.internet.url()}, version_details: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({rarity: faker.number.int({min: undefined, max: undefined}), version: {name: faker.string.alpha(20), url: faker.internet.url()}}))}, location_area_encounters: faker.string.alpha(20), moves: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({move: {name: faker.string.alpha(20), url: faker.internet.url()}, version_group_details: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({level_learned_at: faker.number.int({min: undefined, max: undefined}), move_learn_method: {name: faker.string.alpha(20), url: faker.internet.url()}, version_group: {name: faker.string.alpha(20), url: faker.internet.url()}}))})), species: {name: faker.string.alpha(20), url: faker.internet.url()}, sprites: {front_default: faker.helpers.arrayElement([faker.internet.url(), undefined])}, cries: {latest: faker.internet.url(), legacy: faker.internet.url()}, stats: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({base_stat: faker.number.int({min: undefined, max: undefined}), effort: faker.number.int({min: undefined, max: undefined}), stat: {name: faker.string.alpha(20), url: faker.internet.url()}})), types: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({slot: faker.number.int({min: undefined, max: undefined}), type: {name: faker.string.alpha(20), url: faker.internet.url()}})), past_types: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({generation: {name: faker.string.alpha(20), url: faker.internet.url()}, types: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({slot: faker.number.int({min: undefined, max: undefined}), type: {name: faker.string.alpha(20), url: faker.internet.url()}}))})), ...overrideResponse})
-
-export const getPokemonColorListResponseMock = (overrideResponse: Partial< PaginatedPokemonColorSummaryList > = {}): PaginatedPokemonColorSummaryList => ({count: faker.helpers.arrayElement([faker.number.int({min: undefined, max: undefined}), undefined]), next: faker.helpers.arrayElement([faker.helpers.arrayElement([faker.internet.url(), null]), undefined]), previous: faker.helpers.arrayElement([faker.helpers.arrayElement([faker.internet.url(), null]), undefined]), results: faker.helpers.arrayElement([Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({name: faker.string.alpha(20), url: faker.internet.url()})), undefined]), ...overrideResponse})
-
-export const getPokemonColorRetrieveResponseMock = (overrideResponse: Partial< PokemonColorDetail > = {}): PokemonColorDetail => ({id: faker.number.int({min: undefined, max: undefined}), name: faker.string.alpha(20), names: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({name: faker.string.alpha(20), language: {name: faker.string.alpha(20), url: faker.internet.url()}})), pokemon_species: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({name: faker.string.alpha(20), url: faker.internet.url()})), ...overrideResponse})
-
-export const getPokemonFormListResponseMock = (overrideResponse: Partial< PaginatedPokemonFormSummaryList > = {}): PaginatedPokemonFormSummaryList => ({count: faker.helpers.arrayElement([faker.number.int({min: undefined, max: undefined}), undefined]), next: faker.helpers.arrayElement([faker.helpers.arrayElement([faker.internet.url(), null]), undefined]), previous: faker.helpers.arrayElement([faker.helpers.arrayElement([faker.internet.url(), null]), undefined]), results: faker.helpers.arrayElement([Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({name: faker.string.alpha(20), url: faker.internet.url()})), undefined]), ...overrideResponse})
-
-export const getPokemonFormRetrieveResponseMock = (overrideResponse: Partial< PokemonFormDetail > = {}): PokemonFormDetail => ({id: faker.number.int({min: undefined, max: undefined}), name: faker.string.alpha(20), order: faker.helpers.arrayElement([faker.helpers.arrayElement([faker.number.int({min: undefined, max: undefined}),null,]), undefined]), form_order: faker.helpers.arrayElement([faker.helpers.arrayElement([faker.number.int({min: undefined, max: undefined}),null,]), undefined]), is_default: faker.helpers.arrayElement([faker.datatype.boolean(), undefined]), is_battle_only: faker.helpers.arrayElement([faker.datatype.boolean(), undefined]), is_mega: faker.helpers.arrayElement([faker.datatype.boolean(), undefined]), form_name: faker.string.alpha(20), pokemon: {name: faker.string.alpha(20), url: faker.internet.url()}, sprites: {default: faker.helpers.arrayElement([faker.internet.url(), undefined])}, version_group: {name: faker.string.alpha(20), url: faker.internet.url()}, form_names: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({language: {name: faker.string.alpha(20), url: faker.internet.url()}, name: faker.string.alpha(20)})), names: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({language: {name: faker.string.alpha(20), url: faker.internet.url()}, name: faker.string.alpha(20)})), types: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({slot: faker.number.int({min: undefined, max: undefined}), type: {name: faker.string.alpha(20), url: faker.internet.url()}})), ...overrideResponse})
-
-export const getPokemonHabitatListResponseMock = (overrideResponse: Partial< PaginatedPokemonHabitatSummaryList > = {}): PaginatedPokemonHabitatSummaryList => ({count: faker.helpers.arrayElement([faker.number.int({min: undefined, max: undefined}), undefined]), next: faker.helpers.arrayElement([faker.helpers.arrayElement([faker.internet.url(), null]), undefined]), previous: faker.helpers.arrayElement([faker.helpers.arrayElement([faker.internet.url(), null]), undefined]), results: faker.helpers.arrayElement([Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({name: faker.string.alpha(20), url: faker.internet.url()})), undefined]), ...overrideResponse})
-
-export const getPokemonHabitatRetrieveResponseMock = (overrideResponse: Partial< PokemonHabitatDetail > = {}): PokemonHabitatDetail => ({id: faker.number.int({min: undefined, max: undefined}), name: faker.string.alpha(20), names: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({name: faker.string.alpha(20), language: {name: faker.string.alpha(20), url: faker.internet.url()}})), pokemon_species: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({name: faker.string.alpha(20), url: faker.internet.url()})), ...overrideResponse})
-
-export const getPokemonShapeListResponseMock = (overrideResponse: Partial< PaginatedPokemonShapeSummaryList > = {}): PaginatedPokemonShapeSummaryList => ({count: faker.helpers.arrayElement([faker.number.int({min: undefined, max: undefined}), undefined]), next: faker.helpers.arrayElement([faker.helpers.arrayElement([faker.internet.url(), null]), undefined]), previous: faker.helpers.arrayElement([faker.helpers.arrayElement([faker.internet.url(), null]), undefined]), results: faker.helpers.arrayElement([Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({name: faker.string.alpha(20), url: faker.internet.url()})), undefined]), ...overrideResponse})
-
-export const getPokemonShapeRetrieveResponseMock = (overrideResponse: Partial< PokemonShapeDetail > = {}): PokemonShapeDetail => ({id: faker.number.int({min: undefined, max: undefined}), name: faker.string.alpha(20), awesome_names: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({awesome_name: faker.string.alpha(20), language: {name: faker.string.alpha(20), url: faker.internet.url()}})), names: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({url: faker.internet.url(), name: faker.string.alpha(20)})), pokemon_species: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({name: faker.string.alpha(20), url: faker.internet.url()})), ...overrideResponse})
-
-export const getPokemonSpeciesListResponseMock = (overrideResponse: Partial< PaginatedPokemonSpeciesSummaryList > = {}): PaginatedPokemonSpeciesSummaryList => ({count: faker.helpers.arrayElement([faker.number.int({min: undefined, max: undefined}), undefined]), next: faker.helpers.arrayElement([faker.helpers.arrayElement([faker.internet.url(), null]), undefined]), previous: faker.helpers.arrayElement([faker.helpers.arrayElement([faker.internet.url(), null]), undefined]), results: faker.helpers.arrayElement([Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({name: faker.string.alpha(20), url: faker.internet.url()})), undefined]), ...overrideResponse})
-
-export const getPokemonSpeciesRetrieveResponseMock = (overrideResponse: Partial< PokemonSpeciesDetail > = {}): PokemonSpeciesDetail => ({id: faker.number.int({min: undefined, max: undefined}), name: faker.string.alpha(20), order: faker.helpers.arrayElement([faker.helpers.arrayElement([faker.number.int({min: undefined, max: undefined}),null,]), undefined]), gender_rate: faker.helpers.arrayElement([faker.helpers.arrayElement([faker.number.int({min: undefined, max: undefined}),null,]), undefined]), capture_rate: faker.helpers.arrayElement([faker.helpers.arrayElement([faker.number.int({min: undefined, max: undefined}),null,]), undefined]), base_happiness: faker.helpers.arrayElement([faker.helpers.arrayElement([faker.number.int({min: undefined, max: undefined}),null,]), undefined]), is_baby: faker.helpers.arrayElement([faker.datatype.boolean(), undefined]), is_legendary: faker.helpers.arrayElement([faker.datatype.boolean(), undefined]), is_mythical: faker.helpers.arrayElement([faker.datatype.boolean(), undefined]), hatch_counter: faker.helpers.arrayElement([faker.helpers.arrayElement([faker.number.int({min: undefined, max: undefined}),null,]), undefined]), has_gender_differences: faker.helpers.arrayElement([faker.datatype.boolean(), undefined]), forms_switchable: faker.helpers.arrayElement([faker.datatype.boolean(), undefined]), growth_rate: {name: faker.string.alpha(20), url: faker.internet.url()}, pokedex_numbers: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({entry_number: faker.number.int({min: undefined, max: undefined}), pokedex: {name: faker.string.alpha(20), url: faker.internet.url()}})), egg_groups: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({name: faker.string.alpha(20), url: faker.internet.url()})), color: {name: faker.string.alpha(20), url: faker.internet.url()}, shape: {name: faker.string.alpha(20), url: faker.internet.url()}, evolves_from_species: {name: faker.string.alpha(20), url: faker.internet.url()}, evolution_chain: {url: faker.internet.url()}, habitat: {name: faker.string.alpha(20), url: faker.internet.url()}, generation: {name: faker.string.alpha(20), url: faker.internet.url()}, names: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({language: {name: faker.string.alpha(20), url: faker.internet.url()}, name: faker.string.alpha(20)})), pal_park_encounters: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({area: {name: faker.string.alpha(20), url: faker.internet.url()}, base_score: faker.number.int({min: undefined, max: undefined}), rate: faker.number.int({min: undefined, max: undefined})})), form_descriptions: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({description: faker.helpers.arrayElement([faker.string.alpha(20), undefined]), language: {name: faker.string.alpha(20), url: faker.internet.url()}})), flavor_text_entries: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({flavor_text: faker.string.alpha(20), language: {name: faker.string.alpha(20), url: faker.internet.url()}, version: {name: faker.string.alpha(20), url: faker.internet.url()}})), genera: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({genus: faker.string.alpha(20), language: {name: faker.string.alpha(20), url: faker.internet.url()}})), varieties: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({is_default: faker.datatype.boolean(), pokemon: {name: faker.string.alpha(20), url: faker.internet.url()}})), ...overrideResponse})
-
-export const getPokeathlonStatListResponseMock = (overrideResponse: Partial< PaginatedPokeathlonStatSummaryList > = {}): PaginatedPokeathlonStatSummaryList => ({count: faker.helpers.arrayElement([faker.number.int({min: undefined, max: undefined}), undefined]), next: faker.helpers.arrayElement([faker.helpers.arrayElement([faker.internet.url(), null]), undefined]), previous: faker.helpers.arrayElement([faker.helpers.arrayElement([faker.internet.url(), null]), undefined]), results: faker.helpers.arrayElement([Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({name: faker.string.alpha(20), url: faker.internet.url()})), undefined]), ...overrideResponse})
-
-export const getPokeathlonStatRetrieveResponseMock = (overrideResponse: Partial< PokeathlonStatDetail > = {}): PokeathlonStatDetail => ({id: faker.number.int({min: undefined, max: undefined}), name: faker.string.alpha(20), affecting_natures: {decrease: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({max_change: faker.number.int({min: undefined, max: -1}), nature: {name: faker.string.alpha(20), url: faker.internet.url()}})), increase: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({max_change: faker.number.int({min: 1, max: undefined}), nature: {name: faker.string.alpha(20), url: faker.internet.url()}}))}, names: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({name: faker.string.alpha(20), language: {name: faker.string.alpha(20), url: faker.internet.url()}})), ...overrideResponse})
-
-export const getRegionListResponseMock = (overrideResponse: Partial< PaginatedRegionSummaryList > = {}): PaginatedRegionSummaryList => ({count: faker.helpers.arrayElement([faker.number.int({min: undefined, max: undefined}), undefined]), next: faker.helpers.arrayElement([faker.helpers.arrayElement([faker.internet.url(), null]), undefined]), previous: faker.helpers.arrayElement([faker.helpers.arrayElement([faker.internet.url(), null]), undefined]), results: faker.helpers.arrayElement([Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({name: faker.string.alpha(20), url: faker.internet.url()})), undefined]), ...overrideResponse})
-
-export const getRegionRetrieveResponseMock = (overrideResponse: Partial< RegionDetail > = {}): RegionDetail => ({id: faker.number.int({min: undefined, max: undefined}), name: faker.string.alpha(20), locations: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({name: faker.string.alpha(20), url: faker.internet.url()})), main_generation: {name: faker.string.alpha(20), url: faker.internet.url(),}, names: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({name: faker.string.alpha(20), language: {name: faker.string.alpha(20), url: faker.internet.url()}})), pokedexes: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({name: faker.string.alpha(20), url: faker.internet.url()})), version_groups: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({name: faker.string.alpha(20), url: faker.internet.url()})), ...overrideResponse})
-
-export const getStatListResponseMock = (overrideResponse: Partial< PaginatedStatSummaryList > = {}): PaginatedStatSummaryList => ({count: faker.helpers.arrayElement([faker.number.int({min: undefined, max: undefined}), undefined]), next: faker.helpers.arrayElement([faker.helpers.arrayElement([faker.internet.url(), null]), undefined]), previous: faker.helpers.arrayElement([faker.helpers.arrayElement([faker.internet.url(), null]), undefined]), results: faker.helpers.arrayElement([Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({name: faker.string.alpha(20), url: faker.internet.url()})), undefined]), ...overrideResponse})
-
-export const getStatRetrieveResponseMock = (overrideResponse: Partial< StatDetail > = {}): StatDetail => ({id: faker.number.int({min: undefined, max: undefined}), name: faker.string.alpha(20), game_index: faker.number.int({min: undefined, max: undefined}), is_battle_only: faker.helpers.arrayElement([faker.datatype.boolean(), undefined]), affecting_moves: {increase: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({change: faker.number.int({min: undefined, max: undefined}), move: {name: faker.string.alpha(20), url: faker.internet.url()}})), decrease: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({change: faker.number.int({min: undefined, max: undefined}), move: {name: faker.string.alpha(20), url: faker.internet.url()}}))}, affecting_natures: {increase: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({name: faker.string.alpha(20), url: faker.internet.url()})), decrease: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({name: faker.string.alpha(20), url: faker.internet.url()}))}, characteristics: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({url: faker.internet.url()})), move_damage_class: {name: faker.string.alpha(20), url: faker.internet.url()}, names: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({name: faker.string.alpha(20), language: {name: faker.string.alpha(20), url: faker.internet.url()}})), ...overrideResponse})
-
-export const getSuperContestEffectListResponseMock = (overrideResponse: Partial< PaginatedSuperContestEffectSummaryList > = {}): PaginatedSuperContestEffectSummaryList => ({count: faker.helpers.arrayElement([faker.number.int({min: undefined, max: undefined}), undefined]), next: faker.helpers.arrayElement([faker.helpers.arrayElement([faker.internet.url(), null]), undefined]), previous: faker.helpers.arrayElement([faker.helpers.arrayElement([faker.internet.url(), null]), undefined]), results: faker.helpers.arrayElement([Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({url: faker.internet.url()})), undefined]), ...overrideResponse})
-
-export const getSuperContestEffectRetrieveResponseMock = (overrideResponse: Partial< SuperContestEffectDetail > = {}): SuperContestEffectDetail => ({id: faker.number.int({min: undefined, max: undefined}), appeal: faker.number.int({min: undefined, max: undefined}), flavor_text_entries: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({flavor_text: faker.string.alpha(20), language: {name: faker.string.alpha(20), url: faker.internet.url()}})), moves: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({name: faker.string.alpha(20), url: faker.internet.url()})), ...overrideResponse})
-
-export const getTypeListResponseMock = (overrideResponse: Partial< PaginatedTypeSummaryList > = {}): PaginatedTypeSummaryList => ({count: faker.helpers.arrayElement([faker.number.int({min: undefined, max: undefined}), undefined]), next: faker.helpers.arrayElement([faker.helpers.arrayElement([faker.internet.url(), null]), undefined]), previous: faker.helpers.arrayElement([faker.helpers.arrayElement([faker.internet.url(), null]), undefined]), results: faker.helpers.arrayElement([Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({name: faker.string.alpha(20), url: faker.internet.url()})), undefined]), ...overrideResponse})
-
-export const getTypeRetrieveResponseMock = (overrideResponse: Partial< TypeDetail > = {}): TypeDetail => ({id: faker.number.int({min: undefined, max: undefined}), name: faker.string.alpha(20), damage_relations: {no_damage_to: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({name: faker.string.alpha(20), url: faker.internet.url()})), half_damage_to: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({name: faker.string.alpha(20), url: faker.internet.url()})), double_damage_to: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({name: faker.string.alpha(20), url: faker.internet.url()})), no_damage_from: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({name: faker.string.alpha(20), url: faker.internet.url()})), half_damage_from: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({name: faker.string.alpha(20), url: faker.internet.url()})), double_damage_from: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({name: faker.string.alpha(20), url: faker.internet.url()}))}, past_damage_relations: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({generation: {name: faker.string.alpha(20), url: faker.internet.url()}, damage_relations: {no_damage_to: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({name: faker.string.alpha(20), url: faker.internet.url()})), half_damage_to: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({name: faker.string.alpha(20), url: faker.internet.url()})), double_damage_to: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({name: faker.string.alpha(20), url: faker.internet.url()})), no_damage_from: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({name: faker.string.alpha(20), url: faker.internet.url()})), half_damage_from: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({name: faker.string.alpha(20), url: faker.internet.url()})), double_damage_from: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({name: faker.string.alpha(20), url: faker.internet.url()}))}})), game_indices: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({game_index: faker.number.int({min: undefined, max: undefined}), generation: {name: faker.string.alpha(20), url: faker.internet.url()}})), generation: {name: faker.string.alpha(20), url: faker.internet.url()}, move_damage_class: {name: faker.string.alpha(20), url: faker.internet.url()}, names: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({name: faker.string.alpha(20), language: {name: faker.string.alpha(20), url: faker.internet.url()}})), pokemon: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({slot: faker.helpers.arrayElement([faker.number.int({min: undefined, max: undefined}), undefined]), pokemon: faker.helpers.arrayElement([{name: faker.helpers.arrayElement([faker.string.alpha(20), undefined]), url: faker.helpers.arrayElement([faker.internet.url(), undefined])}, undefined])})), moves: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({name: faker.string.alpha(20), url: faker.internet.url()})), sprites: {
-        [faker.string.alphanumeric(5)]: {
-        [faker.string.alphanumeric(5)]: {'name-icon': faker.helpers.arrayElement([faker.internet.url(), undefined])}
-      }
-      }, ...overrideResponse})
-
-export const getVersionListResponseMock = (overrideResponse: Partial< PaginatedVersionSummaryList > = {}): PaginatedVersionSummaryList => ({count: faker.helpers.arrayElement([faker.number.int({min: undefined, max: undefined}), undefined]), next: faker.helpers.arrayElement([faker.helpers.arrayElement([faker.internet.url(), null]), undefined]), previous: faker.helpers.arrayElement([faker.helpers.arrayElement([faker.internet.url(), null]), undefined]), results: faker.helpers.arrayElement([Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({name: faker.string.alpha(20), url: faker.internet.url()})), undefined]), ...overrideResponse})
-
-export const getVersionRetrieveResponseMock = (overrideResponse: Partial< VersionDetail > = {}): VersionDetail => ({id: faker.number.int({min: undefined, max: undefined}), name: faker.string.alpha(20), names: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({name: faker.string.alpha(20), language: {name: faker.string.alpha(20), url: faker.internet.url()}})), version_group: {name: faker.string.alpha(20), url: faker.internet.url()}, ...overrideResponse})
-
-export const getVersionGroupListResponseMock = (overrideResponse: Partial< PaginatedVersionGroupSummaryList > = {}): PaginatedVersionGroupSummaryList => ({count: faker.helpers.arrayElement([faker.number.int({min: undefined, max: undefined}), undefined]), next: faker.helpers.arrayElement([faker.helpers.arrayElement([faker.internet.url(), null]), undefined]), previous: faker.helpers.arrayElement([faker.helpers.arrayElement([faker.internet.url(), null]), undefined]), results: faker.helpers.arrayElement([Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({name: faker.string.alpha(20), url: faker.internet.url()})), undefined]), ...overrideResponse})
-
-export const getVersionGroupRetrieveResponseMock = (overrideResponse: Partial< VersionGroupDetail > = {}): VersionGroupDetail => ({id: faker.number.int({min: undefined, max: undefined}), name: faker.string.alpha(20), order: faker.helpers.arrayElement([faker.helpers.arrayElement([faker.number.int({min: undefined, max: undefined}),null,]), undefined]), generation: {name: faker.string.alpha(20), url: faker.internet.url()}, move_learn_methods: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({name: faker.string.alpha(20), url: faker.internet.url()})), pokedexes: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({name: faker.string.alpha(20), url: faker.internet.url()})), regions: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({name: faker.string.alpha(20), url: faker.internet.url()})), versions: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({name: faker.string.alpha(20), url: faker.internet.url()})), ...overrideResponse})
-
-export const getPokemonEncountersRetrieveResponseMock = (): PokemonEncountersRetrieve200Item[] => (Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({location_area: {name: faker.string.alpha(20), url: faker.internet.url()}, version_details: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({encounter_details: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({chance: faker.number.int({min: undefined, max: undefined}), condition_values: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({name: faker.string.alpha(20), url: faker.internet.url()})), max_level: faker.number.int({min: undefined, max: undefined}), method: {name: faker.string.alpha(20), url: faker.internet.url()}, min_level: faker.number.int({min: undefined, max: undefined})})), max_chance: faker.number.int({min: undefined, max: undefined}), version: {name: faker.string.alpha(20), url: faker.internet.url()}}))})))
-
-
-export const getAbilityListMockHandler = (overrideResponse?: PaginatedAbilitySummaryList | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<PaginatedAbilitySummaryList> | PaginatedAbilitySummaryList)) => {
-  return http.get('*/api/v2/ability/', async (info) => {await delay(1000);
-  
-    return new HttpResponse(JSON.stringify(overrideResponse !== undefined 
-            ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse) 
-            : getAbilityListResponseMock()),
-      { status: 200,
-        headers: { 'Content-Type': 'application/json' }
-      })
-  })
-}
-
-export const getAbilityRetrieveMockHandler = (overrideResponse?: AbilityDetail | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<AbilityDetail> | AbilityDetail)) => {
-  return http.get('*/api/v2/ability/:id/', async (info) => {await delay(1000);
-  
-    return new HttpResponse(JSON.stringify(overrideResponse !== undefined 
-            ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse) 
-            : getAbilityRetrieveResponseMock()),
-      { status: 200,
-        headers: { 'Content-Type': 'application/json' }
-      })
-  })
-}
-
-export const getBerryListMockHandler = (overrideResponse?: PaginatedBerrySummaryList | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<PaginatedBerrySummaryList> | PaginatedBerrySummaryList)) => {
-  return http.get('*/api/v2/berry/', async (info) => {await delay(1000);
-  
-    return new HttpResponse(JSON.stringify(overrideResponse !== undefined 
-            ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse) 
-            : getBerryListResponseMock()),
-      { status: 200,
-        headers: { 'Content-Type': 'application/json' }
-      })
-  })
-}
-
-export const getBerryRetrieveMockHandler = (overrideResponse?: BerryDetail | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<BerryDetail> | BerryDetail)) => {
-  return http.get('*/api/v2/berry/:id/', async (info) => {await delay(1000);
-  
-    return new HttpResponse(JSON.stringify(overrideResponse !== undefined 
-            ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse) 
-            : getBerryRetrieveResponseMock()),
-      { status: 200,
-        headers: { 'Content-Type': 'application/json' }
-      })
-  })
-}
-
-export const getBerryFirmnessListMockHandler = (overrideResponse?: PaginatedBerryFirmnessSummaryList | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<PaginatedBerryFirmnessSummaryList> | PaginatedBerryFirmnessSummaryList)) => {
-  return http.get('*/api/v2/berry-firmness/', async (info) => {await delay(1000);
-  
-    return new HttpResponse(JSON.stringify(overrideResponse !== undefined 
-            ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse) 
-            : getBerryFirmnessListResponseMock()),
-      { status: 200,
-        headers: { 'Content-Type': 'application/json' }
-      })
-  })
-}
-
-export const getBerryFirmnessRetrieveMockHandler = (overrideResponse?: BerryFirmnessDetail | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<BerryFirmnessDetail> | BerryFirmnessDetail)) => {
-  return http.get('*/api/v2/berry-firmness/:id/', async (info) => {await delay(1000);
-  
-    return new HttpResponse(JSON.stringify(overrideResponse !== undefined 
-            ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse) 
-            : getBerryFirmnessRetrieveResponseMock()),
-      { status: 200,
-        headers: { 'Content-Type': 'application/json' }
-      })
-  })
-}
-
-export const getBerryFlavorListMockHandler = (overrideResponse?: PaginatedBerryFlavorSummaryList | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<PaginatedBerryFlavorSummaryList> | PaginatedBerryFlavorSummaryList)) => {
-  return http.get('*/api/v2/berry-flavor/', async (info) => {await delay(1000);
-  
-    return new HttpResponse(JSON.stringify(overrideResponse !== undefined 
-            ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse) 
-            : getBerryFlavorListResponseMock()),
-      { status: 200,
-        headers: { 'Content-Type': 'application/json' }
-      })
-  })
-}
-
-export const getBerryFlavorRetrieveMockHandler = (overrideResponse?: BerryFlavorDetail | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<BerryFlavorDetail> | BerryFlavorDetail)) => {
-  return http.get('*/api/v2/berry-flavor/:id/', async (info) => {await delay(1000);
-  
-    return new HttpResponse(JSON.stringify(overrideResponse !== undefined 
-            ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse) 
-            : getBerryFlavorRetrieveResponseMock()),
-      { status: 200,
-        headers: { 'Content-Type': 'application/json' }
-      })
-  })
-}
-
-export const getCharacteristicListMockHandler = (overrideResponse?: PaginatedCharacteristicSummaryList | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<PaginatedCharacteristicSummaryList> | PaginatedCharacteristicSummaryList)) => {
-  return http.get('*/api/v2/characteristic/', async (info) => {await delay(1000);
-  
-    return new HttpResponse(JSON.stringify(overrideResponse !== undefined 
-            ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse) 
-            : getCharacteristicListResponseMock()),
-      { status: 200,
-        headers: { 'Content-Type': 'application/json' }
-      })
-  })
-}
-
-export const getCharacteristicRetrieveMockHandler = (overrideResponse?: CharacteristicDetail | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<CharacteristicDetail> | CharacteristicDetail)) => {
-  return http.get('*/api/v2/characteristic/:id/', async (info) => {await delay(1000);
-  
-    return new HttpResponse(JSON.stringify(overrideResponse !== undefined 
-            ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse) 
-            : getCharacteristicRetrieveResponseMock()),
-      { status: 200,
-        headers: { 'Content-Type': 'application/json' }
-      })
-  })
-}
-
-export const getContestTypeListMockHandler = (overrideResponse?: PaginatedContestTypeSummaryList | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<PaginatedContestTypeSummaryList> | PaginatedContestTypeSummaryList)) => {
-  return http.get('*/api/v2/contest-type/', async (info) => {await delay(1000);
-  
-    return new HttpResponse(JSON.stringify(overrideResponse !== undefined 
-            ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse) 
-            : getContestTypeListResponseMock()),
-      { status: 200,
-        headers: { 'Content-Type': 'application/json' }
-      })
-  })
-}
-
-export const getContestTypeRetrieveMockHandler = (overrideResponse?: ContestTypeDetail | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<ContestTypeDetail> | ContestTypeDetail)) => {
-  return http.get('*/api/v2/contest-type/:id/', async (info) => {await delay(1000);
-  
-    return new HttpResponse(JSON.stringify(overrideResponse !== undefined 
-            ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse) 
-            : getContestTypeRetrieveResponseMock()),
-      { status: 200,
-        headers: { 'Content-Type': 'application/json' }
-      })
-  })
-}
-
-export const getContestEffectListMockHandler = (overrideResponse?: PaginatedContestEffectSummaryList | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<PaginatedContestEffectSummaryList> | PaginatedContestEffectSummaryList)) => {
-  return http.get('*/api/v2/contest-effect/', async (info) => {await delay(1000);
-  
-    return new HttpResponse(JSON.stringify(overrideResponse !== undefined 
-            ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse) 
-            : getContestEffectListResponseMock()),
-      { status: 200,
-        headers: { 'Content-Type': 'application/json' }
-      })
-  })
-}
-
-export const getContestEffectRetrieveMockHandler = (overrideResponse?: ContestEffectDetail | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<ContestEffectDetail> | ContestEffectDetail)) => {
-  return http.get('*/api/v2/contest-effect/:id/', async (info) => {await delay(1000);
-  
-    return new HttpResponse(JSON.stringify(overrideResponse !== undefined 
-            ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse) 
-            : getContestEffectRetrieveResponseMock()),
-      { status: 200,
-        headers: { 'Content-Type': 'application/json' }
-      })
-  })
-}
-
-export const getEggGroupListMockHandler = (overrideResponse?: PaginatedEggGroupSummaryList | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<PaginatedEggGroupSummaryList> | PaginatedEggGroupSummaryList)) => {
-  return http.get('*/api/v2/egg-group/', async (info) => {await delay(1000);
-  
-    return new HttpResponse(JSON.stringify(overrideResponse !== undefined 
-            ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse) 
-            : getEggGroupListResponseMock()),
-      { status: 200,
-        headers: { 'Content-Type': 'application/json' }
-      })
-  })
-}
-
-export const getEggGroupRetrieveMockHandler = (overrideResponse?: EggGroupDetail | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<EggGroupDetail> | EggGroupDetail)) => {
-  return http.get('*/api/v2/egg-group/:id/', async (info) => {await delay(1000);
-  
-    return new HttpResponse(JSON.stringify(overrideResponse !== undefined 
-            ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse) 
-            : getEggGroupRetrieveResponseMock()),
-      { status: 200,
-        headers: { 'Content-Type': 'application/json' }
-      })
-  })
-}
-
-export const getEncounterMethodListMockHandler = (overrideResponse?: PaginatedEncounterMethodSummaryList | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<PaginatedEncounterMethodSummaryList> | PaginatedEncounterMethodSummaryList)) => {
-  return http.get('*/api/v2/encounter-method/', async (info) => {await delay(1000);
-  
-    return new HttpResponse(JSON.stringify(overrideResponse !== undefined 
-            ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse) 
-            : getEncounterMethodListResponseMock()),
-      { status: 200,
-        headers: { 'Content-Type': 'application/json' }
-      })
-  })
-}
-
-export const getEncounterMethodRetrieveMockHandler = (overrideResponse?: EncounterMethodDetail | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<EncounterMethodDetail> | EncounterMethodDetail)) => {
-  return http.get('*/api/v2/encounter-method/:id/', async (info) => {await delay(1000);
-  
-    return new HttpResponse(JSON.stringify(overrideResponse !== undefined 
-            ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse) 
-            : getEncounterMethodRetrieveResponseMock()),
-      { status: 200,
-        headers: { 'Content-Type': 'application/json' }
-      })
-  })
-}
-
-export const getEncounterConditionListMockHandler = (overrideResponse?: PaginatedEncounterConditionSummaryList | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<PaginatedEncounterConditionSummaryList> | PaginatedEncounterConditionSummaryList)) => {
-  return http.get('*/api/v2/encounter-condition/', async (info) => {await delay(1000);
-  
-    return new HttpResponse(JSON.stringify(overrideResponse !== undefined 
-            ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse) 
-            : getEncounterConditionListResponseMock()),
-      { status: 200,
-        headers: { 'Content-Type': 'application/json' }
-      })
-  })
-}
-
-export const getEncounterConditionRetrieveMockHandler = (overrideResponse?: EncounterConditionDetail | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<EncounterConditionDetail> | EncounterConditionDetail)) => {
-  return http.get('*/api/v2/encounter-condition/:id/', async (info) => {await delay(1000);
-  
-    return new HttpResponse(JSON.stringify(overrideResponse !== undefined 
-            ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse) 
-            : getEncounterConditionRetrieveResponseMock()),
-      { status: 200,
-        headers: { 'Content-Type': 'application/json' }
-      })
-  })
-}
-
-export const getEncounterConditionValueListMockHandler = (overrideResponse?: PaginatedEncounterConditionValueSummaryList | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<PaginatedEncounterConditionValueSummaryList> | PaginatedEncounterConditionValueSummaryList)) => {
-  return http.get('*/api/v2/encounter-condition-value/', async (info) => {await delay(1000);
-  
-    return new HttpResponse(JSON.stringify(overrideResponse !== undefined 
-            ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse) 
-            : getEncounterConditionValueListResponseMock()),
-      { status: 200,
-        headers: { 'Content-Type': 'application/json' }
-      })
-  })
-}
-
-export const getEncounterConditionValueRetrieveMockHandler = (overrideResponse?: EncounterConditionValueDetail | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<EncounterConditionValueDetail> | EncounterConditionValueDetail)) => {
-  return http.get('*/api/v2/encounter-condition-value/:id/', async (info) => {await delay(1000);
-  
-    return new HttpResponse(JSON.stringify(overrideResponse !== undefined 
-            ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse) 
-            : getEncounterConditionValueRetrieveResponseMock()),
-      { status: 200,
-        headers: { 'Content-Type': 'application/json' }
-      })
-  })
-}
-
-export const getEvolutionChainListMockHandler = (overrideResponse?: PaginatedEvolutionChainSummaryList | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<PaginatedEvolutionChainSummaryList> | PaginatedEvolutionChainSummaryList)) => {
-  return http.get('*/api/v2/evolution-chain/', async (info) => {await delay(1000);
-  
-    return new HttpResponse(JSON.stringify(overrideResponse !== undefined 
-            ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse) 
-            : getEvolutionChainListResponseMock()),
-      { status: 200,
-        headers: { 'Content-Type': 'application/json' }
-      })
-  })
-}
-
-export const getEvolutionChainRetrieveMockHandler = (overrideResponse?: EvolutionChainDetail | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<EvolutionChainDetail> | EvolutionChainDetail)) => {
-  return http.get('*/api/v2/evolution-chain/:id/', async (info) => {await delay(1000);
-  
-    return new HttpResponse(JSON.stringify(overrideResponse !== undefined 
-            ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse) 
-            : getEvolutionChainRetrieveResponseMock()),
-      { status: 200,
-        headers: { 'Content-Type': 'application/json' }
-      })
-  })
-}
-
-export const getEvolutionTriggerListMockHandler = (overrideResponse?: PaginatedEvolutionTriggerSummaryList | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<PaginatedEvolutionTriggerSummaryList> | PaginatedEvolutionTriggerSummaryList)) => {
-  return http.get('*/api/v2/evolution-trigger/', async (info) => {await delay(1000);
-  
-    return new HttpResponse(JSON.stringify(overrideResponse !== undefined 
-            ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse) 
-            : getEvolutionTriggerListResponseMock()),
-      { status: 200,
-        headers: { 'Content-Type': 'application/json' }
-      })
-  })
-}
-
-export const getEvolutionTriggerRetrieveMockHandler = (overrideResponse?: EvolutionTriggerDetail | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<EvolutionTriggerDetail> | EvolutionTriggerDetail)) => {
-  return http.get('*/api/v2/evolution-trigger/:id/', async (info) => {await delay(1000);
-  
-    return new HttpResponse(JSON.stringify(overrideResponse !== undefined 
-            ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse) 
-            : getEvolutionTriggerRetrieveResponseMock()),
-      { status: 200,
-        headers: { 'Content-Type': 'application/json' }
-      })
-  })
-}
-
-export const getGenerationListMockHandler = (overrideResponse?: PaginatedGenerationSummaryList | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<PaginatedGenerationSummaryList> | PaginatedGenerationSummaryList)) => {
-  return http.get('*/api/v2/generation/', async (info) => {await delay(1000);
-  
-    return new HttpResponse(JSON.stringify(overrideResponse !== undefined 
-            ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse) 
-            : getGenerationListResponseMock()),
-      { status: 200,
-        headers: { 'Content-Type': 'application/json' }
-      })
-  })
-}
-
-export const getGenerationRetrieveMockHandler = (overrideResponse?: GenerationDetail | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<GenerationDetail> | GenerationDetail)) => {
-  return http.get('*/api/v2/generation/:id/', async (info) => {await delay(1000);
-  
-    return new HttpResponse(JSON.stringify(overrideResponse !== undefined 
-            ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse) 
-            : getGenerationRetrieveResponseMock()),
-      { status: 200,
-        headers: { 'Content-Type': 'application/json' }
-      })
-  })
-}
-
-export const getGenderListMockHandler = (overrideResponse?: PaginatedGenderSummaryList | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<PaginatedGenderSummaryList> | PaginatedGenderSummaryList)) => {
-  return http.get('*/api/v2/gender/', async (info) => {await delay(1000);
-  
-    return new HttpResponse(JSON.stringify(overrideResponse !== undefined 
-            ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse) 
-            : getGenderListResponseMock()),
-      { status: 200,
-        headers: { 'Content-Type': 'application/json' }
-      })
-  })
-}
-
-export const getGenderRetrieveMockHandler = (overrideResponse?: GenderDetail | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<GenderDetail> | GenderDetail)) => {
-  return http.get('*/api/v2/gender/:id/', async (info) => {await delay(1000);
-  
-    return new HttpResponse(JSON.stringify(overrideResponse !== undefined 
-            ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse) 
-            : getGenderRetrieveResponseMock()),
-      { status: 200,
-        headers: { 'Content-Type': 'application/json' }
-      })
-  })
-}
-
-export const getGrowthRateListMockHandler = (overrideResponse?: PaginatedGrowthRateSummaryList | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<PaginatedGrowthRateSummaryList> | PaginatedGrowthRateSummaryList)) => {
-  return http.get('*/api/v2/growth-rate/', async (info) => {await delay(1000);
-  
-    return new HttpResponse(JSON.stringify(overrideResponse !== undefined 
-            ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse) 
-            : getGrowthRateListResponseMock()),
-      { status: 200,
-        headers: { 'Content-Type': 'application/json' }
-      })
-  })
-}
-
-export const getGrowthRateRetrieveMockHandler = (overrideResponse?: GrowthRateDetail | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<GrowthRateDetail> | GrowthRateDetail)) => {
-  return http.get('*/api/v2/growth-rate/:id/', async (info) => {await delay(1000);
-  
-    return new HttpResponse(JSON.stringify(overrideResponse !== undefined 
-            ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse) 
-            : getGrowthRateRetrieveResponseMock()),
-      { status: 200,
-        headers: { 'Content-Type': 'application/json' }
-      })
-  })
-}
-
-export const getItemListMockHandler = (overrideResponse?: PaginatedItemSummaryList | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<PaginatedItemSummaryList> | PaginatedItemSummaryList)) => {
-  return http.get('*/api/v2/item/', async (info) => {await delay(1000);
-  
-    return new HttpResponse(JSON.stringify(overrideResponse !== undefined 
-            ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse) 
-            : getItemListResponseMock()),
-      { status: 200,
-        headers: { 'Content-Type': 'application/json' }
-      })
-  })
-}
-
-export const getItemRetrieveMockHandler = (overrideResponse?: ItemDetail | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<ItemDetail> | ItemDetail)) => {
-  return http.get('*/api/v2/item/:id/', async (info) => {await delay(1000);
-  
-    return new HttpResponse(JSON.stringify(overrideResponse !== undefined 
-            ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse) 
-            : getItemRetrieveResponseMock()),
-      { status: 200,
-        headers: { 'Content-Type': 'application/json' }
-      })
-  })
-}
-
-export const getItemCategoryListMockHandler = (overrideResponse?: PaginatedItemCategorySummaryList | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<PaginatedItemCategorySummaryList> | PaginatedItemCategorySummaryList)) => {
-  return http.get('*/api/v2/item-category/', async (info) => {await delay(1000);
-  
-    return new HttpResponse(JSON.stringify(overrideResponse !== undefined 
-            ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse) 
-            : getItemCategoryListResponseMock()),
-      { status: 200,
-        headers: { 'Content-Type': 'application/json' }
-      })
-  })
-}
-
-export const getItemCategoryRetrieveMockHandler = (overrideResponse?: ItemCategoryDetail | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<ItemCategoryDetail> | ItemCategoryDetail)) => {
-  return http.get('*/api/v2/item-category/:id/', async (info) => {await delay(1000);
-  
-    return new HttpResponse(JSON.stringify(overrideResponse !== undefined 
-            ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse) 
-            : getItemCategoryRetrieveResponseMock()),
-      { status: 200,
-        headers: { 'Content-Type': 'application/json' }
-      })
-  })
-}
-
-export const getItemAttributeListMockHandler = (overrideResponse?: PaginatedItemAttributeSummaryList | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<PaginatedItemAttributeSummaryList> | PaginatedItemAttributeSummaryList)) => {
-  return http.get('*/api/v2/item-attribute/', async (info) => {await delay(1000);
-  
-    return new HttpResponse(JSON.stringify(overrideResponse !== undefined 
-            ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse) 
-            : getItemAttributeListResponseMock()),
-      { status: 200,
-        headers: { 'Content-Type': 'application/json' }
-      })
-  })
-}
-
-export const getItemAttributeRetrieveMockHandler = (overrideResponse?: ItemAttributeDetail | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<ItemAttributeDetail> | ItemAttributeDetail)) => {
-  return http.get('*/api/v2/item-attribute/:id/', async (info) => {await delay(1000);
-  
-    return new HttpResponse(JSON.stringify(overrideResponse !== undefined 
-            ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse) 
-            : getItemAttributeRetrieveResponseMock()),
-      { status: 200,
-        headers: { 'Content-Type': 'application/json' }
-      })
-  })
-}
-
-export const getItemFlingEffectListMockHandler = (overrideResponse?: PaginatedItemFlingEffectSummaryList | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<PaginatedItemFlingEffectSummaryList> | PaginatedItemFlingEffectSummaryList)) => {
-  return http.get('*/api/v2/item-fling-effect/', async (info) => {await delay(1000);
-  
-    return new HttpResponse(JSON.stringify(overrideResponse !== undefined 
-            ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse) 
-            : getItemFlingEffectListResponseMock()),
-      { status: 200,
-        headers: { 'Content-Type': 'application/json' }
-      })
-  })
-}
-
-export const getItemFlingEffectRetrieveMockHandler = (overrideResponse?: ItemFlingEffectDetail | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<ItemFlingEffectDetail> | ItemFlingEffectDetail)) => {
-  return http.get('*/api/v2/item-fling-effect/:id/', async (info) => {await delay(1000);
-  
-    return new HttpResponse(JSON.stringify(overrideResponse !== undefined 
-            ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse) 
-            : getItemFlingEffectRetrieveResponseMock()),
-      { status: 200,
-        headers: { 'Content-Type': 'application/json' }
-      })
-  })
-}
-
-export const getItemPocketListMockHandler = (overrideResponse?: PaginatedItemPocketSummaryList | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<PaginatedItemPocketSummaryList> | PaginatedItemPocketSummaryList)) => {
-  return http.get('*/api/v2/item-pocket/', async (info) => {await delay(1000);
-  
-    return new HttpResponse(JSON.stringify(overrideResponse !== undefined 
-            ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse) 
-            : getItemPocketListResponseMock()),
-      { status: 200,
-        headers: { 'Content-Type': 'application/json' }
-      })
-  })
-}
-
-export const getItemPocketRetrieveMockHandler = (overrideResponse?: ItemPocketDetail | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<ItemPocketDetail> | ItemPocketDetail)) => {
-  return http.get('*/api/v2/item-pocket/:id/', async (info) => {await delay(1000);
-  
-    return new HttpResponse(JSON.stringify(overrideResponse !== undefined 
-            ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse) 
-            : getItemPocketRetrieveResponseMock()),
-      { status: 200,
-        headers: { 'Content-Type': 'application/json' }
-      })
-  })
-}
-
-export const getLanguageListMockHandler = (overrideResponse?: PaginatedLanguageSummaryList | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<PaginatedLanguageSummaryList> | PaginatedLanguageSummaryList)) => {
-  return http.get('*/api/v2/language/', async (info) => {await delay(1000);
-  
-    return new HttpResponse(JSON.stringify(overrideResponse !== undefined 
-            ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse) 
-            : getLanguageListResponseMock()),
-      { status: 200,
-        headers: { 'Content-Type': 'application/json' }
-      })
-  })
-}
-
-export const getLanguageRetrieveMockHandler = (overrideResponse?: LanguageDetail | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<LanguageDetail> | LanguageDetail)) => {
-  return http.get('*/api/v2/language/:id/', async (info) => {await delay(1000);
-  
-    return new HttpResponse(JSON.stringify(overrideResponse !== undefined 
-            ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse) 
-            : getLanguageRetrieveResponseMock()),
-      { status: 200,
-        headers: { 'Content-Type': 'application/json' }
-      })
-  })
-}
-
-export const getLocationListMockHandler = (overrideResponse?: PaginatedLocationSummaryList | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<PaginatedLocationSummaryList> | PaginatedLocationSummaryList)) => {
-  return http.get('*/api/v2/location/', async (info) => {await delay(1000);
-  
-    return new HttpResponse(JSON.stringify(overrideResponse !== undefined 
-            ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse) 
-            : getLocationListResponseMock()),
-      { status: 200,
-        headers: { 'Content-Type': 'application/json' }
-      })
-  })
-}
-
-export const getLocationRetrieveMockHandler = (overrideResponse?: LocationDetail | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<LocationDetail> | LocationDetail)) => {
-  return http.get('*/api/v2/location/:id/', async (info) => {await delay(1000);
-  
-    return new HttpResponse(JSON.stringify(overrideResponse !== undefined 
-            ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse) 
-            : getLocationRetrieveResponseMock()),
-      { status: 200,
-        headers: { 'Content-Type': 'application/json' }
-      })
-  })
-}
-
-export const getLocationAreaListMockHandler = (overrideResponse?: PaginatedLocationAreaSummaryList | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<PaginatedLocationAreaSummaryList> | PaginatedLocationAreaSummaryList)) => {
-  return http.get('*/api/v2/location-area/', async (info) => {await delay(1000);
-  
-    return new HttpResponse(JSON.stringify(overrideResponse !== undefined 
-            ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse) 
-            : getLocationAreaListResponseMock()),
-      { status: 200,
-        headers: { 'Content-Type': 'application/json' }
-      })
-  })
-}
-
-export const getLocationAreaRetrieveMockHandler = (overrideResponse?: LocationAreaDetail | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<LocationAreaDetail> | LocationAreaDetail)) => {
-  return http.get('*/api/v2/location-area/:id/', async (info) => {await delay(1000);
-  
-    return new HttpResponse(JSON.stringify(overrideResponse !== undefined 
-            ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse) 
-            : getLocationAreaRetrieveResponseMock()),
-      { status: 200,
-        headers: { 'Content-Type': 'application/json' }
-      })
-  })
-}
-
-export const getMachineListMockHandler = (overrideResponse?: PaginatedMachineSummaryList | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<PaginatedMachineSummaryList> | PaginatedMachineSummaryList)) => {
-  return http.get('*/api/v2/machine/', async (info) => {await delay(1000);
-  
-    return new HttpResponse(JSON.stringify(overrideResponse !== undefined 
-            ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse) 
-            : getMachineListResponseMock()),
-      { status: 200,
-        headers: { 'Content-Type': 'application/json' }
-      })
-  })
-}
-
-export const getMachineRetrieveMockHandler = (overrideResponse?: MachineDetail | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<MachineDetail> | MachineDetail)) => {
-  return http.get('*/api/v2/machine/:id/', async (info) => {await delay(1000);
-  
-    return new HttpResponse(JSON.stringify(overrideResponse !== undefined 
-            ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse) 
-            : getMachineRetrieveResponseMock()),
-      { status: 200,
-        headers: { 'Content-Type': 'application/json' }
-      })
-  })
-}
-
-export const getMoveListMockHandler = (overrideResponse?: PaginatedMoveSummaryList | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<PaginatedMoveSummaryList> | PaginatedMoveSummaryList)) => {
-  return http.get('*/api/v2/move/', async (info) => {await delay(1000);
-  
-    return new HttpResponse(JSON.stringify(overrideResponse !== undefined 
-            ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse) 
-            : getMoveListResponseMock()),
-      { status: 200,
-        headers: { 'Content-Type': 'application/json' }
-      })
-  })
-}
-
-export const getMoveRetrieveMockHandler = (overrideResponse?: MoveDetail | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<MoveDetail> | MoveDetail)) => {
-  return http.get('*/api/v2/move/:id/', async (info) => {await delay(1000);
-  
-    return new HttpResponse(JSON.stringify(overrideResponse !== undefined 
-            ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse) 
-            : getMoveRetrieveResponseMock()),
-      { status: 200,
-        headers: { 'Content-Type': 'application/json' }
-      })
-  })
-}
-
-export const getMoveAilmentListMockHandler = (overrideResponse?: PaginatedMoveMetaAilmentSummaryList | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<PaginatedMoveMetaAilmentSummaryList> | PaginatedMoveMetaAilmentSummaryList)) => {
-  return http.get('*/api/v2/move-ailment/', async (info) => {await delay(1000);
-  
-    return new HttpResponse(JSON.stringify(overrideResponse !== undefined 
-            ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse) 
-            : getMoveAilmentListResponseMock()),
-      { status: 200,
-        headers: { 'Content-Type': 'application/json' }
-      })
-  })
-}
-
-export const getMoveAilmentRetrieveMockHandler = (overrideResponse?: MoveMetaAilmentDetail | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<MoveMetaAilmentDetail> | MoveMetaAilmentDetail)) => {
-  return http.get('*/api/v2/move-ailment/:id/', async (info) => {await delay(1000);
-  
-    return new HttpResponse(JSON.stringify(overrideResponse !== undefined 
-            ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse) 
-            : getMoveAilmentRetrieveResponseMock()),
-      { status: 200,
-        headers: { 'Content-Type': 'application/json' }
-      })
-  })
-}
-
-export const getMoveBattleStyleListMockHandler = (overrideResponse?: PaginatedMoveBattleStyleSummaryList | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<PaginatedMoveBattleStyleSummaryList> | PaginatedMoveBattleStyleSummaryList)) => {
-  return http.get('*/api/v2/move-battle-style/', async (info) => {await delay(1000);
-  
-    return new HttpResponse(JSON.stringify(overrideResponse !== undefined 
-            ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse) 
-            : getMoveBattleStyleListResponseMock()),
-      { status: 200,
-        headers: { 'Content-Type': 'application/json' }
-      })
-  })
-}
-
-export const getMoveBattleStyleRetrieveMockHandler = (overrideResponse?: MoveBattleStyleDetail | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<MoveBattleStyleDetail> | MoveBattleStyleDetail)) => {
-  return http.get('*/api/v2/move-battle-style/:id/', async (info) => {await delay(1000);
-  
-    return new HttpResponse(JSON.stringify(overrideResponse !== undefined 
-            ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse) 
-            : getMoveBattleStyleRetrieveResponseMock()),
-      { status: 200,
-        headers: { 'Content-Type': 'application/json' }
-      })
-  })
-}
-
-export const getMoveCategoryListMockHandler = (overrideResponse?: PaginatedMoveMetaCategorySummaryList | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<PaginatedMoveMetaCategorySummaryList> | PaginatedMoveMetaCategorySummaryList)) => {
-  return http.get('*/api/v2/move-category/', async (info) => {await delay(1000);
-  
-    return new HttpResponse(JSON.stringify(overrideResponse !== undefined 
-            ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse) 
-            : getMoveCategoryListResponseMock()),
-      { status: 200,
-        headers: { 'Content-Type': 'application/json' }
-      })
-  })
-}
-
-export const getMoveCategoryRetrieveMockHandler = (overrideResponse?: MoveMetaCategoryDetail | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<MoveMetaCategoryDetail> | MoveMetaCategoryDetail)) => {
-  return http.get('*/api/v2/move-category/:id/', async (info) => {await delay(1000);
-  
-    return new HttpResponse(JSON.stringify(overrideResponse !== undefined 
-            ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse) 
-            : getMoveCategoryRetrieveResponseMock()),
-      { status: 200,
-        headers: { 'Content-Type': 'application/json' }
-      })
-  })
-}
-
-export const getMoveDamageClassListMockHandler = (overrideResponse?: PaginatedMoveDamageClassSummaryList | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<PaginatedMoveDamageClassSummaryList> | PaginatedMoveDamageClassSummaryList)) => {
-  return http.get('*/api/v2/move-damage-class/', async (info) => {await delay(1000);
-  
-    return new HttpResponse(JSON.stringify(overrideResponse !== undefined 
-            ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse) 
-            : getMoveDamageClassListResponseMock()),
-      { status: 200,
-        headers: { 'Content-Type': 'application/json' }
-      })
-  })
-}
-
-export const getMoveDamageClassRetrieveMockHandler = (overrideResponse?: MoveDamageClassDetail | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<MoveDamageClassDetail> | MoveDamageClassDetail)) => {
-  return http.get('*/api/v2/move-damage-class/:id/', async (info) => {await delay(1000);
-  
-    return new HttpResponse(JSON.stringify(overrideResponse !== undefined 
-            ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse) 
-            : getMoveDamageClassRetrieveResponseMock()),
-      { status: 200,
-        headers: { 'Content-Type': 'application/json' }
-      })
-  })
-}
-
-export const getMoveLearnMethodListMockHandler = (overrideResponse?: PaginatedMoveLearnMethodSummaryList | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<PaginatedMoveLearnMethodSummaryList> | PaginatedMoveLearnMethodSummaryList)) => {
-  return http.get('*/api/v2/move-learn-method/', async (info) => {await delay(1000);
-  
-    return new HttpResponse(JSON.stringify(overrideResponse !== undefined 
-            ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse) 
-            : getMoveLearnMethodListResponseMock()),
-      { status: 200,
-        headers: { 'Content-Type': 'application/json' }
-      })
-  })
-}
-
-export const getMoveLearnMethodRetrieveMockHandler = (overrideResponse?: MoveLearnMethodDetail | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<MoveLearnMethodDetail> | MoveLearnMethodDetail)) => {
-  return http.get('*/api/v2/move-learn-method/:id/', async (info) => {await delay(1000);
-  
-    return new HttpResponse(JSON.stringify(overrideResponse !== undefined 
-            ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse) 
-            : getMoveLearnMethodRetrieveResponseMock()),
-      { status: 200,
-        headers: { 'Content-Type': 'application/json' }
-      })
-  })
-}
-
-export const getMoveTargetListMockHandler = (overrideResponse?: PaginatedMoveTargetSummaryList | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<PaginatedMoveTargetSummaryList> | PaginatedMoveTargetSummaryList)) => {
-  return http.get('*/api/v2/move-target/', async (info) => {await delay(1000);
-  
-    return new HttpResponse(JSON.stringify(overrideResponse !== undefined 
-            ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse) 
-            : getMoveTargetListResponseMock()),
-      { status: 200,
-        headers: { 'Content-Type': 'application/json' }
-      })
-  })
-}
-
-export const getMoveTargetRetrieveMockHandler = (overrideResponse?: MoveTargetDetail | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<MoveTargetDetail> | MoveTargetDetail)) => {
-  return http.get('*/api/v2/move-target/:id/', async (info) => {await delay(1000);
-  
-    return new HttpResponse(JSON.stringify(overrideResponse !== undefined 
-            ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse) 
-            : getMoveTargetRetrieveResponseMock()),
-      { status: 200,
-        headers: { 'Content-Type': 'application/json' }
-      })
-  })
-}
-
-export const getNatureListMockHandler = (overrideResponse?: PaginatedNatureSummaryList | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<PaginatedNatureSummaryList> | PaginatedNatureSummaryList)) => {
-  return http.get('*/api/v2/nature/', async (info) => {await delay(1000);
-  
-    return new HttpResponse(JSON.stringify(overrideResponse !== undefined 
-            ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse) 
-            : getNatureListResponseMock()),
-      { status: 200,
-        headers: { 'Content-Type': 'application/json' }
-      })
-  })
-}
-
-export const getNatureRetrieveMockHandler = (overrideResponse?: NatureDetail | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<NatureDetail> | NatureDetail)) => {
-  return http.get('*/api/v2/nature/:id/', async (info) => {await delay(1000);
-  
-    return new HttpResponse(JSON.stringify(overrideResponse !== undefined 
-            ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse) 
-            : getNatureRetrieveResponseMock()),
-      { status: 200,
-        headers: { 'Content-Type': 'application/json' }
-      })
-  })
-}
-
-export const getPalParkAreaListMockHandler = (overrideResponse?: PaginatedPalParkAreaSummaryList | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<PaginatedPalParkAreaSummaryList> | PaginatedPalParkAreaSummaryList)) => {
-  return http.get('*/api/v2/pal-park-area/', async (info) => {await delay(1000);
-  
-    return new HttpResponse(JSON.stringify(overrideResponse !== undefined 
-            ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse) 
-            : getPalParkAreaListResponseMock()),
-      { status: 200,
-        headers: { 'Content-Type': 'application/json' }
-      })
-  })
-}
-
-export const getPalParkAreaRetrieveMockHandler = (overrideResponse?: PalParkAreaDetail | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<PalParkAreaDetail> | PalParkAreaDetail)) => {
-  return http.get('*/api/v2/pal-park-area/:id/', async (info) => {await delay(1000);
-  
-    return new HttpResponse(JSON.stringify(overrideResponse !== undefined 
-            ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse) 
-            : getPalParkAreaRetrieveResponseMock()),
-      { status: 200,
-        headers: { 'Content-Type': 'application/json' }
-      })
-  })
-}
-
-export const getPokedexListMockHandler = (overrideResponse?: PaginatedPokedexSummaryList | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<PaginatedPokedexSummaryList> | PaginatedPokedexSummaryList)) => {
-  return http.get('*/api/v2/pokedex/', async (info) => {await delay(1000);
-  
-    return new HttpResponse(JSON.stringify(overrideResponse !== undefined 
-            ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse) 
-            : getPokedexListResponseMock()),
-      { status: 200,
-        headers: { 'Content-Type': 'application/json' }
-      })
-  })
-}
-
-export const getPokedexRetrieveMockHandler = (overrideResponse?: PokedexDetail | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<PokedexDetail> | PokedexDetail)) => {
-  return http.get('*/api/v2/pokedex/:id/', async (info) => {await delay(1000);
-  
-    return new HttpResponse(JSON.stringify(overrideResponse !== undefined 
-            ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse) 
-            : getPokedexRetrieveResponseMock()),
-      { status: 200,
-        headers: { 'Content-Type': 'application/json' }
-      })
-  })
-}
-
-export const getPokemonListMockHandler = (overrideResponse?: PaginatedPokemonSummaryList | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<PaginatedPokemonSummaryList> | PaginatedPokemonSummaryList)) => {
-  return http.get('*/api/v2/pokemon/', async (info) => {await delay(1000);
-  
-    return new HttpResponse(JSON.stringify(overrideResponse !== undefined 
-            ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse) 
-            : getPokemonListResponseMock()),
-      { status: 200,
-        headers: { 'Content-Type': 'application/json' }
-      })
-  })
-}
-
-export const getPokemonRetrieveMockHandler = (overrideResponse?: PokemonDetail | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<PokemonDetail> | PokemonDetail)) => {
-  return http.get('*/api/v2/pokemon/:id/', async (info) => {await delay(1000);
-  
-    return new HttpResponse(JSON.stringify(overrideResponse !== undefined 
-            ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse) 
-            : getPokemonRetrieveResponseMock()),
-      { status: 200,
-        headers: { 'Content-Type': 'application/json' }
-      })
-  })
-}
-
-export const getPokemonColorListMockHandler = (overrideResponse?: PaginatedPokemonColorSummaryList | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<PaginatedPokemonColorSummaryList> | PaginatedPokemonColorSummaryList)) => {
-  return http.get('*/api/v2/pokemon-color/', async (info) => {await delay(1000);
-  
-    return new HttpResponse(JSON.stringify(overrideResponse !== undefined 
-            ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse) 
-            : getPokemonColorListResponseMock()),
-      { status: 200,
-        headers: { 'Content-Type': 'application/json' }
-      })
-  })
-}
-
-export const getPokemonColorRetrieveMockHandler = (overrideResponse?: PokemonColorDetail | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<PokemonColorDetail> | PokemonColorDetail)) => {
-  return http.get('*/api/v2/pokemon-color/:id/', async (info) => {await delay(1000);
-  
-    return new HttpResponse(JSON.stringify(overrideResponse !== undefined 
-            ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse) 
-            : getPokemonColorRetrieveResponseMock()),
-      { status: 200,
-        headers: { 'Content-Type': 'application/json' }
-      })
-  })
-}
-
-export const getPokemonFormListMockHandler = (overrideResponse?: PaginatedPokemonFormSummaryList | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<PaginatedPokemonFormSummaryList> | PaginatedPokemonFormSummaryList)) => {
-  return http.get('*/api/v2/pokemon-form/', async (info) => {await delay(1000);
-  
-    return new HttpResponse(JSON.stringify(overrideResponse !== undefined 
-            ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse) 
-            : getPokemonFormListResponseMock()),
-      { status: 200,
-        headers: { 'Content-Type': 'application/json' }
-      })
-  })
-}
-
-export const getPokemonFormRetrieveMockHandler = (overrideResponse?: PokemonFormDetail | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<PokemonFormDetail> | PokemonFormDetail)) => {
-  return http.get('*/api/v2/pokemon-form/:id/', async (info) => {await delay(1000);
-  
-    return new HttpResponse(JSON.stringify(overrideResponse !== undefined 
-            ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse) 
-            : getPokemonFormRetrieveResponseMock()),
-      { status: 200,
-        headers: { 'Content-Type': 'application/json' }
-      })
-  })
-}
-
-export const getPokemonHabitatListMockHandler = (overrideResponse?: PaginatedPokemonHabitatSummaryList | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<PaginatedPokemonHabitatSummaryList> | PaginatedPokemonHabitatSummaryList)) => {
-  return http.get('*/api/v2/pokemon-habitat/', async (info) => {await delay(1000);
-  
-    return new HttpResponse(JSON.stringify(overrideResponse !== undefined 
-            ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse) 
-            : getPokemonHabitatListResponseMock()),
-      { status: 200,
-        headers: { 'Content-Type': 'application/json' }
-      })
-  })
-}
-
-export const getPokemonHabitatRetrieveMockHandler = (overrideResponse?: PokemonHabitatDetail | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<PokemonHabitatDetail> | PokemonHabitatDetail)) => {
-  return http.get('*/api/v2/pokemon-habitat/:id/', async (info) => {await delay(1000);
-  
-    return new HttpResponse(JSON.stringify(overrideResponse !== undefined 
-            ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse) 
-            : getPokemonHabitatRetrieveResponseMock()),
-      { status: 200,
-        headers: { 'Content-Type': 'application/json' }
-      })
-  })
-}
-
-export const getPokemonShapeListMockHandler = (overrideResponse?: PaginatedPokemonShapeSummaryList | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<PaginatedPokemonShapeSummaryList> | PaginatedPokemonShapeSummaryList)) => {
-  return http.get('*/api/v2/pokemon-shape/', async (info) => {await delay(1000);
-  
-    return new HttpResponse(JSON.stringify(overrideResponse !== undefined 
-            ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse) 
-            : getPokemonShapeListResponseMock()),
-      { status: 200,
-        headers: { 'Content-Type': 'application/json' }
-      })
-  })
-}
-
-export const getPokemonShapeRetrieveMockHandler = (overrideResponse?: PokemonShapeDetail | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<PokemonShapeDetail> | PokemonShapeDetail)) => {
-  return http.get('*/api/v2/pokemon-shape/:id/', async (info) => {await delay(1000);
-  
-    return new HttpResponse(JSON.stringify(overrideResponse !== undefined 
-            ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse) 
-            : getPokemonShapeRetrieveResponseMock()),
-      { status: 200,
-        headers: { 'Content-Type': 'application/json' }
-      })
-  })
-}
-
-export const getPokemonSpeciesListMockHandler = (overrideResponse?: PaginatedPokemonSpeciesSummaryList | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<PaginatedPokemonSpeciesSummaryList> | PaginatedPokemonSpeciesSummaryList)) => {
-  return http.get('*/api/v2/pokemon-species/', async (info) => {await delay(1000);
-  
-    return new HttpResponse(JSON.stringify(overrideResponse !== undefined 
-            ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse) 
-            : getPokemonSpeciesListResponseMock()),
-      { status: 200,
-        headers: { 'Content-Type': 'application/json' }
-      })
-  })
-}
-
-export const getPokemonSpeciesRetrieveMockHandler = (overrideResponse?: PokemonSpeciesDetail | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<PokemonSpeciesDetail> | PokemonSpeciesDetail)) => {
-  return http.get('*/api/v2/pokemon-species/:id/', async (info) => {await delay(1000);
-  
-    return new HttpResponse(JSON.stringify(overrideResponse !== undefined 
-            ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse) 
-            : getPokemonSpeciesRetrieveResponseMock()),
-      { status: 200,
-        headers: { 'Content-Type': 'application/json' }
-      })
-  })
-}
-
-export const getPokeathlonStatListMockHandler = (overrideResponse?: PaginatedPokeathlonStatSummaryList | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<PaginatedPokeathlonStatSummaryList> | PaginatedPokeathlonStatSummaryList)) => {
-  return http.get('*/api/v2/pokeathlon-stat/', async (info) => {await delay(1000);
-  
-    return new HttpResponse(JSON.stringify(overrideResponse !== undefined 
-            ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse) 
-            : getPokeathlonStatListResponseMock()),
-      { status: 200,
-        headers: { 'Content-Type': 'application/json' }
-      })
-  })
-}
-
-export const getPokeathlonStatRetrieveMockHandler = (overrideResponse?: PokeathlonStatDetail | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<PokeathlonStatDetail> | PokeathlonStatDetail)) => {
-  return http.get('*/api/v2/pokeathlon-stat/:id/', async (info) => {await delay(1000);
-  
-    return new HttpResponse(JSON.stringify(overrideResponse !== undefined 
-            ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse) 
-            : getPokeathlonStatRetrieveResponseMock()),
-      { status: 200,
-        headers: { 'Content-Type': 'application/json' }
-      })
-  })
-}
-
-export const getRegionListMockHandler = (overrideResponse?: PaginatedRegionSummaryList | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<PaginatedRegionSummaryList> | PaginatedRegionSummaryList)) => {
-  return http.get('*/api/v2/region/', async (info) => {await delay(1000);
-  
-    return new HttpResponse(JSON.stringify(overrideResponse !== undefined 
-            ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse) 
-            : getRegionListResponseMock()),
-      { status: 200,
-        headers: { 'Content-Type': 'application/json' }
-      })
-  })
-}
-
-export const getRegionRetrieveMockHandler = (overrideResponse?: RegionDetail | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<RegionDetail> | RegionDetail)) => {
-  return http.get('*/api/v2/region/:id/', async (info) => {await delay(1000);
-  
-    return new HttpResponse(JSON.stringify(overrideResponse !== undefined 
-            ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse) 
-            : getRegionRetrieveResponseMock()),
-      { status: 200,
-        headers: { 'Content-Type': 'application/json' }
-      })
-  })
-}
-
-export const getStatListMockHandler = (overrideResponse?: PaginatedStatSummaryList | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<PaginatedStatSummaryList> | PaginatedStatSummaryList)) => {
-  return http.get('*/api/v2/stat/', async (info) => {await delay(1000);
-  
-    return new HttpResponse(JSON.stringify(overrideResponse !== undefined 
-            ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse) 
-            : getStatListResponseMock()),
-      { status: 200,
-        headers: { 'Content-Type': 'application/json' }
-      })
-  })
-}
-
-export const getStatRetrieveMockHandler = (overrideResponse?: StatDetail | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<StatDetail> | StatDetail)) => {
-  return http.get('*/api/v2/stat/:id/', async (info) => {await delay(1000);
-  
-    return new HttpResponse(JSON.stringify(overrideResponse !== undefined 
-            ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse) 
-            : getStatRetrieveResponseMock()),
-      { status: 200,
-        headers: { 'Content-Type': 'application/json' }
-      })
-  })
-}
-
-export const getSuperContestEffectListMockHandler = (overrideResponse?: PaginatedSuperContestEffectSummaryList | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<PaginatedSuperContestEffectSummaryList> | PaginatedSuperContestEffectSummaryList)) => {
-  return http.get('*/api/v2/super-contest-effect/', async (info) => {await delay(1000);
-  
-    return new HttpResponse(JSON.stringify(overrideResponse !== undefined 
-            ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse) 
-            : getSuperContestEffectListResponseMock()),
-      { status: 200,
-        headers: { 'Content-Type': 'application/json' }
-      })
-  })
-}
-
-export const getSuperContestEffectRetrieveMockHandler = (overrideResponse?: SuperContestEffectDetail | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<SuperContestEffectDetail> | SuperContestEffectDetail)) => {
-  return http.get('*/api/v2/super-contest-effect/:id/', async (info) => {await delay(1000);
-  
-    return new HttpResponse(JSON.stringify(overrideResponse !== undefined 
-            ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse) 
-            : getSuperContestEffectRetrieveResponseMock()),
-      { status: 200,
-        headers: { 'Content-Type': 'application/json' }
-      })
-  })
-}
-
-export const getTypeListMockHandler = (overrideResponse?: PaginatedTypeSummaryList | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<PaginatedTypeSummaryList> | PaginatedTypeSummaryList)) => {
-  return http.get('*/api/v2/type/', async (info) => {await delay(1000);
-  
-    return new HttpResponse(JSON.stringify(overrideResponse !== undefined 
-            ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse) 
-            : getTypeListResponseMock()),
-      { status: 200,
-        headers: { 'Content-Type': 'application/json' }
-      })
-  })
-}
-
-export const getTypeRetrieveMockHandler = (overrideResponse?: TypeDetail | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<TypeDetail> | TypeDetail)) => {
-  return http.get('*/api/v2/type/:id/', async (info) => {await delay(1000);
-  
-    return new HttpResponse(JSON.stringify(overrideResponse !== undefined 
-            ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse) 
-            : getTypeRetrieveResponseMock()),
-      { status: 200,
-        headers: { 'Content-Type': 'application/json' }
-      })
-  })
-}
-
-export const getVersionListMockHandler = (overrideResponse?: PaginatedVersionSummaryList | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<PaginatedVersionSummaryList> | PaginatedVersionSummaryList)) => {
-  return http.get('*/api/v2/version/', async (info) => {await delay(1000);
-  
-    return new HttpResponse(JSON.stringify(overrideResponse !== undefined 
-            ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse) 
-            : getVersionListResponseMock()),
-      { status: 200,
-        headers: { 'Content-Type': 'application/json' }
-      })
-  })
-}
-
-export const getVersionRetrieveMockHandler = (overrideResponse?: VersionDetail | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<VersionDetail> | VersionDetail)) => {
-  return http.get('*/api/v2/version/:id/', async (info) => {await delay(1000);
-  
-    return new HttpResponse(JSON.stringify(overrideResponse !== undefined 
-            ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse) 
-            : getVersionRetrieveResponseMock()),
-      { status: 200,
-        headers: { 'Content-Type': 'application/json' }
-      })
-  })
-}
-
-export const getVersionGroupListMockHandler = (overrideResponse?: PaginatedVersionGroupSummaryList | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<PaginatedVersionGroupSummaryList> | PaginatedVersionGroupSummaryList)) => {
-  return http.get('*/api/v2/version-group/', async (info) => {await delay(1000);
-  
-    return new HttpResponse(JSON.stringify(overrideResponse !== undefined 
-            ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse) 
-            : getVersionGroupListResponseMock()),
-      { status: 200,
-        headers: { 'Content-Type': 'application/json' }
-      })
-  })
-}
-
-export const getVersionGroupRetrieveMockHandler = (overrideResponse?: VersionGroupDetail | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<VersionGroupDetail> | VersionGroupDetail)) => {
-  return http.get('*/api/v2/version-group/:id/', async (info) => {await delay(1000);
-  
-    return new HttpResponse(JSON.stringify(overrideResponse !== undefined 
-            ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse) 
-            : getVersionGroupRetrieveResponseMock()),
-      { status: 200,
-        headers: { 'Content-Type': 'application/json' }
-      })
-  })
-}
-
-export const getPokemonEncountersRetrieveMockHandler = (overrideResponse?: PokemonEncountersRetrieve200Item[] | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<PokemonEncountersRetrieve200Item[]> | PokemonEncountersRetrieve200Item[])) => {
-  return http.get('*/api/v2/pokemon/:pokemonId/encounters', async (info) => {await delay(1000);
-  
-    return new HttpResponse(JSON.stringify(overrideResponse !== undefined 
-            ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse) 
-            : getPokemonEncountersRetrieveResponseMock()),
-      { status: 200,
-        headers: { 'Content-Type': 'application/json' }
-      })
-  })
-}
+  VersionGroupDetail,
+} from "./model";
+
+export const getAbilityListResponseMock = (
+  overrideResponse: Partial<PaginatedAbilitySummaryList> = {},
+): PaginatedAbilitySummaryList => ({
+  count: faker.helpers.arrayElement([
+    faker.number.int({ min: undefined, max: undefined }),
+    undefined,
+  ]),
+  next: faker.helpers.arrayElement([
+    faker.helpers.arrayElement([faker.internet.url(), null]),
+    undefined,
+  ]),
+  previous: faker.helpers.arrayElement([
+    faker.helpers.arrayElement([faker.internet.url(), null]),
+    undefined,
+  ]),
+  results: faker.helpers.arrayElement([
+    Array.from(
+      { length: faker.number.int({ min: 1, max: 10 }) },
+      (_, i) => i + 1,
+    ).map(() => ({ name: faker.string.alpha(20), url: faker.internet.url() })),
+    undefined,
+  ]),
+  ...overrideResponse,
+});
+
+export const getAbilityRetrieveResponseMock = (
+  overrideResponse: Partial<AbilityDetail> = {},
+): AbilityDetail => ({
+  id: faker.number.int({ min: undefined, max: undefined }),
+  name: faker.string.alpha(20),
+  is_main_series: faker.helpers.arrayElement([
+    faker.datatype.boolean(),
+    undefined,
+  ]),
+  generation: { name: faker.string.alpha(20), url: faker.internet.url() },
+  names: Array.from(
+    { length: faker.number.int({ min: 1, max: 10 }) },
+    (_, i) => i + 1,
+  ).map(() => ({
+    name: faker.string.alpha(20),
+    language: { name: faker.string.alpha(20), url: faker.internet.url() },
+  })),
+  effect_entries: Array.from(
+    { length: faker.number.int({ min: 1, max: 10 }) },
+    (_, i) => i + 1,
+  ).map(() => ({
+    effect: faker.string.alpha(20),
+    short_effect: faker.string.alpha(20),
+    language: { name: faker.string.alpha(20), url: faker.internet.url() },
+  })),
+  effect_changes: Array.from(
+    { length: faker.number.int({ min: 1, max: 10 }) },
+    (_, i) => i + 1,
+  ).map(() => ({
+    version_group: { name: faker.string.alpha(20), url: faker.internet.url() },
+    effect_entries: Array.from(
+      { length: faker.number.int({ min: 1, max: 10 }) },
+      (_, i) => i + 1,
+    ).map(() => ({
+      effect: faker.string.alpha(20),
+      language: { name: faker.string.alpha(20), url: faker.internet.url() },
+    })),
+  })),
+  flavor_text_entries: Array.from(
+    { length: faker.number.int({ min: 1, max: 10 }) },
+    (_, i) => i + 1,
+  ).map(() => ({
+    flavor_text: faker.string.alpha(20),
+    language: { name: faker.string.alpha(20), url: faker.internet.url() },
+    version_group: { name: faker.string.alpha(20), url: faker.internet.url() },
+  })),
+  pokemon: Array.from(
+    { length: faker.number.int({ min: 1, max: 10 }) },
+    (_, i) => i + 1,
+  ).map(() => ({
+    is_hidden: faker.datatype.boolean(),
+    slot: faker.number.int({ min: undefined, max: undefined }),
+    pokemon: { name: faker.string.alpha(20), url: faker.internet.url() },
+  })),
+  ...overrideResponse,
+});
+
+export const getBerryListResponseMock = (
+  overrideResponse: Partial<PaginatedBerrySummaryList> = {},
+): PaginatedBerrySummaryList => ({
+  count: faker.helpers.arrayElement([
+    faker.number.int({ min: undefined, max: undefined }),
+    undefined,
+  ]),
+  next: faker.helpers.arrayElement([
+    faker.helpers.arrayElement([faker.internet.url(), null]),
+    undefined,
+  ]),
+  previous: faker.helpers.arrayElement([
+    faker.helpers.arrayElement([faker.internet.url(), null]),
+    undefined,
+  ]),
+  results: faker.helpers.arrayElement([
+    Array.from(
+      { length: faker.number.int({ min: 1, max: 10 }) },
+      (_, i) => i + 1,
+    ).map(() => ({ name: faker.string.alpha(20), url: faker.internet.url() })),
+    undefined,
+  ]),
+  ...overrideResponse,
+});
+
+export const getBerryRetrieveResponseMock = (
+  overrideResponse: Partial<BerryDetail> = {},
+): BerryDetail => ({
+  id: faker.number.int({ min: undefined, max: undefined }),
+  name: faker.string.alpha(20),
+  growth_time: faker.number.int({ min: undefined, max: undefined }),
+  max_harvest: faker.number.int({ min: undefined, max: undefined }),
+  natural_gift_power: faker.number.int({ min: undefined, max: undefined }),
+  size: faker.number.int({ min: undefined, max: undefined }),
+  smoothness: faker.number.int({ min: undefined, max: undefined }),
+  soil_dryness: faker.number.int({ min: undefined, max: undefined }),
+  firmness: { name: faker.string.alpha(20), url: faker.internet.url() },
+  flavors: Array.from(
+    { length: faker.number.int({ min: 1, max: 10 }) },
+    (_, i) => i + 1,
+  ).map(() => ({
+    potency: faker.number.int({ min: undefined, max: undefined }),
+    flavor: {
+      name: faker.helpers.arrayElement([faker.string.alpha(20), undefined]),
+      url: faker.helpers.arrayElement([faker.internet.url(), undefined]),
+    },
+  })),
+  item: { name: faker.string.alpha(20), url: faker.internet.url() },
+  natural_gift_type: {
+    name: faker.string.alpha(20),
+    url: faker.internet.url(),
+  },
+  ...overrideResponse,
+});
+
+export const getBerryFirmnessListResponseMock = (
+  overrideResponse: Partial<PaginatedBerryFirmnessSummaryList> = {},
+): PaginatedBerryFirmnessSummaryList => ({
+  count: faker.helpers.arrayElement([
+    faker.number.int({ min: undefined, max: undefined }),
+    undefined,
+  ]),
+  next: faker.helpers.arrayElement([
+    faker.helpers.arrayElement([faker.internet.url(), null]),
+    undefined,
+  ]),
+  previous: faker.helpers.arrayElement([
+    faker.helpers.arrayElement([faker.internet.url(), null]),
+    undefined,
+  ]),
+  results: faker.helpers.arrayElement([
+    Array.from(
+      { length: faker.number.int({ min: 1, max: 10 }) },
+      (_, i) => i + 1,
+    ).map(() => ({ name: faker.string.alpha(20), url: faker.internet.url() })),
+    undefined,
+  ]),
+  ...overrideResponse,
+});
+
+export const getBerryFirmnessRetrieveResponseMock = (
+  overrideResponse: Partial<BerryFirmnessDetail> = {},
+): BerryFirmnessDetail => ({
+  id: faker.number.int({ min: undefined, max: undefined }),
+  name: faker.string.alpha(20),
+  berries: Array.from(
+    { length: faker.number.int({ min: 1, max: 10 }) },
+    (_, i) => i + 1,
+  ).map(() => ({ name: faker.string.alpha(20), url: faker.internet.url() })),
+  names: Array.from(
+    { length: faker.number.int({ min: 1, max: 10 }) },
+    (_, i) => i + 1,
+  ).map(() => ({
+    name: faker.string.alpha(20),
+    language: { name: faker.string.alpha(20), url: faker.internet.url() },
+  })),
+  ...overrideResponse,
+});
+
+export const getBerryFlavorListResponseMock = (
+  overrideResponse: Partial<PaginatedBerryFlavorSummaryList> = {},
+): PaginatedBerryFlavorSummaryList => ({
+  count: faker.helpers.arrayElement([
+    faker.number.int({ min: undefined, max: undefined }),
+    undefined,
+  ]),
+  next: faker.helpers.arrayElement([
+    faker.helpers.arrayElement([faker.internet.url(), null]),
+    undefined,
+  ]),
+  previous: faker.helpers.arrayElement([
+    faker.helpers.arrayElement([faker.internet.url(), null]),
+    undefined,
+  ]),
+  results: faker.helpers.arrayElement([
+    Array.from(
+      { length: faker.number.int({ min: 1, max: 10 }) },
+      (_, i) => i + 1,
+    ).map(() => ({ name: faker.string.alpha(20), url: faker.internet.url() })),
+    undefined,
+  ]),
+  ...overrideResponse,
+});
+
+export const getBerryFlavorRetrieveResponseMock = (
+  overrideResponse: Partial<BerryFlavorDetail> = {},
+): BerryFlavorDetail => ({
+  id: faker.number.int({ min: undefined, max: undefined }),
+  name: faker.string.alpha(20),
+  berries: Array.from(
+    { length: faker.number.int({ min: 1, max: 10 }) },
+    (_, i) => i + 1,
+  ).map(() => ({
+    potency: faker.number.int({ min: undefined, max: undefined }),
+    berry: {
+      name: faker.helpers.arrayElement([faker.string.alpha(20), undefined]),
+      url: faker.helpers.arrayElement([faker.internet.url(), undefined]),
+    },
+  })),
+  contest_type: { name: faker.string.alpha(20), url: faker.internet.url() },
+  names: Array.from(
+    { length: faker.number.int({ min: 1, max: 10 }) },
+    (_, i) => i + 1,
+  ).map(() => ({
+    name: faker.string.alpha(20),
+    language: { name: faker.string.alpha(20), url: faker.internet.url() },
+  })),
+  ...overrideResponse,
+});
+
+export const getCharacteristicListResponseMock = (
+  overrideResponse: Partial<PaginatedCharacteristicSummaryList> = {},
+): PaginatedCharacteristicSummaryList => ({
+  count: faker.helpers.arrayElement([
+    faker.number.int({ min: undefined, max: undefined }),
+    undefined,
+  ]),
+  next: faker.helpers.arrayElement([
+    faker.helpers.arrayElement([faker.internet.url(), null]),
+    undefined,
+  ]),
+  previous: faker.helpers.arrayElement([
+    faker.helpers.arrayElement([faker.internet.url(), null]),
+    undefined,
+  ]),
+  results: faker.helpers.arrayElement([
+    Array.from(
+      { length: faker.number.int({ min: 1, max: 10 }) },
+      (_, i) => i + 1,
+    ).map(() => ({ url: faker.internet.url() })),
+    undefined,
+  ]),
+  ...overrideResponse,
+});
+
+export const getCharacteristicRetrieveResponseMock = (
+  overrideResponse: Partial<CharacteristicDetail> = {},
+): CharacteristicDetail => ({
+  id: faker.number.int({ min: undefined, max: undefined }),
+  gene_modulo: faker.number.int({ min: undefined, max: undefined }),
+  possible_values: Array.from(
+    { length: faker.number.int({ min: 1, max: 10 }) },
+    (_, i) => i + 1,
+  ).map(() => faker.number.int({ min: undefined, max: undefined })),
+  highest_stat: { name: faker.string.alpha(20), url: faker.internet.url() },
+  descriptions: Array.from(
+    { length: faker.number.int({ min: 1, max: 10 }) },
+    (_, i) => i + 1,
+  ).map(() => ({
+    description: faker.helpers.arrayElement([
+      faker.string.alpha(20),
+      undefined,
+    ]),
+    language: { name: faker.string.alpha(20), url: faker.internet.url() },
+  })),
+  ...overrideResponse,
+});
+
+export const getContestTypeListResponseMock = (
+  overrideResponse: Partial<PaginatedContestTypeSummaryList> = {},
+): PaginatedContestTypeSummaryList => ({
+  count: faker.helpers.arrayElement([
+    faker.number.int({ min: undefined, max: undefined }),
+    undefined,
+  ]),
+  next: faker.helpers.arrayElement([
+    faker.helpers.arrayElement([faker.internet.url(), null]),
+    undefined,
+  ]),
+  previous: faker.helpers.arrayElement([
+    faker.helpers.arrayElement([faker.internet.url(), null]),
+    undefined,
+  ]),
+  results: faker.helpers.arrayElement([
+    Array.from(
+      { length: faker.number.int({ min: 1, max: 10 }) },
+      (_, i) => i + 1,
+    ).map(() => ({ name: faker.string.alpha(20), url: faker.internet.url() })),
+    undefined,
+  ]),
+  ...overrideResponse,
+});
+
+export const getContestTypeRetrieveResponseMock = (
+  overrideResponse: Partial<ContestTypeDetail> = {},
+): ContestTypeDetail => ({
+  id: faker.number.int({ min: undefined, max: undefined }),
+  name: faker.string.alpha(20),
+  berry_flavor: { name: faker.string.alpha(20), url: faker.internet.url() },
+  names: Array.from(
+    { length: faker.number.int({ min: 1, max: 10 }) },
+    (_, i) => i + 1,
+  ).map(() => ({
+    name: faker.string.alpha(20),
+    color: faker.string.alpha(20),
+    language: { name: faker.string.alpha(20), url: faker.internet.url() },
+  })),
+  ...overrideResponse,
+});
+
+export const getContestEffectListResponseMock = (
+  overrideResponse: Partial<PaginatedContestEffectSummaryList> = {},
+): PaginatedContestEffectSummaryList => ({
+  count: faker.helpers.arrayElement([
+    faker.number.int({ min: undefined, max: undefined }),
+    undefined,
+  ]),
+  next: faker.helpers.arrayElement([
+    faker.helpers.arrayElement([faker.internet.url(), null]),
+    undefined,
+  ]),
+  previous: faker.helpers.arrayElement([
+    faker.helpers.arrayElement([faker.internet.url(), null]),
+    undefined,
+  ]),
+  results: faker.helpers.arrayElement([
+    Array.from(
+      { length: faker.number.int({ min: 1, max: 10 }) },
+      (_, i) => i + 1,
+    ).map(() => ({ url: faker.internet.url() })),
+    undefined,
+  ]),
+  ...overrideResponse,
+});
+
+export const getContestEffectRetrieveResponseMock = (
+  overrideResponse: Partial<ContestEffectDetail> = {},
+): ContestEffectDetail => ({
+  id: faker.number.int({ min: undefined, max: undefined }),
+  appeal: faker.number.int({ min: undefined, max: undefined }),
+  jam: faker.number.int({ min: undefined, max: undefined }),
+  effect_entries: Array.from(
+    { length: faker.number.int({ min: 1, max: 10 }) },
+    (_, i) => i + 1,
+  ).map(() => ({
+    effect: faker.string.alpha(20),
+    language: { name: faker.string.alpha(20), url: faker.internet.url() },
+  })),
+  flavor_text_entries: Array.from(
+    { length: faker.number.int({ min: 1, max: 10 }) },
+    (_, i) => i + 1,
+  ).map(() => ({
+    flavor_text: faker.string.alpha(20),
+    language: { name: faker.string.alpha(20), url: faker.internet.url() },
+  })),
+  ...overrideResponse,
+});
+
+export const getEggGroupListResponseMock = (
+  overrideResponse: Partial<PaginatedEggGroupSummaryList> = {},
+): PaginatedEggGroupSummaryList => ({
+  count: faker.helpers.arrayElement([
+    faker.number.int({ min: undefined, max: undefined }),
+    undefined,
+  ]),
+  next: faker.helpers.arrayElement([
+    faker.helpers.arrayElement([faker.internet.url(), null]),
+    undefined,
+  ]),
+  previous: faker.helpers.arrayElement([
+    faker.helpers.arrayElement([faker.internet.url(), null]),
+    undefined,
+  ]),
+  results: faker.helpers.arrayElement([
+    Array.from(
+      { length: faker.number.int({ min: 1, max: 10 }) },
+      (_, i) => i + 1,
+    ).map(() => ({ name: faker.string.alpha(20), url: faker.internet.url() })),
+    undefined,
+  ]),
+  ...overrideResponse,
+});
+
+export const getEggGroupRetrieveResponseMock = (
+  overrideResponse: Partial<EggGroupDetail> = {},
+): EggGroupDetail => ({
+  id: faker.number.int({ min: undefined, max: undefined }),
+  name: faker.string.alpha(20),
+  names: Array.from(
+    { length: faker.number.int({ min: 1, max: 10 }) },
+    (_, i) => i + 1,
+  ).map(() => ({
+    name: faker.string.alpha(20),
+    language: { name: faker.string.alpha(20), url: faker.internet.url() },
+  })),
+  pokemon_species: Array.from(
+    { length: faker.number.int({ min: 1, max: 10 }) },
+    (_, i) => i + 1,
+  ).map(() => ({
+    name: faker.helpers.arrayElement([faker.string.alpha(20), undefined]),
+    url: faker.helpers.arrayElement([faker.internet.url(), undefined]),
+  })),
+  ...overrideResponse,
+});
+
+export const getEncounterMethodListResponseMock = (
+  overrideResponse: Partial<PaginatedEncounterMethodSummaryList> = {},
+): PaginatedEncounterMethodSummaryList => ({
+  count: faker.helpers.arrayElement([
+    faker.number.int({ min: undefined, max: undefined }),
+    undefined,
+  ]),
+  next: faker.helpers.arrayElement([
+    faker.helpers.arrayElement([faker.internet.url(), null]),
+    undefined,
+  ]),
+  previous: faker.helpers.arrayElement([
+    faker.helpers.arrayElement([faker.internet.url(), null]),
+    undefined,
+  ]),
+  results: faker.helpers.arrayElement([
+    Array.from(
+      { length: faker.number.int({ min: 1, max: 10 }) },
+      (_, i) => i + 1,
+    ).map(() => ({ name: faker.string.alpha(20), url: faker.internet.url() })),
+    undefined,
+  ]),
+  ...overrideResponse,
+});
+
+export const getEncounterMethodRetrieveResponseMock = (
+  overrideResponse: Partial<EncounterMethodDetail> = {},
+): EncounterMethodDetail => ({
+  id: faker.number.int({ min: undefined, max: undefined }),
+  name: faker.string.alpha(20),
+  order: faker.helpers.arrayElement([
+    faker.helpers.arrayElement([
+      faker.number.int({ min: undefined, max: undefined }),
+      null,
+    ]),
+    undefined,
+  ]),
+  names: Array.from(
+    { length: faker.number.int({ min: 1, max: 10 }) },
+    (_, i) => i + 1,
+  ).map(() => ({
+    name: faker.string.alpha(20),
+    language: { name: faker.string.alpha(20), url: faker.internet.url() },
+  })),
+  ...overrideResponse,
+});
+
+export const getEncounterConditionListResponseMock = (
+  overrideResponse: Partial<PaginatedEncounterConditionSummaryList> = {},
+): PaginatedEncounterConditionSummaryList => ({
+  count: faker.helpers.arrayElement([
+    faker.number.int({ min: undefined, max: undefined }),
+    undefined,
+  ]),
+  next: faker.helpers.arrayElement([
+    faker.helpers.arrayElement([faker.internet.url(), null]),
+    undefined,
+  ]),
+  previous: faker.helpers.arrayElement([
+    faker.helpers.arrayElement([faker.internet.url(), null]),
+    undefined,
+  ]),
+  results: faker.helpers.arrayElement([
+    Array.from(
+      { length: faker.number.int({ min: 1, max: 10 }) },
+      (_, i) => i + 1,
+    ).map(() => ({ name: faker.string.alpha(20), url: faker.internet.url() })),
+    undefined,
+  ]),
+  ...overrideResponse,
+});
+
+export const getEncounterConditionRetrieveResponseMock = (
+  overrideResponse: Partial<EncounterConditionDetail> = {},
+): EncounterConditionDetail => ({
+  id: faker.number.int({ min: undefined, max: undefined }),
+  name: faker.string.alpha(20),
+  values: Array.from(
+    { length: faker.number.int({ min: 1, max: 10 }) },
+    (_, i) => i + 1,
+  ).map(() => ({ name: faker.string.alpha(20), url: faker.internet.url() })),
+  names: Array.from(
+    { length: faker.number.int({ min: 1, max: 10 }) },
+    (_, i) => i + 1,
+  ).map(() => ({
+    name: faker.string.alpha(20),
+    language: { name: faker.string.alpha(20), url: faker.internet.url() },
+  })),
+  ...overrideResponse,
+});
+
+export const getEncounterConditionValueListResponseMock = (
+  overrideResponse: Partial<PaginatedEncounterConditionValueSummaryList> = {},
+): PaginatedEncounterConditionValueSummaryList => ({
+  count: faker.helpers.arrayElement([
+    faker.number.int({ min: undefined, max: undefined }),
+    undefined,
+  ]),
+  next: faker.helpers.arrayElement([
+    faker.helpers.arrayElement([faker.internet.url(), null]),
+    undefined,
+  ]),
+  previous: faker.helpers.arrayElement([
+    faker.helpers.arrayElement([faker.internet.url(), null]),
+    undefined,
+  ]),
+  results: faker.helpers.arrayElement([
+    Array.from(
+      { length: faker.number.int({ min: 1, max: 10 }) },
+      (_, i) => i + 1,
+    ).map(() => ({ name: faker.string.alpha(20), url: faker.internet.url() })),
+    undefined,
+  ]),
+  ...overrideResponse,
+});
+
+export const getEncounterConditionValueRetrieveResponseMock = (
+  overrideResponse: Partial<EncounterConditionValueDetail> = {},
+): EncounterConditionValueDetail => ({
+  id: faker.number.int({ min: undefined, max: undefined }),
+  name: faker.string.alpha(20),
+  condition: { name: faker.string.alpha(20), url: faker.internet.url() },
+  names: Array.from(
+    { length: faker.number.int({ min: 1, max: 10 }) },
+    (_, i) => i + 1,
+  ).map(() => ({
+    name: faker.string.alpha(20),
+    language: { name: faker.string.alpha(20), url: faker.internet.url() },
+  })),
+  ...overrideResponse,
+});
+
+export const getEvolutionChainListResponseMock = (
+  overrideResponse: Partial<PaginatedEvolutionChainSummaryList> = {},
+): PaginatedEvolutionChainSummaryList => ({
+  count: faker.helpers.arrayElement([
+    faker.number.int({ min: undefined, max: undefined }),
+    undefined,
+  ]),
+  next: faker.helpers.arrayElement([
+    faker.helpers.arrayElement([faker.internet.url(), null]),
+    undefined,
+  ]),
+  previous: faker.helpers.arrayElement([
+    faker.helpers.arrayElement([faker.internet.url(), null]),
+    undefined,
+  ]),
+  results: faker.helpers.arrayElement([
+    Array.from(
+      { length: faker.number.int({ min: 1, max: 10 }) },
+      (_, i) => i + 1,
+    ).map(() => ({ url: faker.internet.url() })),
+    undefined,
+  ]),
+  ...overrideResponse,
+});
+
+export const getEvolutionChainRetrieveResponseMock = (
+  overrideResponse: Partial<EvolutionChainDetail> = {},
+): EvolutionChainDetail => ({
+  id: faker.number.int({ min: undefined, max: undefined }),
+  baby_trigger_item: {
+    name: faker.string.alpha(20),
+    url: faker.internet.url(),
+  },
+  chain: {
+    evolution_details: Array.from(
+      { length: faker.number.int({ min: 1, max: 10 }) },
+      (_, i) => i + 1,
+    ).map(() => ({})),
+    evolves_to: Array.from(
+      { length: faker.number.int({ min: 1, max: 10 }) },
+      (_, i) => i + 1,
+    ).map(() => ({
+      evolution_details: Array.from(
+        { length: faker.number.int({ min: 1, max: 10 }) },
+        (_, i) => i + 1,
+      ).map(() => ({
+        gender: { name: faker.string.alpha(20), url: faker.internet.url() },
+        held_item: { name: faker.string.alpha(20), url: faker.internet.url() },
+        item: { name: faker.string.alpha(20), url: faker.internet.url() },
+        known_move: {},
+        known_move_type: {},
+        location: { name: faker.string.alpha(20), url: faker.internet.url() },
+        min_affection: faker.helpers.arrayElement([
+          faker.number.int({ min: undefined, max: undefined }),
+          null,
+        ]),
+        min_beauty: faker.helpers.arrayElement([
+          faker.number.int({ min: undefined, max: undefined }),
+          null,
+        ]),
+        min_happiness: faker.helpers.arrayElement([
+          faker.number.int({ min: undefined, max: undefined }),
+          null,
+        ]),
+        min_level: faker.helpers.arrayElement([
+          faker.number.int({ min: undefined, max: undefined }),
+          null,
+        ]),
+        needs_overworld_rain: faker.datatype.boolean(),
+        party_species: faker.helpers.arrayElement([
+          faker.string.alpha(20),
+          null,
+        ]),
+        party_type: faker.helpers.arrayElement([faker.string.alpha(20), null]),
+        relative_physical_stats: faker.helpers.arrayElement([
+          faker.string.alpha(20),
+          null,
+        ]),
+        time_of_day: faker.string.alpha(20),
+        trade_species: faker.helpers.arrayElement([
+          faker.string.alpha(20),
+          null,
+        ]),
+        trigger: { name: faker.string.alpha(20), url: faker.internet.url() },
+        turn_upside_down: faker.datatype.boolean(),
+      })),
+      is_baby: faker.datatype.boolean(),
+      species: { name: faker.string.alpha(20), url: faker.internet.url() },
+    })),
+    is_baby: faker.datatype.boolean(),
+    species: { name: faker.string.alpha(20), url: faker.internet.url() },
+  },
+  ...overrideResponse,
+});
+
+export const getEvolutionTriggerListResponseMock = (
+  overrideResponse: Partial<PaginatedEvolutionTriggerSummaryList> = {},
+): PaginatedEvolutionTriggerSummaryList => ({
+  count: faker.helpers.arrayElement([
+    faker.number.int({ min: undefined, max: undefined }),
+    undefined,
+  ]),
+  next: faker.helpers.arrayElement([
+    faker.helpers.arrayElement([faker.internet.url(), null]),
+    undefined,
+  ]),
+  previous: faker.helpers.arrayElement([
+    faker.helpers.arrayElement([faker.internet.url(), null]),
+    undefined,
+  ]),
+  results: faker.helpers.arrayElement([
+    Array.from(
+      { length: faker.number.int({ min: 1, max: 10 }) },
+      (_, i) => i + 1,
+    ).map(() => ({ name: faker.string.alpha(20), url: faker.internet.url() })),
+    undefined,
+  ]),
+  ...overrideResponse,
+});
+
+export const getEvolutionTriggerRetrieveResponseMock = (
+  overrideResponse: Partial<EvolutionTriggerDetail> = {},
+): EvolutionTriggerDetail => ({
+  id: faker.number.int({ min: undefined, max: undefined }),
+  name: faker.string.alpha(20),
+  names: Array.from(
+    { length: faker.number.int({ min: 1, max: 10 }) },
+    (_, i) => i + 1,
+  ).map(() => ({
+    name: faker.string.alpha(20),
+    language: { name: faker.string.alpha(20), url: faker.internet.url() },
+  })),
+  pokemon_species: Array.from(
+    { length: faker.number.int({ min: 1, max: 10 }) },
+    (_, i) => i + 1,
+  ).map(() => ({ name: faker.string.alpha(20), url: faker.internet.url() })),
+  ...overrideResponse,
+});
+
+export const getGenerationListResponseMock = (
+  overrideResponse: Partial<PaginatedGenerationSummaryList> = {},
+): PaginatedGenerationSummaryList => ({
+  count: faker.helpers.arrayElement([
+    faker.number.int({ min: undefined, max: undefined }),
+    undefined,
+  ]),
+  next: faker.helpers.arrayElement([
+    faker.helpers.arrayElement([faker.internet.url(), null]),
+    undefined,
+  ]),
+  previous: faker.helpers.arrayElement([
+    faker.helpers.arrayElement([faker.internet.url(), null]),
+    undefined,
+  ]),
+  results: faker.helpers.arrayElement([
+    Array.from(
+      { length: faker.number.int({ min: 1, max: 10 }) },
+      (_, i) => i + 1,
+    ).map(() => ({ name: faker.string.alpha(20), url: faker.internet.url() })),
+    undefined,
+  ]),
+  ...overrideResponse,
+});
+
+export const getGenerationRetrieveResponseMock = (
+  overrideResponse: Partial<GenerationDetail> = {},
+): GenerationDetail => ({
+  id: faker.number.int({ min: undefined, max: undefined }),
+  name: faker.string.alpha(20),
+  abilities: Array.from(
+    { length: faker.number.int({ min: 1, max: 10 }) },
+    (_, i) => i + 1,
+  ).map(() => ({ name: faker.string.alpha(20), url: faker.internet.url() })),
+  main_region: { name: faker.string.alpha(20), url: faker.internet.url() },
+  moves: Array.from(
+    { length: faker.number.int({ min: 1, max: 10 }) },
+    (_, i) => i + 1,
+  ).map(() => ({ name: faker.string.alpha(20), url: faker.internet.url() })),
+  names: Array.from(
+    { length: faker.number.int({ min: 1, max: 10 }) },
+    (_, i) => i + 1,
+  ).map(() => ({
+    name: faker.string.alpha(20),
+    language: { name: faker.string.alpha(20), url: faker.internet.url() },
+  })),
+  pokemon_species: Array.from(
+    { length: faker.number.int({ min: 1, max: 10 }) },
+    (_, i) => i + 1,
+  ).map(() => ({ name: faker.string.alpha(20), url: faker.internet.url() })),
+  types: Array.from(
+    { length: faker.number.int({ min: 1, max: 10 }) },
+    (_, i) => i + 1,
+  ).map(() => ({ name: faker.string.alpha(20), url: faker.internet.url() })),
+  version_groups: Array.from(
+    { length: faker.number.int({ min: 1, max: 10 }) },
+    (_, i) => i + 1,
+  ).map(() => ({ name: faker.string.alpha(20), url: faker.internet.url() })),
+  ...overrideResponse,
+});
+
+export const getGenderListResponseMock = (
+  overrideResponse: Partial<PaginatedGenderSummaryList> = {},
+): PaginatedGenderSummaryList => ({
+  count: faker.helpers.arrayElement([
+    faker.number.int({ min: undefined, max: undefined }),
+    undefined,
+  ]),
+  next: faker.helpers.arrayElement([
+    faker.helpers.arrayElement([faker.internet.url(), null]),
+    undefined,
+  ]),
+  previous: faker.helpers.arrayElement([
+    faker.helpers.arrayElement([faker.internet.url(), null]),
+    undefined,
+  ]),
+  results: faker.helpers.arrayElement([
+    Array.from(
+      { length: faker.number.int({ min: 1, max: 10 }) },
+      (_, i) => i + 1,
+    ).map(() => ({ name: faker.string.alpha(20), url: faker.internet.url() })),
+    undefined,
+  ]),
+  ...overrideResponse,
+});
+
+export const getGenderRetrieveResponseMock = (
+  overrideResponse: Partial<GenderDetail> = {},
+): GenderDetail => ({
+  id: faker.number.int({ min: undefined, max: undefined }),
+  name: faker.string.alpha(20),
+  pokemon_species_details: Array.from(
+    { length: faker.number.int({ min: 1, max: 10 }) },
+    (_, i) => i + 1,
+  ).map(() => ({
+    rate: faker.number.int({ min: undefined, max: undefined }),
+    pokemon_species: {
+      name: faker.string.alpha(20),
+      url: faker.internet.url(),
+    },
+  })),
+  required_for_evolution: Array.from(
+    { length: faker.number.int({ min: 1, max: 10 }) },
+    (_, i) => i + 1,
+  ).map(() => ({ name: faker.string.alpha(20), url: faker.internet.url() })),
+  ...overrideResponse,
+});
+
+export const getGrowthRateListResponseMock = (
+  overrideResponse: Partial<PaginatedGrowthRateSummaryList> = {},
+): PaginatedGrowthRateSummaryList => ({
+  count: faker.helpers.arrayElement([
+    faker.number.int({ min: undefined, max: undefined }),
+    undefined,
+  ]),
+  next: faker.helpers.arrayElement([
+    faker.helpers.arrayElement([faker.internet.url(), null]),
+    undefined,
+  ]),
+  previous: faker.helpers.arrayElement([
+    faker.helpers.arrayElement([faker.internet.url(), null]),
+    undefined,
+  ]),
+  results: faker.helpers.arrayElement([
+    Array.from(
+      { length: faker.number.int({ min: 1, max: 10 }) },
+      (_, i) => i + 1,
+    ).map(() => ({ name: faker.string.alpha(20), url: faker.internet.url() })),
+    undefined,
+  ]),
+  ...overrideResponse,
+});
+
+export const getGrowthRateRetrieveResponseMock = (
+  overrideResponse: Partial<GrowthRateDetail> = {},
+): GrowthRateDetail => ({
+  id: faker.number.int({ min: undefined, max: undefined }),
+  name: faker.string.alpha(20),
+  formula: faker.string.alpha(20),
+  descriptions: Array.from(
+    { length: faker.number.int({ min: 1, max: 10 }) },
+    (_, i) => i + 1,
+  ).map(() => ({
+    description: faker.helpers.arrayElement([
+      faker.string.alpha(20),
+      undefined,
+    ]),
+    language: { name: faker.string.alpha(20), url: faker.internet.url() },
+  })),
+  levels: Array.from(
+    { length: faker.number.int({ min: 1, max: 10 }) },
+    (_, i) => i + 1,
+  ).map(() => ({
+    level: faker.number.int({ min: undefined, max: undefined }),
+    experience: faker.number.int({ min: undefined, max: undefined }),
+  })),
+  pokemon_species: Array.from(
+    { length: faker.number.int({ min: 1, max: 10 }) },
+    (_, i) => i + 1,
+  ).map(() => ({ name: faker.string.alpha(20), url: faker.internet.url() })),
+  ...overrideResponse,
+});
+
+export const getItemListResponseMock = (
+  overrideResponse: Partial<PaginatedItemSummaryList> = {},
+): PaginatedItemSummaryList => ({
+  count: faker.helpers.arrayElement([
+    faker.number.int({ min: undefined, max: undefined }),
+    undefined,
+  ]),
+  next: faker.helpers.arrayElement([
+    faker.helpers.arrayElement([faker.internet.url(), null]),
+    undefined,
+  ]),
+  previous: faker.helpers.arrayElement([
+    faker.helpers.arrayElement([faker.internet.url(), null]),
+    undefined,
+  ]),
+  results: faker.helpers.arrayElement([
+    Array.from(
+      { length: faker.number.int({ min: 1, max: 10 }) },
+      (_, i) => i + 1,
+    ).map(() => ({ name: faker.string.alpha(20), url: faker.internet.url() })),
+    undefined,
+  ]),
+  ...overrideResponse,
+});
+
+export const getItemRetrieveResponseMock = (
+  overrideResponse: Partial<ItemDetail> = {},
+): ItemDetail => ({
+  id: faker.number.int({ min: undefined, max: undefined }),
+  name: faker.string.alpha(20),
+  cost: faker.helpers.arrayElement([
+    faker.helpers.arrayElement([
+      faker.number.int({ min: undefined, max: undefined }),
+      null,
+    ]),
+    undefined,
+  ]),
+  fling_power: faker.helpers.arrayElement([
+    faker.helpers.arrayElement([
+      faker.number.int({ min: undefined, max: undefined }),
+      null,
+    ]),
+    undefined,
+  ]),
+  fling_effect: { name: faker.string.alpha(20), url: faker.internet.url() },
+  attributes: Array.from(
+    { length: faker.number.int({ min: 1, max: 10 }) },
+    (_, i) => i + 1,
+  ).map(() => ({ name: faker.string.alpha(20), url: faker.internet.url() })),
+  category: { name: faker.string.alpha(20), url: faker.internet.url() },
+  effect_entries: Array.from(
+    { length: faker.number.int({ min: 1, max: 10 }) },
+    (_, i) => i + 1,
+  ).map(() => ({
+    effect: faker.string.alpha(20),
+    short_effect: faker.string.alpha(20),
+    language: { name: faker.string.alpha(20), url: faker.internet.url() },
+  })),
+  flavor_text_entries: Array.from(
+    { length: faker.number.int({ min: 1, max: 10 }) },
+    (_, i) => i + 1,
+  ).map(() => ({
+    text: faker.string.alpha(20),
+    version_group: { name: faker.string.alpha(20), url: faker.internet.url() },
+    language: { name: faker.string.alpha(20), url: faker.internet.url() },
+  })),
+  game_indices: Array.from(
+    { length: faker.number.int({ min: 1, max: 10 }) },
+    (_, i) => i + 1,
+  ).map(() => ({
+    game_index: faker.number.int({ min: undefined, max: undefined }),
+    generation: { name: faker.string.alpha(20), url: faker.internet.url() },
+  })),
+  names: Array.from(
+    { length: faker.number.int({ min: 1, max: 10 }) },
+    (_, i) => i + 1,
+  ).map(() => ({
+    name: faker.string.alpha(20),
+    language: { name: faker.string.alpha(20), url: faker.internet.url() },
+  })),
+  held_by_pokemon: Array.from(
+    { length: faker.number.int({ min: 1, max: 10 }) },
+    (_, i) => i + 1,
+  ).map(() => ({
+    pokemon: { name: faker.string.alpha(20), url: faker.internet.url() },
+    "version-details": Array.from(
+      { length: faker.number.int({ min: 1, max: 10 }) },
+      (_, i) => i + 1,
+    ).map(() => ({
+      rarity: faker.number.int({ min: undefined, max: undefined }),
+      version: { name: faker.string.alpha(20), url: faker.internet.url() },
+    })),
+  })),
+  sprites: { default: faker.internet.url() },
+  baby_trigger_for: { url: faker.internet.url() },
+  machines: Array.from(
+    { length: faker.number.int({ min: 1, max: 10 }) },
+    (_, i) => i + 1,
+  ).map(() => ({
+    machine: faker.internet.url(),
+    version_group: { name: faker.string.alpha(20), url: faker.internet.url() },
+  })),
+  ...overrideResponse,
+});
+
+export const getItemCategoryListResponseMock = (
+  overrideResponse: Partial<PaginatedItemCategorySummaryList> = {},
+): PaginatedItemCategorySummaryList => ({
+  count: faker.helpers.arrayElement([
+    faker.number.int({ min: undefined, max: undefined }),
+    undefined,
+  ]),
+  next: faker.helpers.arrayElement([
+    faker.helpers.arrayElement([faker.internet.url(), null]),
+    undefined,
+  ]),
+  previous: faker.helpers.arrayElement([
+    faker.helpers.arrayElement([faker.internet.url(), null]),
+    undefined,
+  ]),
+  results: faker.helpers.arrayElement([
+    Array.from(
+      { length: faker.number.int({ min: 1, max: 10 }) },
+      (_, i) => i + 1,
+    ).map(() => ({ name: faker.string.alpha(20), url: faker.internet.url() })),
+    undefined,
+  ]),
+  ...overrideResponse,
+});
+
+export const getItemCategoryRetrieveResponseMock = (
+  overrideResponse: Partial<ItemCategoryDetail> = {},
+): ItemCategoryDetail => ({
+  id: faker.number.int({ min: undefined, max: undefined }),
+  name: faker.string.alpha(20),
+  items: Array.from(
+    { length: faker.number.int({ min: 1, max: 10 }) },
+    (_, i) => i + 1,
+  ).map(() => ({ name: faker.string.alpha(20), url: faker.internet.url() })),
+  names: Array.from(
+    { length: faker.number.int({ min: 1, max: 10 }) },
+    (_, i) => i + 1,
+  ).map(() => ({
+    name: faker.string.alpha(20),
+    language: { name: faker.string.alpha(20), url: faker.internet.url() },
+  })),
+  pocket: { name: faker.string.alpha(20), url: faker.internet.url() },
+  ...overrideResponse,
+});
+
+export const getItemAttributeListResponseMock = (
+  overrideResponse: Partial<PaginatedItemAttributeSummaryList> = {},
+): PaginatedItemAttributeSummaryList => ({
+  count: faker.helpers.arrayElement([
+    faker.number.int({ min: undefined, max: undefined }),
+    undefined,
+  ]),
+  next: faker.helpers.arrayElement([
+    faker.helpers.arrayElement([faker.internet.url(), null]),
+    undefined,
+  ]),
+  previous: faker.helpers.arrayElement([
+    faker.helpers.arrayElement([faker.internet.url(), null]),
+    undefined,
+  ]),
+  results: faker.helpers.arrayElement([
+    Array.from(
+      { length: faker.number.int({ min: 1, max: 10 }) },
+      (_, i) => i + 1,
+    ).map(() => ({ name: faker.string.alpha(20), url: faker.internet.url() })),
+    undefined,
+  ]),
+  ...overrideResponse,
+});
+
+export const getItemAttributeRetrieveResponseMock = (
+  overrideResponse: Partial<ItemAttributeDetail> = {},
+): ItemAttributeDetail => ({
+  id: faker.number.int({ min: undefined, max: undefined }),
+  name: faker.string.alpha(20),
+  descriptions: Array.from(
+    { length: faker.number.int({ min: 1, max: 10 }) },
+    (_, i) => i + 1,
+  ).map(() => ({
+    description: faker.helpers.arrayElement([
+      faker.string.alpha(20),
+      undefined,
+    ]),
+    language: { name: faker.string.alpha(20), url: faker.internet.url() },
+  })),
+  items: Array.from(
+    { length: faker.number.int({ min: 1, max: 10 }) },
+    (_, i) => i + 1,
+  ).map(() => ({ name: faker.string.alpha(20), url: faker.internet.url() })),
+  names: Array.from(
+    { length: faker.number.int({ min: 1, max: 10 }) },
+    (_, i) => i + 1,
+  ).map(() => ({
+    name: faker.string.alpha(20),
+    language: { name: faker.string.alpha(20), url: faker.internet.url() },
+  })),
+  ...overrideResponse,
+});
+
+export const getItemFlingEffectListResponseMock = (
+  overrideResponse: Partial<PaginatedItemFlingEffectSummaryList> = {},
+): PaginatedItemFlingEffectSummaryList => ({
+  count: faker.helpers.arrayElement([
+    faker.number.int({ min: undefined, max: undefined }),
+    undefined,
+  ]),
+  next: faker.helpers.arrayElement([
+    faker.helpers.arrayElement([faker.internet.url(), null]),
+    undefined,
+  ]),
+  previous: faker.helpers.arrayElement([
+    faker.helpers.arrayElement([faker.internet.url(), null]),
+    undefined,
+  ]),
+  results: faker.helpers.arrayElement([
+    Array.from(
+      { length: faker.number.int({ min: 1, max: 10 }) },
+      (_, i) => i + 1,
+    ).map(() => ({ name: faker.string.alpha(20), url: faker.internet.url() })),
+    undefined,
+  ]),
+  ...overrideResponse,
+});
+
+export const getItemFlingEffectRetrieveResponseMock = (
+  overrideResponse: Partial<ItemFlingEffectDetail> = {},
+): ItemFlingEffectDetail => ({
+  id: faker.number.int({ min: undefined, max: undefined }),
+  name: faker.string.alpha(20),
+  effect_entries: Array.from(
+    { length: faker.number.int({ min: 1, max: 10 }) },
+    (_, i) => i + 1,
+  ).map(() => ({
+    effect: faker.string.alpha(20),
+    language: { name: faker.string.alpha(20), url: faker.internet.url() },
+  })),
+  items: Array.from(
+    { length: faker.number.int({ min: 1, max: 10 }) },
+    (_, i) => i + 1,
+  ).map(() => ({ name: faker.string.alpha(20), url: faker.internet.url() })),
+  ...overrideResponse,
+});
+
+export const getItemPocketListResponseMock = (
+  overrideResponse: Partial<PaginatedItemPocketSummaryList> = {},
+): PaginatedItemPocketSummaryList => ({
+  count: faker.helpers.arrayElement([
+    faker.number.int({ min: undefined, max: undefined }),
+    undefined,
+  ]),
+  next: faker.helpers.arrayElement([
+    faker.helpers.arrayElement([faker.internet.url(), null]),
+    undefined,
+  ]),
+  previous: faker.helpers.arrayElement([
+    faker.helpers.arrayElement([faker.internet.url(), null]),
+    undefined,
+  ]),
+  results: faker.helpers.arrayElement([
+    Array.from(
+      { length: faker.number.int({ min: 1, max: 10 }) },
+      (_, i) => i + 1,
+    ).map(() => ({ name: faker.string.alpha(20), url: faker.internet.url() })),
+    undefined,
+  ]),
+  ...overrideResponse,
+});
+
+export const getItemPocketRetrieveResponseMock = (
+  overrideResponse: Partial<ItemPocketDetail> = {},
+): ItemPocketDetail => ({
+  id: faker.number.int({ min: undefined, max: undefined }),
+  name: faker.string.alpha(20),
+  categories: Array.from(
+    { length: faker.number.int({ min: 1, max: 10 }) },
+    (_, i) => i + 1,
+  ).map(() => ({ name: faker.string.alpha(20), url: faker.internet.url() })),
+  names: Array.from(
+    { length: faker.number.int({ min: 1, max: 10 }) },
+    (_, i) => i + 1,
+  ).map(() => ({
+    name: faker.string.alpha(20),
+    language: { name: faker.string.alpha(20), url: faker.internet.url() },
+  })),
+  ...overrideResponse,
+});
+
+export const getLanguageListResponseMock = (
+  overrideResponse: Partial<PaginatedLanguageSummaryList> = {},
+): PaginatedLanguageSummaryList => ({
+  count: faker.helpers.arrayElement([
+    faker.number.int({ min: undefined, max: undefined }),
+    undefined,
+  ]),
+  next: faker.helpers.arrayElement([
+    faker.helpers.arrayElement([faker.internet.url(), null]),
+    undefined,
+  ]),
+  previous: faker.helpers.arrayElement([
+    faker.helpers.arrayElement([faker.internet.url(), null]),
+    undefined,
+  ]),
+  results: faker.helpers.arrayElement([
+    Array.from(
+      { length: faker.number.int({ min: 1, max: 10 }) },
+      (_, i) => i + 1,
+    ).map(() => ({ name: faker.string.alpha(20), url: faker.internet.url() })),
+    undefined,
+  ]),
+  ...overrideResponse,
+});
+
+export const getLanguageRetrieveResponseMock = (
+  overrideResponse: Partial<LanguageDetail> = {},
+): LanguageDetail => ({
+  id: faker.number.int({ min: undefined, max: undefined }),
+  name: faker.string.alpha(20),
+  official: faker.helpers.arrayElement([faker.datatype.boolean(), undefined]),
+  iso639: faker.string.alpha(20),
+  iso3166: faker.string.alpha(20),
+  names: Array.from(
+    { length: faker.number.int({ min: 1, max: 10 }) },
+    (_, i) => i + 1,
+  ).map(() => ({
+    name: faker.string.alpha(20),
+    language: { name: faker.string.alpha(20), url: faker.internet.url() },
+  })),
+  ...overrideResponse,
+});
+
+export const getLocationListResponseMock = (
+  overrideResponse: Partial<PaginatedLocationSummaryList> = {},
+): PaginatedLocationSummaryList => ({
+  count: faker.helpers.arrayElement([
+    faker.number.int({ min: undefined, max: undefined }),
+    undefined,
+  ]),
+  next: faker.helpers.arrayElement([
+    faker.helpers.arrayElement([faker.internet.url(), null]),
+    undefined,
+  ]),
+  previous: faker.helpers.arrayElement([
+    faker.helpers.arrayElement([faker.internet.url(), null]),
+    undefined,
+  ]),
+  results: faker.helpers.arrayElement([
+    Array.from(
+      { length: faker.number.int({ min: 1, max: 10 }) },
+      (_, i) => i + 1,
+    ).map(() => ({ name: faker.string.alpha(20), url: faker.internet.url() })),
+    undefined,
+  ]),
+  ...overrideResponse,
+});
+
+export const getLocationRetrieveResponseMock = (
+  overrideResponse: Partial<LocationDetail> = {},
+): LocationDetail => ({
+  id: faker.number.int({ min: undefined, max: undefined }),
+  name: faker.string.alpha(20),
+  region: { name: faker.string.alpha(20), url: faker.internet.url() },
+  names: Array.from(
+    { length: faker.number.int({ min: 1, max: 10 }) },
+    (_, i) => i + 1,
+  ).map(() => ({
+    name: faker.string.alpha(20),
+    language: { name: faker.string.alpha(20), url: faker.internet.url() },
+  })),
+  game_indices: Array.from(
+    { length: faker.number.int({ min: 1, max: 10 }) },
+    (_, i) => i + 1,
+  ).map(() => ({
+    game_index: faker.number.int({ min: undefined, max: undefined }),
+    generation: { name: faker.string.alpha(20), url: faker.internet.url() },
+  })),
+  areas: Array.from(
+    { length: faker.number.int({ min: 1, max: 10 }) },
+    (_, i) => i + 1,
+  ).map(() => ({ name: faker.string.alpha(20), url: faker.internet.url() })),
+  ...overrideResponse,
+});
+
+export const getLocationAreaListResponseMock = (
+  overrideResponse: Partial<PaginatedLocationAreaSummaryList> = {},
+): PaginatedLocationAreaSummaryList => ({
+  count: faker.helpers.arrayElement([
+    faker.number.int({ min: undefined, max: undefined }),
+    undefined,
+  ]),
+  next: faker.helpers.arrayElement([
+    faker.helpers.arrayElement([faker.internet.url(), null]),
+    undefined,
+  ]),
+  previous: faker.helpers.arrayElement([
+    faker.helpers.arrayElement([faker.internet.url(), null]),
+    undefined,
+  ]),
+  results: faker.helpers.arrayElement([
+    Array.from(
+      { length: faker.number.int({ min: 1, max: 10 }) },
+      (_, i) => i + 1,
+    ).map(() => ({ name: faker.string.alpha(20), url: faker.internet.url() })),
+    undefined,
+  ]),
+  ...overrideResponse,
+});
+
+export const getLocationAreaRetrieveResponseMock = (
+  overrideResponse: Partial<LocationAreaDetail> = {},
+): LocationAreaDetail => ({
+  id: faker.number.int({ min: undefined, max: undefined }),
+  name: faker.string.alpha(20),
+  game_index: faker.number.int({ min: undefined, max: undefined }),
+  encounter_method_rates: Array.from(
+    { length: faker.number.int({ min: 1, max: 10 }) },
+    (_, i) => i + 1,
+  ).map(() => ({
+    encounter_method: {
+      name: faker.string.alpha(20),
+      url: faker.internet.url(),
+    },
+    version_details: Array.from(
+      { length: faker.number.int({ min: 1, max: 10 }) },
+      (_, i) => i + 1,
+    ).map(() => ({
+      rate: faker.number.int({ min: undefined, max: undefined }),
+      version: { name: faker.string.alpha(20), url: faker.internet.url() },
+    })),
+  })),
+  location: { name: faker.string.alpha(20), url: faker.internet.url() },
+  names: Array.from(
+    { length: faker.number.int({ min: 1, max: 10 }) },
+    (_, i) => i + 1,
+  ).map(() => ({
+    name: faker.string.alpha(20),
+    language: { name: faker.string.alpha(20), url: faker.internet.url() },
+  })),
+  pokemon_encounters: Array.from(
+    { length: faker.number.int({ min: 1, max: 10 }) },
+    (_, i) => i + 1,
+  ).map(() => ({
+    pokemon: { name: faker.string.alpha(20), url: faker.internet.url() },
+    version_details: Array.from(
+      { length: faker.number.int({ min: 1, max: 10 }) },
+      (_, i) => i + 1,
+    ).map(() => ({
+      version: { name: faker.string.alpha(20), url: faker.internet.url() },
+      max_chance: faker.number.int({ min: undefined, max: undefined }),
+      encounter_details: {
+        min_level: faker.number.int({ min: undefined, max: undefined }),
+        max_level: faker.number.int({ min: undefined, max: undefined }),
+        condition_values: faker.helpers.arrayElement([
+          { name: faker.string.alpha(20), url: faker.internet.url() },
+          undefined,
+        ]),
+        chance: faker.number.int({ min: undefined, max: undefined }),
+        method: { name: faker.string.alpha(20), url: faker.internet.url() },
+      },
+    })),
+  })),
+  ...overrideResponse,
+});
+
+export const getMachineListResponseMock = (
+  overrideResponse: Partial<PaginatedMachineSummaryList> = {},
+): PaginatedMachineSummaryList => ({
+  count: faker.helpers.arrayElement([
+    faker.number.int({ min: undefined, max: undefined }),
+    undefined,
+  ]),
+  next: faker.helpers.arrayElement([
+    faker.helpers.arrayElement([faker.internet.url(), null]),
+    undefined,
+  ]),
+  previous: faker.helpers.arrayElement([
+    faker.helpers.arrayElement([faker.internet.url(), null]),
+    undefined,
+  ]),
+  results: faker.helpers.arrayElement([
+    Array.from(
+      { length: faker.number.int({ min: 1, max: 10 }) },
+      (_, i) => i + 1,
+    ).map(() => ({ url: faker.internet.url() })),
+    undefined,
+  ]),
+  ...overrideResponse,
+});
+
+export const getMachineRetrieveResponseMock = (
+  overrideResponse: Partial<MachineDetail> = {},
+): MachineDetail => ({
+  id: faker.number.int({ min: undefined, max: undefined }),
+  item: { name: faker.string.alpha(20), url: faker.internet.url() },
+  version_group: { name: faker.string.alpha(20), url: faker.internet.url() },
+  move: { name: faker.string.alpha(20), url: faker.internet.url() },
+  ...overrideResponse,
+});
+
+export const getMoveListResponseMock = (
+  overrideResponse: Partial<PaginatedMoveSummaryList> = {},
+): PaginatedMoveSummaryList => ({
+  count: faker.helpers.arrayElement([
+    faker.number.int({ min: undefined, max: undefined }),
+    undefined,
+  ]),
+  next: faker.helpers.arrayElement([
+    faker.helpers.arrayElement([faker.internet.url(), null]),
+    undefined,
+  ]),
+  previous: faker.helpers.arrayElement([
+    faker.helpers.arrayElement([faker.internet.url(), null]),
+    undefined,
+  ]),
+  results: faker.helpers.arrayElement([
+    Array.from(
+      { length: faker.number.int({ min: 1, max: 10 }) },
+      (_, i) => i + 1,
+    ).map(() => ({ name: faker.string.alpha(20), url: faker.internet.url() })),
+    undefined,
+  ]),
+  ...overrideResponse,
+});
+
+export const getMoveRetrieveResponseMock = (
+  overrideResponse: Partial<MoveDetail> = {},
+): MoveDetail => ({
+  id: faker.number.int({ min: undefined, max: undefined }),
+  name: faker.string.alpha(20),
+  accuracy: faker.helpers.arrayElement([
+    faker.helpers.arrayElement([
+      faker.number.int({ min: undefined, max: undefined }),
+      null,
+    ]),
+    undefined,
+  ]),
+  effect_chance: faker.number.int({ min: undefined, max: undefined }),
+  pp: faker.helpers.arrayElement([
+    faker.helpers.arrayElement([
+      faker.number.int({ min: undefined, max: undefined }),
+      null,
+    ]),
+    undefined,
+  ]),
+  priority: faker.helpers.arrayElement([
+    faker.helpers.arrayElement([
+      faker.number.int({ min: undefined, max: undefined }),
+      null,
+    ]),
+    undefined,
+  ]),
+  power: faker.helpers.arrayElement([
+    faker.helpers.arrayElement([
+      faker.number.int({ min: undefined, max: undefined }),
+      null,
+    ]),
+    undefined,
+  ]),
+  contest_combos: {
+    normal: {
+      use_before: Array.from(
+        { length: faker.number.int({ min: 1, max: 10 }) },
+        (_, i) => i + 1,
+      ).map(() => ({
+        name: faker.string.alpha(20),
+        url: faker.internet.url(),
+      })),
+      use_after: Array.from(
+        { length: faker.number.int({ min: 1, max: 10 }) },
+        (_, i) => i + 1,
+      ).map(() => ({
+        name: faker.string.alpha(20),
+        url: faker.internet.url(),
+      })),
+    },
+    super: {
+      use_before: Array.from(
+        { length: faker.number.int({ min: 1, max: 10 }) },
+        (_, i) => i + 1,
+      ).map(() => ({
+        name: faker.string.alpha(20),
+        url: faker.internet.url(),
+      })),
+      use_after: Array.from(
+        { length: faker.number.int({ min: 1, max: 10 }) },
+        (_, i) => i + 1,
+      ).map(() => ({
+        name: faker.string.alpha(20),
+        url: faker.internet.url(),
+      })),
+    },
+  },
+  contest_type: { name: faker.string.alpha(20), url: faker.internet.url() },
+  contest_effect: { url: faker.internet.url() },
+  damage_class: { name: faker.string.alpha(20), url: faker.internet.url() },
+  effect_entries: Array.from(
+    { length: faker.number.int({ min: 1, max: 10 }) },
+    (_, i) => i + 1,
+  ).map(() => ({
+    effect: faker.string.alpha(20),
+    short_effect: faker.string.alpha(20),
+    language: { name: faker.string.alpha(20), url: faker.internet.url() },
+  })),
+  effect_changes: Array.from(
+    { length: faker.number.int({ min: 1, max: 10 }) },
+    (_, i) => i + 1,
+  ).map(() => ({
+    effect_entries: Array.from(
+      { length: faker.number.int({ min: 1, max: 10 }) },
+      (_, i) => i + 1,
+    ).map(() => ({
+      effect: faker.string.alpha(20),
+      language: { name: faker.string.alpha(20), url: faker.internet.url() },
+    })),
+    version_group: { name: faker.string.alpha(20), url: faker.internet.url() },
+  })),
+  generation: { name: faker.string.alpha(20), url: faker.internet.url() },
+  meta: {
+    ailment: { name: faker.string.alpha(20), url: faker.internet.url() },
+    category: { name: faker.string.alpha(20), url: faker.internet.url() },
+    min_hits: faker.helpers.arrayElement([
+      faker.helpers.arrayElement([
+        faker.number.int({ min: undefined, max: undefined }),
+        null,
+      ]),
+      undefined,
+    ]),
+    max_hits: faker.helpers.arrayElement([
+      faker.helpers.arrayElement([
+        faker.number.int({ min: undefined, max: undefined }),
+        null,
+      ]),
+      undefined,
+    ]),
+    min_turns: faker.helpers.arrayElement([
+      faker.helpers.arrayElement([
+        faker.number.int({ min: undefined, max: undefined }),
+        null,
+      ]),
+      undefined,
+    ]),
+    max_turns: faker.helpers.arrayElement([
+      faker.helpers.arrayElement([
+        faker.number.int({ min: undefined, max: undefined }),
+        null,
+      ]),
+      undefined,
+    ]),
+    drain: faker.helpers.arrayElement([
+      faker.helpers.arrayElement([
+        faker.number.int({ min: undefined, max: undefined }),
+        null,
+      ]),
+      undefined,
+    ]),
+    healing: faker.helpers.arrayElement([
+      faker.helpers.arrayElement([
+        faker.number.int({ min: undefined, max: undefined }),
+        null,
+      ]),
+      undefined,
+    ]),
+    crit_rate: faker.helpers.arrayElement([
+      faker.helpers.arrayElement([
+        faker.number.int({ min: undefined, max: undefined }),
+        null,
+      ]),
+      undefined,
+    ]),
+    ailment_chance: faker.helpers.arrayElement([
+      faker.helpers.arrayElement([
+        faker.number.int({ min: undefined, max: undefined }),
+        null,
+      ]),
+      undefined,
+    ]),
+    flinch_chance: faker.helpers.arrayElement([
+      faker.helpers.arrayElement([
+        faker.number.int({ min: undefined, max: undefined }),
+        null,
+      ]),
+      undefined,
+    ]),
+    stat_chance: faker.helpers.arrayElement([
+      faker.helpers.arrayElement([
+        faker.number.int({ min: undefined, max: undefined }),
+        null,
+      ]),
+      undefined,
+    ]),
+  },
+  names: Array.from(
+    { length: faker.number.int({ min: 1, max: 10 }) },
+    (_, i) => i + 1,
+  ).map(() => ({
+    name: faker.string.alpha(20),
+    language: { name: faker.string.alpha(20), url: faker.internet.url() },
+  })),
+  past_values: Array.from(
+    { length: faker.number.int({ min: 1, max: 10 }) },
+    (_, i) => i + 1,
+  ).map(() => ({
+    accuracy: faker.helpers.arrayElement([
+      faker.helpers.arrayElement([
+        faker.number.int({ min: undefined, max: undefined }),
+        null,
+      ]),
+      undefined,
+    ]),
+    power: faker.helpers.arrayElement([
+      faker.helpers.arrayElement([
+        faker.number.int({ min: undefined, max: undefined }),
+        null,
+      ]),
+      undefined,
+    ]),
+    pp: faker.helpers.arrayElement([
+      faker.helpers.arrayElement([
+        faker.number.int({ min: undefined, max: undefined }),
+        null,
+      ]),
+      undefined,
+    ]),
+    effect_chance: faker.number.int({ min: undefined, max: undefined }),
+    effect_entries: Array.from(
+      { length: faker.number.int({ min: 1, max: 10 }) },
+      (_, i) => i + 1,
+    ).map(() => ({
+      effect: faker.string.alpha(20),
+      short_effect: faker.string.alpha(20),
+      language: { name: faker.string.alpha(20), url: faker.internet.url() },
+    })),
+    type: { name: faker.string.alpha(20), url: faker.internet.url() },
+    version_group: { name: faker.string.alpha(20), url: faker.internet.url() },
+  })),
+  stat_changes: Array.from(
+    { length: faker.number.int({ min: 1, max: 10 }) },
+    (_, i) => i + 1,
+  ).map(() => ({
+    change: faker.number.int({ min: undefined, max: undefined }),
+    stat: { name: faker.string.alpha(20), url: faker.internet.url() },
+  })),
+  super_contest_effect: { url: faker.internet.url() },
+  target: { name: faker.string.alpha(20), url: faker.internet.url() },
+  type: { name: faker.string.alpha(20), url: faker.internet.url() },
+  machines: Array.from(
+    { length: faker.number.int({ min: 1, max: 10 }) },
+    (_, i) => i + 1,
+  ).map(() => ({
+    machine: { url: faker.internet.url() },
+    version_group: { name: faker.string.alpha(20), url: faker.internet.url() },
+  })),
+  flavor_text_entries: Array.from(
+    { length: faker.number.int({ min: 1, max: 10 }) },
+    (_, i) => i + 1,
+  ).map(() => ({
+    flavor_text: faker.string.alpha(20),
+    language: { name: faker.string.alpha(20), url: faker.internet.url() },
+    version_group: { name: faker.string.alpha(20), url: faker.internet.url() },
+  })),
+  learned_by_pokemon: Array.from(
+    { length: faker.number.int({ min: 1, max: 10 }) },
+    (_, i) => i + 1,
+  ).map(() => ({ name: faker.string.alpha(20), url: faker.internet.url() })),
+  ...overrideResponse,
+});
+
+export const getMoveAilmentListResponseMock = (
+  overrideResponse: Partial<PaginatedMoveMetaAilmentSummaryList> = {},
+): PaginatedMoveMetaAilmentSummaryList => ({
+  count: faker.helpers.arrayElement([
+    faker.number.int({ min: undefined, max: undefined }),
+    undefined,
+  ]),
+  next: faker.helpers.arrayElement([
+    faker.helpers.arrayElement([faker.internet.url(), null]),
+    undefined,
+  ]),
+  previous: faker.helpers.arrayElement([
+    faker.helpers.arrayElement([faker.internet.url(), null]),
+    undefined,
+  ]),
+  results: faker.helpers.arrayElement([
+    Array.from(
+      { length: faker.number.int({ min: 1, max: 10 }) },
+      (_, i) => i + 1,
+    ).map(() => ({ name: faker.string.alpha(20), url: faker.internet.url() })),
+    undefined,
+  ]),
+  ...overrideResponse,
+});
+
+export const getMoveAilmentRetrieveResponseMock = (
+  overrideResponse: Partial<MoveMetaAilmentDetail> = {},
+): MoveMetaAilmentDetail => ({
+  id: faker.number.int({ min: undefined, max: undefined }),
+  name: faker.string.alpha(20),
+  moves: Array.from(
+    { length: faker.number.int({ min: 1, max: 10 }) },
+    (_, i) => i + 1,
+  ).map(() => ({ name: faker.string.alpha(20), url: faker.internet.url() })),
+  names: Array.from(
+    { length: faker.number.int({ min: 1, max: 10 }) },
+    (_, i) => i + 1,
+  ).map(() => ({
+    name: faker.string.alpha(20),
+    language: { name: faker.string.alpha(20), url: faker.internet.url() },
+  })),
+  ...overrideResponse,
+});
+
+export const getMoveBattleStyleListResponseMock = (
+  overrideResponse: Partial<PaginatedMoveBattleStyleSummaryList> = {},
+): PaginatedMoveBattleStyleSummaryList => ({
+  count: faker.helpers.arrayElement([
+    faker.number.int({ min: undefined, max: undefined }),
+    undefined,
+  ]),
+  next: faker.helpers.arrayElement([
+    faker.helpers.arrayElement([faker.internet.url(), null]),
+    undefined,
+  ]),
+  previous: faker.helpers.arrayElement([
+    faker.helpers.arrayElement([faker.internet.url(), null]),
+    undefined,
+  ]),
+  results: faker.helpers.arrayElement([
+    Array.from(
+      { length: faker.number.int({ min: 1, max: 10 }) },
+      (_, i) => i + 1,
+    ).map(() => ({ name: faker.string.alpha(20), url: faker.internet.url() })),
+    undefined,
+  ]),
+  ...overrideResponse,
+});
+
+export const getMoveBattleStyleRetrieveResponseMock = (
+  overrideResponse: Partial<MoveBattleStyleDetail> = {},
+): MoveBattleStyleDetail => ({
+  id: faker.number.int({ min: undefined, max: undefined }),
+  name: faker.string.alpha(20),
+  names: Array.from(
+    { length: faker.number.int({ min: 1, max: 10 }) },
+    (_, i) => i + 1,
+  ).map(() => ({
+    name: faker.string.alpha(20),
+    language: { name: faker.string.alpha(20), url: faker.internet.url() },
+  })),
+  ...overrideResponse,
+});
+
+export const getMoveCategoryListResponseMock = (
+  overrideResponse: Partial<PaginatedMoveMetaCategorySummaryList> = {},
+): PaginatedMoveMetaCategorySummaryList => ({
+  count: faker.helpers.arrayElement([
+    faker.number.int({ min: undefined, max: undefined }),
+    undefined,
+  ]),
+  next: faker.helpers.arrayElement([
+    faker.helpers.arrayElement([faker.internet.url(), null]),
+    undefined,
+  ]),
+  previous: faker.helpers.arrayElement([
+    faker.helpers.arrayElement([faker.internet.url(), null]),
+    undefined,
+  ]),
+  results: faker.helpers.arrayElement([
+    Array.from(
+      { length: faker.number.int({ min: 1, max: 10 }) },
+      (_, i) => i + 1,
+    ).map(() => ({ name: faker.string.alpha(20), url: faker.internet.url() })),
+    undefined,
+  ]),
+  ...overrideResponse,
+});
+
+export const getMoveCategoryRetrieveResponseMock = (
+  overrideResponse: Partial<MoveMetaCategoryDetail> = {},
+): MoveMetaCategoryDetail => ({
+  id: faker.number.int({ min: undefined, max: undefined }),
+  name: faker.string.alpha(20),
+  descriptions: Array.from(
+    { length: faker.number.int({ min: 1, max: 10 }) },
+    (_, i) => i + 1,
+  ).map(() => ({
+    description: faker.helpers.arrayElement([
+      faker.string.alpha(20),
+      undefined,
+    ]),
+    language: { name: faker.string.alpha(20), url: faker.internet.url() },
+  })),
+  moves: Array.from(
+    { length: faker.number.int({ min: 1, max: 10 }) },
+    (_, i) => i + 1,
+  ).map(() => ({ name: faker.string.alpha(20), url: faker.internet.url() })),
+  ...overrideResponse,
+});
+
+export const getMoveDamageClassListResponseMock = (
+  overrideResponse: Partial<PaginatedMoveDamageClassSummaryList> = {},
+): PaginatedMoveDamageClassSummaryList => ({
+  count: faker.helpers.arrayElement([
+    faker.number.int({ min: undefined, max: undefined }),
+    undefined,
+  ]),
+  next: faker.helpers.arrayElement([
+    faker.helpers.arrayElement([faker.internet.url(), null]),
+    undefined,
+  ]),
+  previous: faker.helpers.arrayElement([
+    faker.helpers.arrayElement([faker.internet.url(), null]),
+    undefined,
+  ]),
+  results: faker.helpers.arrayElement([
+    Array.from(
+      { length: faker.number.int({ min: 1, max: 10 }) },
+      (_, i) => i + 1,
+    ).map(() => ({ name: faker.string.alpha(20), url: faker.internet.url() })),
+    undefined,
+  ]),
+  ...overrideResponse,
+});
+
+export const getMoveDamageClassRetrieveResponseMock = (
+  overrideResponse: Partial<MoveDamageClassDetail> = {},
+): MoveDamageClassDetail => ({
+  id: faker.number.int({ min: undefined, max: undefined }),
+  name: faker.string.alpha(20),
+  descriptions: Array.from(
+    { length: faker.number.int({ min: 1, max: 10 }) },
+    (_, i) => i + 1,
+  ).map(() => ({
+    description: faker.helpers.arrayElement([
+      faker.string.alpha(20),
+      undefined,
+    ]),
+    language: { name: faker.string.alpha(20), url: faker.internet.url() },
+  })),
+  moves: Array.from(
+    { length: faker.number.int({ min: 1, max: 10 }) },
+    (_, i) => i + 1,
+  ).map(() => ({ name: faker.string.alpha(20), url: faker.internet.url() })),
+  names: Array.from(
+    { length: faker.number.int({ min: 1, max: 10 }) },
+    (_, i) => i + 1,
+  ).map(() => ({
+    name: faker.string.alpha(20),
+    language: { name: faker.string.alpha(20), url: faker.internet.url() },
+  })),
+  ...overrideResponse,
+});
+
+export const getMoveLearnMethodListResponseMock = (
+  overrideResponse: Partial<PaginatedMoveLearnMethodSummaryList> = {},
+): PaginatedMoveLearnMethodSummaryList => ({
+  count: faker.helpers.arrayElement([
+    faker.number.int({ min: undefined, max: undefined }),
+    undefined,
+  ]),
+  next: faker.helpers.arrayElement([
+    faker.helpers.arrayElement([faker.internet.url(), null]),
+    undefined,
+  ]),
+  previous: faker.helpers.arrayElement([
+    faker.helpers.arrayElement([faker.internet.url(), null]),
+    undefined,
+  ]),
+  results: faker.helpers.arrayElement([
+    Array.from(
+      { length: faker.number.int({ min: 1, max: 10 }) },
+      (_, i) => i + 1,
+    ).map(() => ({ name: faker.string.alpha(20), url: faker.internet.url() })),
+    undefined,
+  ]),
+  ...overrideResponse,
+});
+
+export const getMoveLearnMethodRetrieveResponseMock = (
+  overrideResponse: Partial<MoveLearnMethodDetail> = {},
+): MoveLearnMethodDetail => ({
+  id: faker.number.int({ min: undefined, max: undefined }),
+  name: faker.string.alpha(20),
+  names: Array.from(
+    { length: faker.number.int({ min: 1, max: 10 }) },
+    (_, i) => i + 1,
+  ).map(() => ({
+    name: faker.string.alpha(20),
+    language: { name: faker.string.alpha(20), url: faker.internet.url() },
+  })),
+  descriptions: Array.from(
+    { length: faker.number.int({ min: 1, max: 10 }) },
+    (_, i) => i + 1,
+  ).map(() => ({
+    description: faker.helpers.arrayElement([
+      faker.string.alpha(20),
+      undefined,
+    ]),
+    language: { name: faker.string.alpha(20), url: faker.internet.url() },
+  })),
+  version_groups: Array.from(
+    { length: faker.number.int({ min: 1, max: 10 }) },
+    (_, i) => i + 1,
+  ).map(() => ({ name: faker.string.alpha(20), url: faker.internet.url() })),
+  ...overrideResponse,
+});
+
+export const getMoveTargetListResponseMock = (
+  overrideResponse: Partial<PaginatedMoveTargetSummaryList> = {},
+): PaginatedMoveTargetSummaryList => ({
+  count: faker.helpers.arrayElement([
+    faker.number.int({ min: undefined, max: undefined }),
+    undefined,
+  ]),
+  next: faker.helpers.arrayElement([
+    faker.helpers.arrayElement([faker.internet.url(), null]),
+    undefined,
+  ]),
+  previous: faker.helpers.arrayElement([
+    faker.helpers.arrayElement([faker.internet.url(), null]),
+    undefined,
+  ]),
+  results: faker.helpers.arrayElement([
+    Array.from(
+      { length: faker.number.int({ min: 1, max: 10 }) },
+      (_, i) => i + 1,
+    ).map(() => ({ name: faker.string.alpha(20), url: faker.internet.url() })),
+    undefined,
+  ]),
+  ...overrideResponse,
+});
+
+export const getMoveTargetRetrieveResponseMock = (
+  overrideResponse: Partial<MoveTargetDetail> = {},
+): MoveTargetDetail => ({
+  id: faker.number.int({ min: undefined, max: undefined }),
+  name: faker.string.alpha(20),
+  descriptions: Array.from(
+    { length: faker.number.int({ min: 1, max: 10 }) },
+    (_, i) => i + 1,
+  ).map(() => ({
+    description: faker.helpers.arrayElement([
+      faker.string.alpha(20),
+      undefined,
+    ]),
+    language: { name: faker.string.alpha(20), url: faker.internet.url() },
+  })),
+  moves: Array.from(
+    { length: faker.number.int({ min: 1, max: 10 }) },
+    (_, i) => i + 1,
+  ).map(() => ({ name: faker.string.alpha(20), url: faker.internet.url() })),
+  names: Array.from(
+    { length: faker.number.int({ min: 1, max: 10 }) },
+    (_, i) => i + 1,
+  ).map(() => ({
+    name: faker.string.alpha(20),
+    language: { name: faker.string.alpha(20), url: faker.internet.url() },
+  })),
+  ...overrideResponse,
+});
+
+export const getNatureListResponseMock = (
+  overrideResponse: Partial<PaginatedNatureSummaryList> = {},
+): PaginatedNatureSummaryList => ({
+  count: faker.helpers.arrayElement([
+    faker.number.int({ min: undefined, max: undefined }),
+    undefined,
+  ]),
+  next: faker.helpers.arrayElement([
+    faker.helpers.arrayElement([faker.internet.url(), null]),
+    undefined,
+  ]),
+  previous: faker.helpers.arrayElement([
+    faker.helpers.arrayElement([faker.internet.url(), null]),
+    undefined,
+  ]),
+  results: faker.helpers.arrayElement([
+    Array.from(
+      { length: faker.number.int({ min: 1, max: 10 }) },
+      (_, i) => i + 1,
+    ).map(() => ({ name: faker.string.alpha(20), url: faker.internet.url() })),
+    undefined,
+  ]),
+  ...overrideResponse,
+});
+
+export const getNatureRetrieveResponseMock = (
+  overrideResponse: Partial<NatureDetail> = {},
+): NatureDetail => ({
+  id: faker.number.int({ min: undefined, max: undefined }),
+  name: faker.string.alpha(20),
+  decreased_stat: { name: faker.string.alpha(20), url: faker.internet.url() },
+  increased_stat: { name: faker.string.alpha(20), url: faker.internet.url() },
+  likes_flavor: { name: faker.string.alpha(20), url: faker.internet.url() },
+  hates_flavor: { name: faker.string.alpha(20), url: faker.internet.url() },
+  berries: Array.from(
+    { length: faker.number.int({ min: 1, max: 10 }) },
+    (_, i) => i + 1,
+  ).map(() => ({ name: faker.string.alpha(20), url: faker.internet.url() })),
+  pokeathlon_stat_changes: Array.from(
+    { length: faker.number.int({ min: 1, max: 10 }) },
+    (_, i) => i + 1,
+  ).map(() => ({
+    max_change: faker.number.int({ min: undefined, max: undefined }),
+    pokeathlon_stat: {
+      name: faker.string.alpha(20),
+      url: faker.internet.url(),
+    },
+  })),
+  move_battle_style_preferences: Array.from(
+    { length: faker.number.int({ min: 1, max: 10 }) },
+    (_, i) => i + 1,
+  ).map(() => ({
+    low_hp_preference: faker.number.int({ min: undefined, max: undefined }),
+    high_hp_preference: faker.number.int({ min: undefined, max: undefined }),
+    move_battle_style: {
+      name: faker.string.alpha(20),
+      url: faker.internet.url(),
+    },
+  })),
+  names: Array.from(
+    { length: faker.number.int({ min: 1, max: 10 }) },
+    (_, i) => i + 1,
+  ).map(() => ({
+    name: faker.string.alpha(20),
+    language: { name: faker.string.alpha(20), url: faker.internet.url() },
+  })),
+  ...overrideResponse,
+});
+
+export const getPalParkAreaListResponseMock = (
+  overrideResponse: Partial<PaginatedPalParkAreaSummaryList> = {},
+): PaginatedPalParkAreaSummaryList => ({
+  count: faker.helpers.arrayElement([
+    faker.number.int({ min: undefined, max: undefined }),
+    undefined,
+  ]),
+  next: faker.helpers.arrayElement([
+    faker.helpers.arrayElement([faker.internet.url(), null]),
+    undefined,
+  ]),
+  previous: faker.helpers.arrayElement([
+    faker.helpers.arrayElement([faker.internet.url(), null]),
+    undefined,
+  ]),
+  results: faker.helpers.arrayElement([
+    Array.from(
+      { length: faker.number.int({ min: 1, max: 10 }) },
+      (_, i) => i + 1,
+    ).map(() => ({ name: faker.string.alpha(20), url: faker.internet.url() })),
+    undefined,
+  ]),
+  ...overrideResponse,
+});
+
+export const getPalParkAreaRetrieveResponseMock = (
+  overrideResponse: Partial<PalParkAreaDetail> = {},
+): PalParkAreaDetail => ({
+  id: faker.number.int({ min: undefined, max: undefined }),
+  name: faker.string.alpha(20),
+  names: Array.from(
+    { length: faker.number.int({ min: 1, max: 10 }) },
+    (_, i) => i + 1,
+  ).map(() => ({
+    name: faker.string.alpha(20),
+    language: { name: faker.string.alpha(20), url: faker.internet.url() },
+  })),
+  pokemon_encounters: Array.from(
+    { length: faker.number.int({ min: 1, max: 10 }) },
+    (_, i) => i + 1,
+  ).map(() => ({
+    base_score: faker.number.int({ min: undefined, max: undefined }),
+    "pokemon-species": {
+      name: faker.string.alpha(20),
+      url: faker.internet.url(),
+    },
+    rate: faker.number.int({ min: undefined, max: undefined }),
+  })),
+  ...overrideResponse,
+});
+
+export const getPokedexListResponseMock = (
+  overrideResponse: Partial<PaginatedPokedexSummaryList> = {},
+): PaginatedPokedexSummaryList => ({
+  count: faker.helpers.arrayElement([
+    faker.number.int({ min: undefined, max: undefined }),
+    undefined,
+  ]),
+  next: faker.helpers.arrayElement([
+    faker.helpers.arrayElement([faker.internet.url(), null]),
+    undefined,
+  ]),
+  previous: faker.helpers.arrayElement([
+    faker.helpers.arrayElement([faker.internet.url(), null]),
+    undefined,
+  ]),
+  results: faker.helpers.arrayElement([
+    Array.from(
+      { length: faker.number.int({ min: 1, max: 10 }) },
+      (_, i) => i + 1,
+    ).map(() => ({ name: faker.string.alpha(20), url: faker.internet.url() })),
+    undefined,
+  ]),
+  ...overrideResponse,
+});
+
+export const getPokedexRetrieveResponseMock = (
+  overrideResponse: Partial<PokedexDetail> = {},
+): PokedexDetail => ({
+  id: faker.number.int({ min: undefined, max: undefined }),
+  name: faker.string.alpha(20),
+  is_main_series: faker.helpers.arrayElement([
+    faker.datatype.boolean(),
+    undefined,
+  ]),
+  descriptions: Array.from(
+    { length: faker.number.int({ min: 1, max: 10 }) },
+    (_, i) => i + 1,
+  ).map(() => ({
+    description: faker.helpers.arrayElement([
+      faker.string.alpha(20),
+      undefined,
+    ]),
+    language: { name: faker.string.alpha(20), url: faker.internet.url() },
+  })),
+  names: Array.from(
+    { length: faker.number.int({ min: 1, max: 10 }) },
+    (_, i) => i + 1,
+  ).map(() => ({
+    name: faker.string.alpha(20),
+    language: { name: faker.string.alpha(20), url: faker.internet.url() },
+  })),
+  pokemon_entries: Array.from(
+    { length: faker.number.int({ min: 1, max: 10 }) },
+    (_, i) => i + 1,
+  ).map(() => ({
+    entry_number: faker.number.int({ min: undefined, max: undefined }),
+    pokemon_species: {
+      name: faker.string.alpha(20),
+      url: faker.internet.url(),
+    },
+  })),
+  region: { name: faker.string.alpha(20), url: faker.internet.url() },
+  version_groups: Array.from(
+    { length: faker.number.int({ min: 1, max: 10 }) },
+    (_, i) => i + 1,
+  ).map(() => ({ name: faker.string.alpha(20), url: faker.internet.url() })),
+  ...overrideResponse,
+});
+
+export const getPokemonListResponseMock = (
+  overrideResponse: Partial<PaginatedPokemonSummaryList> = {},
+): PaginatedPokemonSummaryList => ({
+  count: faker.helpers.arrayElement([
+    faker.number.int({ min: undefined, max: undefined }),
+    undefined,
+  ]),
+  next: faker.helpers.arrayElement([
+    faker.helpers.arrayElement([faker.internet.url(), null]),
+    undefined,
+  ]),
+  previous: faker.helpers.arrayElement([
+    faker.helpers.arrayElement([faker.internet.url(), null]),
+    undefined,
+  ]),
+  results: faker.helpers.arrayElement([
+    Array.from(
+      { length: faker.number.int({ min: 1, max: 10 }) },
+      (_, i) => i + 1,
+    ).map(() => ({ name: faker.string.alpha(20), url: faker.internet.url() })),
+    undefined,
+  ]),
+  ...overrideResponse,
+});
+
+export const getPokemonRetrieveResponseMock = (
+  overrideResponse: Partial<PokemonDetail> = {},
+): PokemonDetail => ({
+  id: faker.number.int({ min: undefined, max: undefined }),
+  name: faker.string.alpha(20),
+  base_experience: faker.helpers.arrayElement([
+    faker.helpers.arrayElement([
+      faker.number.int({ min: undefined, max: undefined }),
+      null,
+    ]),
+    undefined,
+  ]),
+  height: faker.helpers.arrayElement([
+    faker.helpers.arrayElement([
+      faker.number.int({ min: undefined, max: undefined }),
+      null,
+    ]),
+    undefined,
+  ]),
+  is_default: faker.helpers.arrayElement([faker.datatype.boolean(), undefined]),
+  order: faker.helpers.arrayElement([
+    faker.helpers.arrayElement([
+      faker.number.int({ min: undefined, max: undefined }),
+      null,
+    ]),
+    undefined,
+  ]),
+  weight: faker.helpers.arrayElement([
+    faker.helpers.arrayElement([
+      faker.number.int({ min: undefined, max: undefined }),
+      null,
+    ]),
+    undefined,
+  ]),
+  abilities: Array.from(
+    { length: faker.number.int({ min: 1, max: 10 }) },
+    (_, i) => i + 1,
+  ).map(() => ({
+    ability: { name: faker.string.alpha(20), url: faker.internet.url() },
+    is_hidden: faker.datatype.boolean(),
+    slot: faker.number.int({ min: undefined, max: undefined }),
+  })),
+  past_abilities: Array.from(
+    { length: faker.number.int({ min: 1, max: 10 }) },
+    (_, i) => i + 1,
+  ).map(() => ({
+    abilities: Array.from(
+      { length: faker.number.int({ min: 1, max: 10 }) },
+      (_, i) => i + 1,
+    ).map(() => ({
+      ability: { name: faker.string.alpha(20), url: faker.internet.url() },
+      is_hidden: faker.datatype.boolean(),
+      slot: faker.number.int({ min: undefined, max: undefined }),
+    })),
+    generation: { name: faker.string.alpha(20), url: faker.internet.url() },
+  })),
+  forms: Array.from(
+    { length: faker.number.int({ min: 1, max: 10 }) },
+    (_, i) => i + 1,
+  ).map(() => ({ name: faker.string.alpha(20), url: faker.internet.url() })),
+  game_indices: Array.from(
+    { length: faker.number.int({ min: 1, max: 10 }) },
+    (_, i) => i + 1,
+  ).map(() => ({
+    game_index: faker.number.int({ min: undefined, max: undefined }),
+    version: { name: faker.string.alpha(20), url: faker.internet.url() },
+  })),
+  held_items: {
+    item: { name: faker.string.alpha(20), url: faker.internet.url() },
+    version_details: Array.from(
+      { length: faker.number.int({ min: 1, max: 10 }) },
+      (_, i) => i + 1,
+    ).map(() => ({
+      rarity: faker.number.int({ min: undefined, max: undefined }),
+      version: { name: faker.string.alpha(20), url: faker.internet.url() },
+    })),
+  },
+  location_area_encounters: faker.string.alpha(20),
+  moves: Array.from(
+    { length: faker.number.int({ min: 1, max: 10 }) },
+    (_, i) => i + 1,
+  ).map(() => ({
+    move: { name: faker.string.alpha(20), url: faker.internet.url() },
+    version_group_details: Array.from(
+      { length: faker.number.int({ min: 1, max: 10 }) },
+      (_, i) => i + 1,
+    ).map(() => ({
+      level_learned_at: faker.number.int({ min: undefined, max: undefined }),
+      move_learn_method: {
+        name: faker.string.alpha(20),
+        url: faker.internet.url(),
+      },
+      version_group: {
+        name: faker.string.alpha(20),
+        url: faker.internet.url(),
+      },
+    })),
+  })),
+  species: { name: faker.string.alpha(20), url: faker.internet.url() },
+  sprites: {
+    front_default: faker.helpers.arrayElement([
+      faker.internet.url(),
+      undefined,
+    ]),
+  },
+  cries: { latest: faker.internet.url(), legacy: faker.internet.url() },
+  stats: Array.from(
+    { length: faker.number.int({ min: 1, max: 10 }) },
+    (_, i) => i + 1,
+  ).map(() => ({
+    base_stat: faker.number.int({ min: undefined, max: undefined }),
+    effort: faker.number.int({ min: undefined, max: undefined }),
+    stat: { name: faker.string.alpha(20), url: faker.internet.url() },
+  })),
+  types: Array.from(
+    { length: faker.number.int({ min: 1, max: 10 }) },
+    (_, i) => i + 1,
+  ).map(() => ({
+    slot: faker.number.int({ min: undefined, max: undefined }),
+    type: { name: faker.string.alpha(20), url: faker.internet.url() },
+  })),
+  past_types: Array.from(
+    { length: faker.number.int({ min: 1, max: 10 }) },
+    (_, i) => i + 1,
+  ).map(() => ({
+    generation: { name: faker.string.alpha(20), url: faker.internet.url() },
+    types: Array.from(
+      { length: faker.number.int({ min: 1, max: 10 }) },
+      (_, i) => i + 1,
+    ).map(() => ({
+      slot: faker.number.int({ min: undefined, max: undefined }),
+      type: { name: faker.string.alpha(20), url: faker.internet.url() },
+    })),
+  })),
+  ...overrideResponse,
+});
+
+export const getPokemonColorListResponseMock = (
+  overrideResponse: Partial<PaginatedPokemonColorSummaryList> = {},
+): PaginatedPokemonColorSummaryList => ({
+  count: faker.helpers.arrayElement([
+    faker.number.int({ min: undefined, max: undefined }),
+    undefined,
+  ]),
+  next: faker.helpers.arrayElement([
+    faker.helpers.arrayElement([faker.internet.url(), null]),
+    undefined,
+  ]),
+  previous: faker.helpers.arrayElement([
+    faker.helpers.arrayElement([faker.internet.url(), null]),
+    undefined,
+  ]),
+  results: faker.helpers.arrayElement([
+    Array.from(
+      { length: faker.number.int({ min: 1, max: 10 }) },
+      (_, i) => i + 1,
+    ).map(() => ({ name: faker.string.alpha(20), url: faker.internet.url() })),
+    undefined,
+  ]),
+  ...overrideResponse,
+});
+
+export const getPokemonColorRetrieveResponseMock = (
+  overrideResponse: Partial<PokemonColorDetail> = {},
+): PokemonColorDetail => ({
+  id: faker.number.int({ min: undefined, max: undefined }),
+  name: faker.string.alpha(20),
+  names: Array.from(
+    { length: faker.number.int({ min: 1, max: 10 }) },
+    (_, i) => i + 1,
+  ).map(() => ({
+    name: faker.string.alpha(20),
+    language: { name: faker.string.alpha(20), url: faker.internet.url() },
+  })),
+  pokemon_species: Array.from(
+    { length: faker.number.int({ min: 1, max: 10 }) },
+    (_, i) => i + 1,
+  ).map(() => ({ name: faker.string.alpha(20), url: faker.internet.url() })),
+  ...overrideResponse,
+});
+
+export const getPokemonFormListResponseMock = (
+  overrideResponse: Partial<PaginatedPokemonFormSummaryList> = {},
+): PaginatedPokemonFormSummaryList => ({
+  count: faker.helpers.arrayElement([
+    faker.number.int({ min: undefined, max: undefined }),
+    undefined,
+  ]),
+  next: faker.helpers.arrayElement([
+    faker.helpers.arrayElement([faker.internet.url(), null]),
+    undefined,
+  ]),
+  previous: faker.helpers.arrayElement([
+    faker.helpers.arrayElement([faker.internet.url(), null]),
+    undefined,
+  ]),
+  results: faker.helpers.arrayElement([
+    Array.from(
+      { length: faker.number.int({ min: 1, max: 10 }) },
+      (_, i) => i + 1,
+    ).map(() => ({ name: faker.string.alpha(20), url: faker.internet.url() })),
+    undefined,
+  ]),
+  ...overrideResponse,
+});
+
+export const getPokemonFormRetrieveResponseMock = (
+  overrideResponse: Partial<PokemonFormDetail> = {},
+): PokemonFormDetail => ({
+  id: faker.number.int({ min: undefined, max: undefined }),
+  name: faker.string.alpha(20),
+  order: faker.helpers.arrayElement([
+    faker.helpers.arrayElement([
+      faker.number.int({ min: undefined, max: undefined }),
+      null,
+    ]),
+    undefined,
+  ]),
+  form_order: faker.helpers.arrayElement([
+    faker.helpers.arrayElement([
+      faker.number.int({ min: undefined, max: undefined }),
+      null,
+    ]),
+    undefined,
+  ]),
+  is_default: faker.helpers.arrayElement([faker.datatype.boolean(), undefined]),
+  is_battle_only: faker.helpers.arrayElement([
+    faker.datatype.boolean(),
+    undefined,
+  ]),
+  is_mega: faker.helpers.arrayElement([faker.datatype.boolean(), undefined]),
+  form_name: faker.string.alpha(20),
+  pokemon: { name: faker.string.alpha(20), url: faker.internet.url() },
+  sprites: {
+    default: faker.helpers.arrayElement([faker.internet.url(), undefined]),
+  },
+  version_group: { name: faker.string.alpha(20), url: faker.internet.url() },
+  form_names: Array.from(
+    { length: faker.number.int({ min: 1, max: 10 }) },
+    (_, i) => i + 1,
+  ).map(() => ({
+    language: { name: faker.string.alpha(20), url: faker.internet.url() },
+    name: faker.string.alpha(20),
+  })),
+  names: Array.from(
+    { length: faker.number.int({ min: 1, max: 10 }) },
+    (_, i) => i + 1,
+  ).map(() => ({
+    language: { name: faker.string.alpha(20), url: faker.internet.url() },
+    name: faker.string.alpha(20),
+  })),
+  types: Array.from(
+    { length: faker.number.int({ min: 1, max: 10 }) },
+    (_, i) => i + 1,
+  ).map(() => ({
+    slot: faker.number.int({ min: undefined, max: undefined }),
+    type: { name: faker.string.alpha(20), url: faker.internet.url() },
+  })),
+  ...overrideResponse,
+});
+
+export const getPokemonHabitatListResponseMock = (
+  overrideResponse: Partial<PaginatedPokemonHabitatSummaryList> = {},
+): PaginatedPokemonHabitatSummaryList => ({
+  count: faker.helpers.arrayElement([
+    faker.number.int({ min: undefined, max: undefined }),
+    undefined,
+  ]),
+  next: faker.helpers.arrayElement([
+    faker.helpers.arrayElement([faker.internet.url(), null]),
+    undefined,
+  ]),
+  previous: faker.helpers.arrayElement([
+    faker.helpers.arrayElement([faker.internet.url(), null]),
+    undefined,
+  ]),
+  results: faker.helpers.arrayElement([
+    Array.from(
+      { length: faker.number.int({ min: 1, max: 10 }) },
+      (_, i) => i + 1,
+    ).map(() => ({ name: faker.string.alpha(20), url: faker.internet.url() })),
+    undefined,
+  ]),
+  ...overrideResponse,
+});
+
+export const getPokemonHabitatRetrieveResponseMock = (
+  overrideResponse: Partial<PokemonHabitatDetail> = {},
+): PokemonHabitatDetail => ({
+  id: faker.number.int({ min: undefined, max: undefined }),
+  name: faker.string.alpha(20),
+  names: Array.from(
+    { length: faker.number.int({ min: 1, max: 10 }) },
+    (_, i) => i + 1,
+  ).map(() => ({
+    name: faker.string.alpha(20),
+    language: { name: faker.string.alpha(20), url: faker.internet.url() },
+  })),
+  pokemon_species: Array.from(
+    { length: faker.number.int({ min: 1, max: 10 }) },
+    (_, i) => i + 1,
+  ).map(() => ({ name: faker.string.alpha(20), url: faker.internet.url() })),
+  ...overrideResponse,
+});
+
+export const getPokemonShapeListResponseMock = (
+  overrideResponse: Partial<PaginatedPokemonShapeSummaryList> = {},
+): PaginatedPokemonShapeSummaryList => ({
+  count: faker.helpers.arrayElement([
+    faker.number.int({ min: undefined, max: undefined }),
+    undefined,
+  ]),
+  next: faker.helpers.arrayElement([
+    faker.helpers.arrayElement([faker.internet.url(), null]),
+    undefined,
+  ]),
+  previous: faker.helpers.arrayElement([
+    faker.helpers.arrayElement([faker.internet.url(), null]),
+    undefined,
+  ]),
+  results: faker.helpers.arrayElement([
+    Array.from(
+      { length: faker.number.int({ min: 1, max: 10 }) },
+      (_, i) => i + 1,
+    ).map(() => ({ name: faker.string.alpha(20), url: faker.internet.url() })),
+    undefined,
+  ]),
+  ...overrideResponse,
+});
+
+export const getPokemonShapeRetrieveResponseMock = (
+  overrideResponse: Partial<PokemonShapeDetail> = {},
+): PokemonShapeDetail => ({
+  id: faker.number.int({ min: undefined, max: undefined }),
+  name: faker.string.alpha(20),
+  awesome_names: Array.from(
+    { length: faker.number.int({ min: 1, max: 10 }) },
+    (_, i) => i + 1,
+  ).map(() => ({
+    awesome_name: faker.string.alpha(20),
+    language: { name: faker.string.alpha(20), url: faker.internet.url() },
+  })),
+  names: Array.from(
+    { length: faker.number.int({ min: 1, max: 10 }) },
+    (_, i) => i + 1,
+  ).map(() => ({ url: faker.internet.url(), name: faker.string.alpha(20) })),
+  pokemon_species: Array.from(
+    { length: faker.number.int({ min: 1, max: 10 }) },
+    (_, i) => i + 1,
+  ).map(() => ({ name: faker.string.alpha(20), url: faker.internet.url() })),
+  ...overrideResponse,
+});
+
+export const getPokemonSpeciesListResponseMock = (
+  overrideResponse: Partial<PaginatedPokemonSpeciesSummaryList> = {},
+): PaginatedPokemonSpeciesSummaryList => ({
+  count: faker.helpers.arrayElement([
+    faker.number.int({ min: undefined, max: undefined }),
+    undefined,
+  ]),
+  next: faker.helpers.arrayElement([
+    faker.helpers.arrayElement([faker.internet.url(), null]),
+    undefined,
+  ]),
+  previous: faker.helpers.arrayElement([
+    faker.helpers.arrayElement([faker.internet.url(), null]),
+    undefined,
+  ]),
+  results: faker.helpers.arrayElement([
+    Array.from(
+      { length: faker.number.int({ min: 1, max: 10 }) },
+      (_, i) => i + 1,
+    ).map(() => ({ name: faker.string.alpha(20), url: faker.internet.url() })),
+    undefined,
+  ]),
+  ...overrideResponse,
+});
+
+export const getPokemonSpeciesRetrieveResponseMock = (
+  overrideResponse: Partial<PokemonSpeciesDetail> = {},
+): PokemonSpeciesDetail => ({
+  id: faker.number.int({ min: undefined, max: undefined }),
+  name: faker.string.alpha(20),
+  order: faker.helpers.arrayElement([
+    faker.helpers.arrayElement([
+      faker.number.int({ min: undefined, max: undefined }),
+      null,
+    ]),
+    undefined,
+  ]),
+  gender_rate: faker.helpers.arrayElement([
+    faker.helpers.arrayElement([
+      faker.number.int({ min: undefined, max: undefined }),
+      null,
+    ]),
+    undefined,
+  ]),
+  capture_rate: faker.helpers.arrayElement([
+    faker.helpers.arrayElement([
+      faker.number.int({ min: undefined, max: undefined }),
+      null,
+    ]),
+    undefined,
+  ]),
+  base_happiness: faker.helpers.arrayElement([
+    faker.helpers.arrayElement([
+      faker.number.int({ min: undefined, max: undefined }),
+      null,
+    ]),
+    undefined,
+  ]),
+  is_baby: faker.helpers.arrayElement([faker.datatype.boolean(), undefined]),
+  is_legendary: faker.helpers.arrayElement([
+    faker.datatype.boolean(),
+    undefined,
+  ]),
+  is_mythical: faker.helpers.arrayElement([
+    faker.datatype.boolean(),
+    undefined,
+  ]),
+  hatch_counter: faker.helpers.arrayElement([
+    faker.helpers.arrayElement([
+      faker.number.int({ min: undefined, max: undefined }),
+      null,
+    ]),
+    undefined,
+  ]),
+  has_gender_differences: faker.helpers.arrayElement([
+    faker.datatype.boolean(),
+    undefined,
+  ]),
+  forms_switchable: faker.helpers.arrayElement([
+    faker.datatype.boolean(),
+    undefined,
+  ]),
+  growth_rate: { name: faker.string.alpha(20), url: faker.internet.url() },
+  pokedex_numbers: Array.from(
+    { length: faker.number.int({ min: 1, max: 10 }) },
+    (_, i) => i + 1,
+  ).map(() => ({
+    entry_number: faker.number.int({ min: undefined, max: undefined }),
+    pokedex: { name: faker.string.alpha(20), url: faker.internet.url() },
+  })),
+  egg_groups: Array.from(
+    { length: faker.number.int({ min: 1, max: 10 }) },
+    (_, i) => i + 1,
+  ).map(() => ({ name: faker.string.alpha(20), url: faker.internet.url() })),
+  color: { name: faker.string.alpha(20), url: faker.internet.url() },
+  shape: { name: faker.string.alpha(20), url: faker.internet.url() },
+  evolves_from_species: {
+    name: faker.string.alpha(20),
+    url: faker.internet.url(),
+  },
+  evolution_chain: { url: faker.internet.url() },
+  habitat: { name: faker.string.alpha(20), url: faker.internet.url() },
+  generation: { name: faker.string.alpha(20), url: faker.internet.url() },
+  names: Array.from(
+    { length: faker.number.int({ min: 1, max: 10 }) },
+    (_, i) => i + 1,
+  ).map(() => ({
+    language: { name: faker.string.alpha(20), url: faker.internet.url() },
+    name: faker.string.alpha(20),
+  })),
+  pal_park_encounters: Array.from(
+    { length: faker.number.int({ min: 1, max: 10 }) },
+    (_, i) => i + 1,
+  ).map(() => ({
+    area: { name: faker.string.alpha(20), url: faker.internet.url() },
+    base_score: faker.number.int({ min: undefined, max: undefined }),
+    rate: faker.number.int({ min: undefined, max: undefined }),
+  })),
+  form_descriptions: Array.from(
+    { length: faker.number.int({ min: 1, max: 10 }) },
+    (_, i) => i + 1,
+  ).map(() => ({
+    description: faker.helpers.arrayElement([
+      faker.string.alpha(20),
+      undefined,
+    ]),
+    language: { name: faker.string.alpha(20), url: faker.internet.url() },
+  })),
+  flavor_text_entries: Array.from(
+    { length: faker.number.int({ min: 1, max: 10 }) },
+    (_, i) => i + 1,
+  ).map(() => ({
+    flavor_text: faker.string.alpha(20),
+    language: { name: faker.string.alpha(20), url: faker.internet.url() },
+    version: { name: faker.string.alpha(20), url: faker.internet.url() },
+  })),
+  genera: Array.from(
+    { length: faker.number.int({ min: 1, max: 10 }) },
+    (_, i) => i + 1,
+  ).map(() => ({
+    genus: faker.string.alpha(20),
+    language: { name: faker.string.alpha(20), url: faker.internet.url() },
+  })),
+  varieties: Array.from(
+    { length: faker.number.int({ min: 1, max: 10 }) },
+    (_, i) => i + 1,
+  ).map(() => ({
+    is_default: faker.datatype.boolean(),
+    pokemon: { name: faker.string.alpha(20), url: faker.internet.url() },
+  })),
+  ...overrideResponse,
+});
+
+export const getPokeathlonStatListResponseMock = (
+  overrideResponse: Partial<PaginatedPokeathlonStatSummaryList> = {},
+): PaginatedPokeathlonStatSummaryList => ({
+  count: faker.helpers.arrayElement([
+    faker.number.int({ min: undefined, max: undefined }),
+    undefined,
+  ]),
+  next: faker.helpers.arrayElement([
+    faker.helpers.arrayElement([faker.internet.url(), null]),
+    undefined,
+  ]),
+  previous: faker.helpers.arrayElement([
+    faker.helpers.arrayElement([faker.internet.url(), null]),
+    undefined,
+  ]),
+  results: faker.helpers.arrayElement([
+    Array.from(
+      { length: faker.number.int({ min: 1, max: 10 }) },
+      (_, i) => i + 1,
+    ).map(() => ({ name: faker.string.alpha(20), url: faker.internet.url() })),
+    undefined,
+  ]),
+  ...overrideResponse,
+});
+
+export const getPokeathlonStatRetrieveResponseMock = (
+  overrideResponse: Partial<PokeathlonStatDetail> = {},
+): PokeathlonStatDetail => ({
+  id: faker.number.int({ min: undefined, max: undefined }),
+  name: faker.string.alpha(20),
+  affecting_natures: {
+    decrease: Array.from(
+      { length: faker.number.int({ min: 1, max: 10 }) },
+      (_, i) => i + 1,
+    ).map(() => ({
+      max_change: faker.number.int({ min: undefined, max: -1 }),
+      nature: { name: faker.string.alpha(20), url: faker.internet.url() },
+    })),
+    increase: Array.from(
+      { length: faker.number.int({ min: 1, max: 10 }) },
+      (_, i) => i + 1,
+    ).map(() => ({
+      max_change: faker.number.int({ min: 1, max: undefined }),
+      nature: { name: faker.string.alpha(20), url: faker.internet.url() },
+    })),
+  },
+  names: Array.from(
+    { length: faker.number.int({ min: 1, max: 10 }) },
+    (_, i) => i + 1,
+  ).map(() => ({
+    name: faker.string.alpha(20),
+    language: { name: faker.string.alpha(20), url: faker.internet.url() },
+  })),
+  ...overrideResponse,
+});
+
+export const getRegionListResponseMock = (
+  overrideResponse: Partial<PaginatedRegionSummaryList> = {},
+): PaginatedRegionSummaryList => ({
+  count: faker.helpers.arrayElement([
+    faker.number.int({ min: undefined, max: undefined }),
+    undefined,
+  ]),
+  next: faker.helpers.arrayElement([
+    faker.helpers.arrayElement([faker.internet.url(), null]),
+    undefined,
+  ]),
+  previous: faker.helpers.arrayElement([
+    faker.helpers.arrayElement([faker.internet.url(), null]),
+    undefined,
+  ]),
+  results: faker.helpers.arrayElement([
+    Array.from(
+      { length: faker.number.int({ min: 1, max: 10 }) },
+      (_, i) => i + 1,
+    ).map(() => ({ name: faker.string.alpha(20), url: faker.internet.url() })),
+    undefined,
+  ]),
+  ...overrideResponse,
+});
+
+export const getRegionRetrieveResponseMock = (
+  overrideResponse: Partial<RegionDetail> = {},
+): RegionDetail => ({
+  id: faker.number.int({ min: undefined, max: undefined }),
+  name: faker.string.alpha(20),
+  locations: Array.from(
+    { length: faker.number.int({ min: 1, max: 10 }) },
+    (_, i) => i + 1,
+  ).map(() => ({ name: faker.string.alpha(20), url: faker.internet.url() })),
+  main_generation: { name: faker.string.alpha(20), url: faker.internet.url() },
+  names: Array.from(
+    { length: faker.number.int({ min: 1, max: 10 }) },
+    (_, i) => i + 1,
+  ).map(() => ({
+    name: faker.string.alpha(20),
+    language: { name: faker.string.alpha(20), url: faker.internet.url() },
+  })),
+  pokedexes: Array.from(
+    { length: faker.number.int({ min: 1, max: 10 }) },
+    (_, i) => i + 1,
+  ).map(() => ({ name: faker.string.alpha(20), url: faker.internet.url() })),
+  version_groups: Array.from(
+    { length: faker.number.int({ min: 1, max: 10 }) },
+    (_, i) => i + 1,
+  ).map(() => ({ name: faker.string.alpha(20), url: faker.internet.url() })),
+  ...overrideResponse,
+});
+
+export const getStatListResponseMock = (
+  overrideResponse: Partial<PaginatedStatSummaryList> = {},
+): PaginatedStatSummaryList => ({
+  count: faker.helpers.arrayElement([
+    faker.number.int({ min: undefined, max: undefined }),
+    undefined,
+  ]),
+  next: faker.helpers.arrayElement([
+    faker.helpers.arrayElement([faker.internet.url(), null]),
+    undefined,
+  ]),
+  previous: faker.helpers.arrayElement([
+    faker.helpers.arrayElement([faker.internet.url(), null]),
+    undefined,
+  ]),
+  results: faker.helpers.arrayElement([
+    Array.from(
+      { length: faker.number.int({ min: 1, max: 10 }) },
+      (_, i) => i + 1,
+    ).map(() => ({ name: faker.string.alpha(20), url: faker.internet.url() })),
+    undefined,
+  ]),
+  ...overrideResponse,
+});
+
+export const getStatRetrieveResponseMock = (
+  overrideResponse: Partial<StatDetail> = {},
+): StatDetail => ({
+  id: faker.number.int({ min: undefined, max: undefined }),
+  name: faker.string.alpha(20),
+  game_index: faker.number.int({ min: undefined, max: undefined }),
+  is_battle_only: faker.helpers.arrayElement([
+    faker.datatype.boolean(),
+    undefined,
+  ]),
+  affecting_moves: {
+    increase: Array.from(
+      { length: faker.number.int({ min: 1, max: 10 }) },
+      (_, i) => i + 1,
+    ).map(() => ({
+      change: faker.number.int({ min: undefined, max: undefined }),
+      move: { name: faker.string.alpha(20), url: faker.internet.url() },
+    })),
+    decrease: Array.from(
+      { length: faker.number.int({ min: 1, max: 10 }) },
+      (_, i) => i + 1,
+    ).map(() => ({
+      change: faker.number.int({ min: undefined, max: undefined }),
+      move: { name: faker.string.alpha(20), url: faker.internet.url() },
+    })),
+  },
+  affecting_natures: {
+    increase: Array.from(
+      { length: faker.number.int({ min: 1, max: 10 }) },
+      (_, i) => i + 1,
+    ).map(() => ({ name: faker.string.alpha(20), url: faker.internet.url() })),
+    decrease: Array.from(
+      { length: faker.number.int({ min: 1, max: 10 }) },
+      (_, i) => i + 1,
+    ).map(() => ({ name: faker.string.alpha(20), url: faker.internet.url() })),
+  },
+  characteristics: Array.from(
+    { length: faker.number.int({ min: 1, max: 10 }) },
+    (_, i) => i + 1,
+  ).map(() => ({ url: faker.internet.url() })),
+  move_damage_class: {
+    name: faker.string.alpha(20),
+    url: faker.internet.url(),
+  },
+  names: Array.from(
+    { length: faker.number.int({ min: 1, max: 10 }) },
+    (_, i) => i + 1,
+  ).map(() => ({
+    name: faker.string.alpha(20),
+    language: { name: faker.string.alpha(20), url: faker.internet.url() },
+  })),
+  ...overrideResponse,
+});
+
+export const getSuperContestEffectListResponseMock = (
+  overrideResponse: Partial<PaginatedSuperContestEffectSummaryList> = {},
+): PaginatedSuperContestEffectSummaryList => ({
+  count: faker.helpers.arrayElement([
+    faker.number.int({ min: undefined, max: undefined }),
+    undefined,
+  ]),
+  next: faker.helpers.arrayElement([
+    faker.helpers.arrayElement([faker.internet.url(), null]),
+    undefined,
+  ]),
+  previous: faker.helpers.arrayElement([
+    faker.helpers.arrayElement([faker.internet.url(), null]),
+    undefined,
+  ]),
+  results: faker.helpers.arrayElement([
+    Array.from(
+      { length: faker.number.int({ min: 1, max: 10 }) },
+      (_, i) => i + 1,
+    ).map(() => ({ url: faker.internet.url() })),
+    undefined,
+  ]),
+  ...overrideResponse,
+});
+
+export const getSuperContestEffectRetrieveResponseMock = (
+  overrideResponse: Partial<SuperContestEffectDetail> = {},
+): SuperContestEffectDetail => ({
+  id: faker.number.int({ min: undefined, max: undefined }),
+  appeal: faker.number.int({ min: undefined, max: undefined }),
+  flavor_text_entries: Array.from(
+    { length: faker.number.int({ min: 1, max: 10 }) },
+    (_, i) => i + 1,
+  ).map(() => ({
+    flavor_text: faker.string.alpha(20),
+    language: { name: faker.string.alpha(20), url: faker.internet.url() },
+  })),
+  moves: Array.from(
+    { length: faker.number.int({ min: 1, max: 10 }) },
+    (_, i) => i + 1,
+  ).map(() => ({ name: faker.string.alpha(20), url: faker.internet.url() })),
+  ...overrideResponse,
+});
+
+export const getTypeListResponseMock = (
+  overrideResponse: Partial<PaginatedTypeSummaryList> = {},
+): PaginatedTypeSummaryList => ({
+  count: faker.helpers.arrayElement([
+    faker.number.int({ min: undefined, max: undefined }),
+    undefined,
+  ]),
+  next: faker.helpers.arrayElement([
+    faker.helpers.arrayElement([faker.internet.url(), null]),
+    undefined,
+  ]),
+  previous: faker.helpers.arrayElement([
+    faker.helpers.arrayElement([faker.internet.url(), null]),
+    undefined,
+  ]),
+  results: faker.helpers.arrayElement([
+    Array.from(
+      { length: faker.number.int({ min: 1, max: 10 }) },
+      (_, i) => i + 1,
+    ).map(() => ({ name: faker.string.alpha(20), url: faker.internet.url() })),
+    undefined,
+  ]),
+  ...overrideResponse,
+});
+
+export const getTypeRetrieveResponseMock = (
+  overrideResponse: Partial<TypeDetail> = {},
+): TypeDetail => ({
+  id: faker.number.int({ min: undefined, max: undefined }),
+  name: faker.string.alpha(20),
+  damage_relations: {
+    no_damage_to: Array.from(
+      { length: faker.number.int({ min: 1, max: 10 }) },
+      (_, i) => i + 1,
+    ).map(() => ({ name: faker.string.alpha(20), url: faker.internet.url() })),
+    half_damage_to: Array.from(
+      { length: faker.number.int({ min: 1, max: 10 }) },
+      (_, i) => i + 1,
+    ).map(() => ({ name: faker.string.alpha(20), url: faker.internet.url() })),
+    double_damage_to: Array.from(
+      { length: faker.number.int({ min: 1, max: 10 }) },
+      (_, i) => i + 1,
+    ).map(() => ({ name: faker.string.alpha(20), url: faker.internet.url() })),
+    no_damage_from: Array.from(
+      { length: faker.number.int({ min: 1, max: 10 }) },
+      (_, i) => i + 1,
+    ).map(() => ({ name: faker.string.alpha(20), url: faker.internet.url() })),
+    half_damage_from: Array.from(
+      { length: faker.number.int({ min: 1, max: 10 }) },
+      (_, i) => i + 1,
+    ).map(() => ({ name: faker.string.alpha(20), url: faker.internet.url() })),
+    double_damage_from: Array.from(
+      { length: faker.number.int({ min: 1, max: 10 }) },
+      (_, i) => i + 1,
+    ).map(() => ({ name: faker.string.alpha(20), url: faker.internet.url() })),
+  },
+  past_damage_relations: Array.from(
+    { length: faker.number.int({ min: 1, max: 10 }) },
+    (_, i) => i + 1,
+  ).map(() => ({
+    generation: { name: faker.string.alpha(20), url: faker.internet.url() },
+    damage_relations: {
+      no_damage_to: Array.from(
+        { length: faker.number.int({ min: 1, max: 10 }) },
+        (_, i) => i + 1,
+      ).map(() => ({
+        name: faker.string.alpha(20),
+        url: faker.internet.url(),
+      })),
+      half_damage_to: Array.from(
+        { length: faker.number.int({ min: 1, max: 10 }) },
+        (_, i) => i + 1,
+      ).map(() => ({
+        name: faker.string.alpha(20),
+        url: faker.internet.url(),
+      })),
+      double_damage_to: Array.from(
+        { length: faker.number.int({ min: 1, max: 10 }) },
+        (_, i) => i + 1,
+      ).map(() => ({
+        name: faker.string.alpha(20),
+        url: faker.internet.url(),
+      })),
+      no_damage_from: Array.from(
+        { length: faker.number.int({ min: 1, max: 10 }) },
+        (_, i) => i + 1,
+      ).map(() => ({
+        name: faker.string.alpha(20),
+        url: faker.internet.url(),
+      })),
+      half_damage_from: Array.from(
+        { length: faker.number.int({ min: 1, max: 10 }) },
+        (_, i) => i + 1,
+      ).map(() => ({
+        name: faker.string.alpha(20),
+        url: faker.internet.url(),
+      })),
+      double_damage_from: Array.from(
+        { length: faker.number.int({ min: 1, max: 10 }) },
+        (_, i) => i + 1,
+      ).map(() => ({
+        name: faker.string.alpha(20),
+        url: faker.internet.url(),
+      })),
+    },
+  })),
+  game_indices: Array.from(
+    { length: faker.number.int({ min: 1, max: 10 }) },
+    (_, i) => i + 1,
+  ).map(() => ({
+    game_index: faker.number.int({ min: undefined, max: undefined }),
+    generation: { name: faker.string.alpha(20), url: faker.internet.url() },
+  })),
+  generation: { name: faker.string.alpha(20), url: faker.internet.url() },
+  move_damage_class: {
+    name: faker.string.alpha(20),
+    url: faker.internet.url(),
+  },
+  names: Array.from(
+    { length: faker.number.int({ min: 1, max: 10 }) },
+    (_, i) => i + 1,
+  ).map(() => ({
+    name: faker.string.alpha(20),
+    language: { name: faker.string.alpha(20), url: faker.internet.url() },
+  })),
+  pokemon: Array.from(
+    { length: faker.number.int({ min: 1, max: 10 }) },
+    (_, i) => i + 1,
+  ).map(() => ({
+    slot: faker.helpers.arrayElement([
+      faker.number.int({ min: undefined, max: undefined }),
+      undefined,
+    ]),
+    pokemon: faker.helpers.arrayElement([
+      {
+        name: faker.helpers.arrayElement([faker.string.alpha(20), undefined]),
+        url: faker.helpers.arrayElement([faker.internet.url(), undefined]),
+      },
+      undefined,
+    ]),
+  })),
+  moves: Array.from(
+    { length: faker.number.int({ min: 1, max: 10 }) },
+    (_, i) => i + 1,
+  ).map(() => ({ name: faker.string.alpha(20), url: faker.internet.url() })),
+  sprites: {
+    [faker.string.alphanumeric(5)]: {
+      [faker.string.alphanumeric(5)]: {
+        "name-icon": faker.helpers.arrayElement([
+          faker.internet.url(),
+          undefined,
+        ]),
+      },
+    },
+  },
+  ...overrideResponse,
+});
+
+export const getVersionListResponseMock = (
+  overrideResponse: Partial<PaginatedVersionSummaryList> = {},
+): PaginatedVersionSummaryList => ({
+  count: faker.helpers.arrayElement([
+    faker.number.int({ min: undefined, max: undefined }),
+    undefined,
+  ]),
+  next: faker.helpers.arrayElement([
+    faker.helpers.arrayElement([faker.internet.url(), null]),
+    undefined,
+  ]),
+  previous: faker.helpers.arrayElement([
+    faker.helpers.arrayElement([faker.internet.url(), null]),
+    undefined,
+  ]),
+  results: faker.helpers.arrayElement([
+    Array.from(
+      { length: faker.number.int({ min: 1, max: 10 }) },
+      (_, i) => i + 1,
+    ).map(() => ({ name: faker.string.alpha(20), url: faker.internet.url() })),
+    undefined,
+  ]),
+  ...overrideResponse,
+});
+
+export const getVersionRetrieveResponseMock = (
+  overrideResponse: Partial<VersionDetail> = {},
+): VersionDetail => ({
+  id: faker.number.int({ min: undefined, max: undefined }),
+  name: faker.string.alpha(20),
+  names: Array.from(
+    { length: faker.number.int({ min: 1, max: 10 }) },
+    (_, i) => i + 1,
+  ).map(() => ({
+    name: faker.string.alpha(20),
+    language: { name: faker.string.alpha(20), url: faker.internet.url() },
+  })),
+  version_group: { name: faker.string.alpha(20), url: faker.internet.url() },
+  ...overrideResponse,
+});
+
+export const getVersionGroupListResponseMock = (
+  overrideResponse: Partial<PaginatedVersionGroupSummaryList> = {},
+): PaginatedVersionGroupSummaryList => ({
+  count: faker.helpers.arrayElement([
+    faker.number.int({ min: undefined, max: undefined }),
+    undefined,
+  ]),
+  next: faker.helpers.arrayElement([
+    faker.helpers.arrayElement([faker.internet.url(), null]),
+    undefined,
+  ]),
+  previous: faker.helpers.arrayElement([
+    faker.helpers.arrayElement([faker.internet.url(), null]),
+    undefined,
+  ]),
+  results: faker.helpers.arrayElement([
+    Array.from(
+      { length: faker.number.int({ min: 1, max: 10 }) },
+      (_, i) => i + 1,
+    ).map(() => ({ name: faker.string.alpha(20), url: faker.internet.url() })),
+    undefined,
+  ]),
+  ...overrideResponse,
+});
+
+export const getVersionGroupRetrieveResponseMock = (
+  overrideResponse: Partial<VersionGroupDetail> = {},
+): VersionGroupDetail => ({
+  id: faker.number.int({ min: undefined, max: undefined }),
+  name: faker.string.alpha(20),
+  order: faker.helpers.arrayElement([
+    faker.helpers.arrayElement([
+      faker.number.int({ min: undefined, max: undefined }),
+      null,
+    ]),
+    undefined,
+  ]),
+  generation: { name: faker.string.alpha(20), url: faker.internet.url() },
+  move_learn_methods: Array.from(
+    { length: faker.number.int({ min: 1, max: 10 }) },
+    (_, i) => i + 1,
+  ).map(() => ({ name: faker.string.alpha(20), url: faker.internet.url() })),
+  pokedexes: Array.from(
+    { length: faker.number.int({ min: 1, max: 10 }) },
+    (_, i) => i + 1,
+  ).map(() => ({ name: faker.string.alpha(20), url: faker.internet.url() })),
+  regions: Array.from(
+    { length: faker.number.int({ min: 1, max: 10 }) },
+    (_, i) => i + 1,
+  ).map(() => ({ name: faker.string.alpha(20), url: faker.internet.url() })),
+  versions: Array.from(
+    { length: faker.number.int({ min: 1, max: 10 }) },
+    (_, i) => i + 1,
+  ).map(() => ({ name: faker.string.alpha(20), url: faker.internet.url() })),
+  ...overrideResponse,
+});
+
+export const getPokemonEncountersRetrieveResponseMock =
+  (): PokemonEncountersRetrieve200Item[] =>
+    Array.from(
+      { length: faker.number.int({ min: 1, max: 10 }) },
+      (_, i) => i + 1,
+    ).map(() => ({
+      location_area: {
+        name: faker.string.alpha(20),
+        url: faker.internet.url(),
+      },
+      version_details: Array.from(
+        { length: faker.number.int({ min: 1, max: 10 }) },
+        (_, i) => i + 1,
+      ).map(() => ({
+        encounter_details: Array.from(
+          { length: faker.number.int({ min: 1, max: 10 }) },
+          (_, i) => i + 1,
+        ).map(() => ({
+          chance: faker.number.int({ min: undefined, max: undefined }),
+          condition_values: Array.from(
+            { length: faker.number.int({ min: 1, max: 10 }) },
+            (_, i) => i + 1,
+          ).map(() => ({
+            name: faker.string.alpha(20),
+            url: faker.internet.url(),
+          })),
+          max_level: faker.number.int({ min: undefined, max: undefined }),
+          method: { name: faker.string.alpha(20), url: faker.internet.url() },
+          min_level: faker.number.int({ min: undefined, max: undefined }),
+        })),
+        max_chance: faker.number.int({ min: undefined, max: undefined }),
+        version: { name: faker.string.alpha(20), url: faker.internet.url() },
+      })),
+    }));
+
+export const getAbilityListMockHandler = (
+  overrideResponse?:
+    | PaginatedAbilitySummaryList
+    | ((
+        info: Parameters<Parameters<typeof http.get>[1]>[0],
+      ) => Promise<PaginatedAbilitySummaryList> | PaginatedAbilitySummaryList),
+) => {
+  return http.get("*/api/v2/ability", async (info) => {
+    await delay(1000);
+
+    return new HttpResponse(
+      JSON.stringify(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getAbilityListResponseMock(),
+      ),
+      { status: 200, headers: { "Content-Type": "application/json" } },
+    );
+  });
+};
+
+export const getAbilityRetrieveMockHandler = (
+  overrideResponse?:
+    | AbilityDetail
+    | ((
+        info: Parameters<Parameters<typeof http.get>[1]>[0],
+      ) => Promise<AbilityDetail> | AbilityDetail),
+) => {
+  return http.get("*/api/v2/ability/:id", async (info) => {
+    await delay(1000);
+
+    return new HttpResponse(
+      JSON.stringify(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getAbilityRetrieveResponseMock(),
+      ),
+      { status: 200, headers: { "Content-Type": "application/json" } },
+    );
+  });
+};
+
+export const getBerryListMockHandler = (
+  overrideResponse?:
+    | PaginatedBerrySummaryList
+    | ((
+        info: Parameters<Parameters<typeof http.get>[1]>[0],
+      ) => Promise<PaginatedBerrySummaryList> | PaginatedBerrySummaryList),
+) => {
+  return http.get("*/api/v2/berry", async (info) => {
+    await delay(1000);
+
+    return new HttpResponse(
+      JSON.stringify(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getBerryListResponseMock(),
+      ),
+      { status: 200, headers: { "Content-Type": "application/json" } },
+    );
+  });
+};
+
+export const getBerryRetrieveMockHandler = (
+  overrideResponse?:
+    | BerryDetail
+    | ((
+        info: Parameters<Parameters<typeof http.get>[1]>[0],
+      ) => Promise<BerryDetail> | BerryDetail),
+) => {
+  return http.get("*/api/v2/berry/:id", async (info) => {
+    await delay(1000);
+
+    return new HttpResponse(
+      JSON.stringify(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getBerryRetrieveResponseMock(),
+      ),
+      { status: 200, headers: { "Content-Type": "application/json" } },
+    );
+  });
+};
+
+export const getBerryFirmnessListMockHandler = (
+  overrideResponse?:
+    | PaginatedBerryFirmnessSummaryList
+    | ((
+        info: Parameters<Parameters<typeof http.get>[1]>[0],
+      ) =>
+        | Promise<PaginatedBerryFirmnessSummaryList>
+        | PaginatedBerryFirmnessSummaryList),
+) => {
+  return http.get("*/api/v2/berry-firmness", async (info) => {
+    await delay(1000);
+
+    return new HttpResponse(
+      JSON.stringify(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getBerryFirmnessListResponseMock(),
+      ),
+      { status: 200, headers: { "Content-Type": "application/json" } },
+    );
+  });
+};
+
+export const getBerryFirmnessRetrieveMockHandler = (
+  overrideResponse?:
+    | BerryFirmnessDetail
+    | ((
+        info: Parameters<Parameters<typeof http.get>[1]>[0],
+      ) => Promise<BerryFirmnessDetail> | BerryFirmnessDetail),
+) => {
+  return http.get("*/api/v2/berry-firmness/:id", async (info) => {
+    await delay(1000);
+
+    return new HttpResponse(
+      JSON.stringify(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getBerryFirmnessRetrieveResponseMock(),
+      ),
+      { status: 200, headers: { "Content-Type": "application/json" } },
+    );
+  });
+};
+
+export const getBerryFlavorListMockHandler = (
+  overrideResponse?:
+    | PaginatedBerryFlavorSummaryList
+    | ((
+        info: Parameters<Parameters<typeof http.get>[1]>[0],
+      ) =>
+        | Promise<PaginatedBerryFlavorSummaryList>
+        | PaginatedBerryFlavorSummaryList),
+) => {
+  return http.get("*/api/v2/berry-flavor", async (info) => {
+    await delay(1000);
+
+    return new HttpResponse(
+      JSON.stringify(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getBerryFlavorListResponseMock(),
+      ),
+      { status: 200, headers: { "Content-Type": "application/json" } },
+    );
+  });
+};
+
+export const getBerryFlavorRetrieveMockHandler = (
+  overrideResponse?:
+    | BerryFlavorDetail
+    | ((
+        info: Parameters<Parameters<typeof http.get>[1]>[0],
+      ) => Promise<BerryFlavorDetail> | BerryFlavorDetail),
+) => {
+  return http.get("*/api/v2/berry-flavor/:id", async (info) => {
+    await delay(1000);
+
+    return new HttpResponse(
+      JSON.stringify(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getBerryFlavorRetrieveResponseMock(),
+      ),
+      { status: 200, headers: { "Content-Type": "application/json" } },
+    );
+  });
+};
+
+export const getCharacteristicListMockHandler = (
+  overrideResponse?:
+    | PaginatedCharacteristicSummaryList
+    | ((
+        info: Parameters<Parameters<typeof http.get>[1]>[0],
+      ) =>
+        | Promise<PaginatedCharacteristicSummaryList>
+        | PaginatedCharacteristicSummaryList),
+) => {
+  return http.get("*/api/v2/characteristic", async (info) => {
+    await delay(1000);
+
+    return new HttpResponse(
+      JSON.stringify(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getCharacteristicListResponseMock(),
+      ),
+      { status: 200, headers: { "Content-Type": "application/json" } },
+    );
+  });
+};
+
+export const getCharacteristicRetrieveMockHandler = (
+  overrideResponse?:
+    | CharacteristicDetail
+    | ((
+        info: Parameters<Parameters<typeof http.get>[1]>[0],
+      ) => Promise<CharacteristicDetail> | CharacteristicDetail),
+) => {
+  return http.get("*/api/v2/characteristic/:id", async (info) => {
+    await delay(1000);
+
+    return new HttpResponse(
+      JSON.stringify(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getCharacteristicRetrieveResponseMock(),
+      ),
+      { status: 200, headers: { "Content-Type": "application/json" } },
+    );
+  });
+};
+
+export const getContestTypeListMockHandler = (
+  overrideResponse?:
+    | PaginatedContestTypeSummaryList
+    | ((
+        info: Parameters<Parameters<typeof http.get>[1]>[0],
+      ) =>
+        | Promise<PaginatedContestTypeSummaryList>
+        | PaginatedContestTypeSummaryList),
+) => {
+  return http.get("*/api/v2/contest-type", async (info) => {
+    await delay(1000);
+
+    return new HttpResponse(
+      JSON.stringify(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getContestTypeListResponseMock(),
+      ),
+      { status: 200, headers: { "Content-Type": "application/json" } },
+    );
+  });
+};
+
+export const getContestTypeRetrieveMockHandler = (
+  overrideResponse?:
+    | ContestTypeDetail
+    | ((
+        info: Parameters<Parameters<typeof http.get>[1]>[0],
+      ) => Promise<ContestTypeDetail> | ContestTypeDetail),
+) => {
+  return http.get("*/api/v2/contest-type/:id", async (info) => {
+    await delay(1000);
+
+    return new HttpResponse(
+      JSON.stringify(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getContestTypeRetrieveResponseMock(),
+      ),
+      { status: 200, headers: { "Content-Type": "application/json" } },
+    );
+  });
+};
+
+export const getContestEffectListMockHandler = (
+  overrideResponse?:
+    | PaginatedContestEffectSummaryList
+    | ((
+        info: Parameters<Parameters<typeof http.get>[1]>[0],
+      ) =>
+        | Promise<PaginatedContestEffectSummaryList>
+        | PaginatedContestEffectSummaryList),
+) => {
+  return http.get("*/api/v2/contest-effect", async (info) => {
+    await delay(1000);
+
+    return new HttpResponse(
+      JSON.stringify(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getContestEffectListResponseMock(),
+      ),
+      { status: 200, headers: { "Content-Type": "application/json" } },
+    );
+  });
+};
+
+export const getContestEffectRetrieveMockHandler = (
+  overrideResponse?:
+    | ContestEffectDetail
+    | ((
+        info: Parameters<Parameters<typeof http.get>[1]>[0],
+      ) => Promise<ContestEffectDetail> | ContestEffectDetail),
+) => {
+  return http.get("*/api/v2/contest-effect/:id", async (info) => {
+    await delay(1000);
+
+    return new HttpResponse(
+      JSON.stringify(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getContestEffectRetrieveResponseMock(),
+      ),
+      { status: 200, headers: { "Content-Type": "application/json" } },
+    );
+  });
+};
+
+export const getEggGroupListMockHandler = (
+  overrideResponse?:
+    | PaginatedEggGroupSummaryList
+    | ((
+        info: Parameters<Parameters<typeof http.get>[1]>[0],
+      ) =>
+        | Promise<PaginatedEggGroupSummaryList>
+        | PaginatedEggGroupSummaryList),
+) => {
+  return http.get("*/api/v2/egg-group", async (info) => {
+    await delay(1000);
+
+    return new HttpResponse(
+      JSON.stringify(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getEggGroupListResponseMock(),
+      ),
+      { status: 200, headers: { "Content-Type": "application/json" } },
+    );
+  });
+};
+
+export const getEggGroupRetrieveMockHandler = (
+  overrideResponse?:
+    | EggGroupDetail
+    | ((
+        info: Parameters<Parameters<typeof http.get>[1]>[0],
+      ) => Promise<EggGroupDetail> | EggGroupDetail),
+) => {
+  return http.get("*/api/v2/egg-group/:id", async (info) => {
+    await delay(1000);
+
+    return new HttpResponse(
+      JSON.stringify(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getEggGroupRetrieveResponseMock(),
+      ),
+      { status: 200, headers: { "Content-Type": "application/json" } },
+    );
+  });
+};
+
+export const getEncounterMethodListMockHandler = (
+  overrideResponse?:
+    | PaginatedEncounterMethodSummaryList
+    | ((
+        info: Parameters<Parameters<typeof http.get>[1]>[0],
+      ) =>
+        | Promise<PaginatedEncounterMethodSummaryList>
+        | PaginatedEncounterMethodSummaryList),
+) => {
+  return http.get("*/api/v2/encounter-method", async (info) => {
+    await delay(1000);
+
+    return new HttpResponse(
+      JSON.stringify(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getEncounterMethodListResponseMock(),
+      ),
+      { status: 200, headers: { "Content-Type": "application/json" } },
+    );
+  });
+};
+
+export const getEncounterMethodRetrieveMockHandler = (
+  overrideResponse?:
+    | EncounterMethodDetail
+    | ((
+        info: Parameters<Parameters<typeof http.get>[1]>[0],
+      ) => Promise<EncounterMethodDetail> | EncounterMethodDetail),
+) => {
+  return http.get("*/api/v2/encounter-method/:id", async (info) => {
+    await delay(1000);
+
+    return new HttpResponse(
+      JSON.stringify(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getEncounterMethodRetrieveResponseMock(),
+      ),
+      { status: 200, headers: { "Content-Type": "application/json" } },
+    );
+  });
+};
+
+export const getEncounterConditionListMockHandler = (
+  overrideResponse?:
+    | PaginatedEncounterConditionSummaryList
+    | ((
+        info: Parameters<Parameters<typeof http.get>[1]>[0],
+      ) =>
+        | Promise<PaginatedEncounterConditionSummaryList>
+        | PaginatedEncounterConditionSummaryList),
+) => {
+  return http.get("*/api/v2/encounter-condition", async (info) => {
+    await delay(1000);
+
+    return new HttpResponse(
+      JSON.stringify(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getEncounterConditionListResponseMock(),
+      ),
+      { status: 200, headers: { "Content-Type": "application/json" } },
+    );
+  });
+};
+
+export const getEncounterConditionRetrieveMockHandler = (
+  overrideResponse?:
+    | EncounterConditionDetail
+    | ((
+        info: Parameters<Parameters<typeof http.get>[1]>[0],
+      ) => Promise<EncounterConditionDetail> | EncounterConditionDetail),
+) => {
+  return http.get("*/api/v2/encounter-condition/:id", async (info) => {
+    await delay(1000);
+
+    return new HttpResponse(
+      JSON.stringify(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getEncounterConditionRetrieveResponseMock(),
+      ),
+      { status: 200, headers: { "Content-Type": "application/json" } },
+    );
+  });
+};
+
+export const getEncounterConditionValueListMockHandler = (
+  overrideResponse?:
+    | PaginatedEncounterConditionValueSummaryList
+    | ((
+        info: Parameters<Parameters<typeof http.get>[1]>[0],
+      ) =>
+        | Promise<PaginatedEncounterConditionValueSummaryList>
+        | PaginatedEncounterConditionValueSummaryList),
+) => {
+  return http.get("*/api/v2/encounter-condition-value", async (info) => {
+    await delay(1000);
+
+    return new HttpResponse(
+      JSON.stringify(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getEncounterConditionValueListResponseMock(),
+      ),
+      { status: 200, headers: { "Content-Type": "application/json" } },
+    );
+  });
+};
+
+export const getEncounterConditionValueRetrieveMockHandler = (
+  overrideResponse?:
+    | EncounterConditionValueDetail
+    | ((
+        info: Parameters<Parameters<typeof http.get>[1]>[0],
+      ) =>
+        | Promise<EncounterConditionValueDetail>
+        | EncounterConditionValueDetail),
+) => {
+  return http.get("*/api/v2/encounter-condition-value/:id", async (info) => {
+    await delay(1000);
+
+    return new HttpResponse(
+      JSON.stringify(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getEncounterConditionValueRetrieveResponseMock(),
+      ),
+      { status: 200, headers: { "Content-Type": "application/json" } },
+    );
+  });
+};
+
+export const getEvolutionChainListMockHandler = (
+  overrideResponse?:
+    | PaginatedEvolutionChainSummaryList
+    | ((
+        info: Parameters<Parameters<typeof http.get>[1]>[0],
+      ) =>
+        | Promise<PaginatedEvolutionChainSummaryList>
+        | PaginatedEvolutionChainSummaryList),
+) => {
+  return http.get("*/api/v2/evolution-chain", async (info) => {
+    await delay(1000);
+
+    return new HttpResponse(
+      JSON.stringify(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getEvolutionChainListResponseMock(),
+      ),
+      { status: 200, headers: { "Content-Type": "application/json" } },
+    );
+  });
+};
+
+export const getEvolutionChainRetrieveMockHandler = (
+  overrideResponse?:
+    | EvolutionChainDetail
+    | ((
+        info: Parameters<Parameters<typeof http.get>[1]>[0],
+      ) => Promise<EvolutionChainDetail> | EvolutionChainDetail),
+) => {
+  return http.get("*/api/v2/evolution-chain/:id", async (info) => {
+    await delay(1000);
+
+    return new HttpResponse(
+      JSON.stringify(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getEvolutionChainRetrieveResponseMock(),
+      ),
+      { status: 200, headers: { "Content-Type": "application/json" } },
+    );
+  });
+};
+
+export const getEvolutionTriggerListMockHandler = (
+  overrideResponse?:
+    | PaginatedEvolutionTriggerSummaryList
+    | ((
+        info: Parameters<Parameters<typeof http.get>[1]>[0],
+      ) =>
+        | Promise<PaginatedEvolutionTriggerSummaryList>
+        | PaginatedEvolutionTriggerSummaryList),
+) => {
+  return http.get("*/api/v2/evolution-trigger", async (info) => {
+    await delay(1000);
+
+    return new HttpResponse(
+      JSON.stringify(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getEvolutionTriggerListResponseMock(),
+      ),
+      { status: 200, headers: { "Content-Type": "application/json" } },
+    );
+  });
+};
+
+export const getEvolutionTriggerRetrieveMockHandler = (
+  overrideResponse?:
+    | EvolutionTriggerDetail
+    | ((
+        info: Parameters<Parameters<typeof http.get>[1]>[0],
+      ) => Promise<EvolutionTriggerDetail> | EvolutionTriggerDetail),
+) => {
+  return http.get("*/api/v2/evolution-trigger/:id", async (info) => {
+    await delay(1000);
+
+    return new HttpResponse(
+      JSON.stringify(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getEvolutionTriggerRetrieveResponseMock(),
+      ),
+      { status: 200, headers: { "Content-Type": "application/json" } },
+    );
+  });
+};
+
+export const getGenerationListMockHandler = (
+  overrideResponse?:
+    | PaginatedGenerationSummaryList
+    | ((
+        info: Parameters<Parameters<typeof http.get>[1]>[0],
+      ) =>
+        | Promise<PaginatedGenerationSummaryList>
+        | PaginatedGenerationSummaryList),
+) => {
+  return http.get("*/api/v2/generation", async (info) => {
+    await delay(1000);
+
+    return new HttpResponse(
+      JSON.stringify(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getGenerationListResponseMock(),
+      ),
+      { status: 200, headers: { "Content-Type": "application/json" } },
+    );
+  });
+};
+
+export const getGenerationRetrieveMockHandler = (
+  overrideResponse?:
+    | GenerationDetail
+    | ((
+        info: Parameters<Parameters<typeof http.get>[1]>[0],
+      ) => Promise<GenerationDetail> | GenerationDetail),
+) => {
+  return http.get("*/api/v2/generation/:id", async (info) => {
+    await delay(1000);
+
+    return new HttpResponse(
+      JSON.stringify(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getGenerationRetrieveResponseMock(),
+      ),
+      { status: 200, headers: { "Content-Type": "application/json" } },
+    );
+  });
+};
+
+export const getGenderListMockHandler = (
+  overrideResponse?:
+    | PaginatedGenderSummaryList
+    | ((
+        info: Parameters<Parameters<typeof http.get>[1]>[0],
+      ) => Promise<PaginatedGenderSummaryList> | PaginatedGenderSummaryList),
+) => {
+  return http.get("*/api/v2/gender", async (info) => {
+    await delay(1000);
+
+    return new HttpResponse(
+      JSON.stringify(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getGenderListResponseMock(),
+      ),
+      { status: 200, headers: { "Content-Type": "application/json" } },
+    );
+  });
+};
+
+export const getGenderRetrieveMockHandler = (
+  overrideResponse?:
+    | GenderDetail
+    | ((
+        info: Parameters<Parameters<typeof http.get>[1]>[0],
+      ) => Promise<GenderDetail> | GenderDetail),
+) => {
+  return http.get("*/api/v2/gender/:id", async (info) => {
+    await delay(1000);
+
+    return new HttpResponse(
+      JSON.stringify(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getGenderRetrieveResponseMock(),
+      ),
+      { status: 200, headers: { "Content-Type": "application/json" } },
+    );
+  });
+};
+
+export const getGrowthRateListMockHandler = (
+  overrideResponse?:
+    | PaginatedGrowthRateSummaryList
+    | ((
+        info: Parameters<Parameters<typeof http.get>[1]>[0],
+      ) =>
+        | Promise<PaginatedGrowthRateSummaryList>
+        | PaginatedGrowthRateSummaryList),
+) => {
+  return http.get("*/api/v2/growth-rate", async (info) => {
+    await delay(1000);
+
+    return new HttpResponse(
+      JSON.stringify(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getGrowthRateListResponseMock(),
+      ),
+      { status: 200, headers: { "Content-Type": "application/json" } },
+    );
+  });
+};
+
+export const getGrowthRateRetrieveMockHandler = (
+  overrideResponse?:
+    | GrowthRateDetail
+    | ((
+        info: Parameters<Parameters<typeof http.get>[1]>[0],
+      ) => Promise<GrowthRateDetail> | GrowthRateDetail),
+) => {
+  return http.get("*/api/v2/growth-rate/:id", async (info) => {
+    await delay(1000);
+
+    return new HttpResponse(
+      JSON.stringify(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getGrowthRateRetrieveResponseMock(),
+      ),
+      { status: 200, headers: { "Content-Type": "application/json" } },
+    );
+  });
+};
+
+export const getItemListMockHandler = (
+  overrideResponse?:
+    | PaginatedItemSummaryList
+    | ((
+        info: Parameters<Parameters<typeof http.get>[1]>[0],
+      ) => Promise<PaginatedItemSummaryList> | PaginatedItemSummaryList),
+) => {
+  return http.get("*/api/v2/item", async (info) => {
+    await delay(1000);
+
+    return new HttpResponse(
+      JSON.stringify(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getItemListResponseMock(),
+      ),
+      { status: 200, headers: { "Content-Type": "application/json" } },
+    );
+  });
+};
+
+export const getItemRetrieveMockHandler = (
+  overrideResponse?:
+    | ItemDetail
+    | ((
+        info: Parameters<Parameters<typeof http.get>[1]>[0],
+      ) => Promise<ItemDetail> | ItemDetail),
+) => {
+  return http.get("*/api/v2/item/:id", async (info) => {
+    await delay(1000);
+
+    return new HttpResponse(
+      JSON.stringify(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getItemRetrieveResponseMock(),
+      ),
+      { status: 200, headers: { "Content-Type": "application/json" } },
+    );
+  });
+};
+
+export const getItemCategoryListMockHandler = (
+  overrideResponse?:
+    | PaginatedItemCategorySummaryList
+    | ((
+        info: Parameters<Parameters<typeof http.get>[1]>[0],
+      ) =>
+        | Promise<PaginatedItemCategorySummaryList>
+        | PaginatedItemCategorySummaryList),
+) => {
+  return http.get("*/api/v2/item-category", async (info) => {
+    await delay(1000);
+
+    return new HttpResponse(
+      JSON.stringify(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getItemCategoryListResponseMock(),
+      ),
+      { status: 200, headers: { "Content-Type": "application/json" } },
+    );
+  });
+};
+
+export const getItemCategoryRetrieveMockHandler = (
+  overrideResponse?:
+    | ItemCategoryDetail
+    | ((
+        info: Parameters<Parameters<typeof http.get>[1]>[0],
+      ) => Promise<ItemCategoryDetail> | ItemCategoryDetail),
+) => {
+  return http.get("*/api/v2/item-category/:id", async (info) => {
+    await delay(1000);
+
+    return new HttpResponse(
+      JSON.stringify(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getItemCategoryRetrieveResponseMock(),
+      ),
+      { status: 200, headers: { "Content-Type": "application/json" } },
+    );
+  });
+};
+
+export const getItemAttributeListMockHandler = (
+  overrideResponse?:
+    | PaginatedItemAttributeSummaryList
+    | ((
+        info: Parameters<Parameters<typeof http.get>[1]>[0],
+      ) =>
+        | Promise<PaginatedItemAttributeSummaryList>
+        | PaginatedItemAttributeSummaryList),
+) => {
+  return http.get("*/api/v2/item-attribute", async (info) => {
+    await delay(1000);
+
+    return new HttpResponse(
+      JSON.stringify(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getItemAttributeListResponseMock(),
+      ),
+      { status: 200, headers: { "Content-Type": "application/json" } },
+    );
+  });
+};
+
+export const getItemAttributeRetrieveMockHandler = (
+  overrideResponse?:
+    | ItemAttributeDetail
+    | ((
+        info: Parameters<Parameters<typeof http.get>[1]>[0],
+      ) => Promise<ItemAttributeDetail> | ItemAttributeDetail),
+) => {
+  return http.get("*/api/v2/item-attribute/:id", async (info) => {
+    await delay(1000);
+
+    return new HttpResponse(
+      JSON.stringify(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getItemAttributeRetrieveResponseMock(),
+      ),
+      { status: 200, headers: { "Content-Type": "application/json" } },
+    );
+  });
+};
+
+export const getItemFlingEffectListMockHandler = (
+  overrideResponse?:
+    | PaginatedItemFlingEffectSummaryList
+    | ((
+        info: Parameters<Parameters<typeof http.get>[1]>[0],
+      ) =>
+        | Promise<PaginatedItemFlingEffectSummaryList>
+        | PaginatedItemFlingEffectSummaryList),
+) => {
+  return http.get("*/api/v2/item-fling-effect", async (info) => {
+    await delay(1000);
+
+    return new HttpResponse(
+      JSON.stringify(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getItemFlingEffectListResponseMock(),
+      ),
+      { status: 200, headers: { "Content-Type": "application/json" } },
+    );
+  });
+};
+
+export const getItemFlingEffectRetrieveMockHandler = (
+  overrideResponse?:
+    | ItemFlingEffectDetail
+    | ((
+        info: Parameters<Parameters<typeof http.get>[1]>[0],
+      ) => Promise<ItemFlingEffectDetail> | ItemFlingEffectDetail),
+) => {
+  return http.get("*/api/v2/item-fling-effect/:id", async (info) => {
+    await delay(1000);
+
+    return new HttpResponse(
+      JSON.stringify(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getItemFlingEffectRetrieveResponseMock(),
+      ),
+      { status: 200, headers: { "Content-Type": "application/json" } },
+    );
+  });
+};
+
+export const getItemPocketListMockHandler = (
+  overrideResponse?:
+    | PaginatedItemPocketSummaryList
+    | ((
+        info: Parameters<Parameters<typeof http.get>[1]>[0],
+      ) =>
+        | Promise<PaginatedItemPocketSummaryList>
+        | PaginatedItemPocketSummaryList),
+) => {
+  return http.get("*/api/v2/item-pocket", async (info) => {
+    await delay(1000);
+
+    return new HttpResponse(
+      JSON.stringify(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getItemPocketListResponseMock(),
+      ),
+      { status: 200, headers: { "Content-Type": "application/json" } },
+    );
+  });
+};
+
+export const getItemPocketRetrieveMockHandler = (
+  overrideResponse?:
+    | ItemPocketDetail
+    | ((
+        info: Parameters<Parameters<typeof http.get>[1]>[0],
+      ) => Promise<ItemPocketDetail> | ItemPocketDetail),
+) => {
+  return http.get("*/api/v2/item-pocket/:id", async (info) => {
+    await delay(1000);
+
+    return new HttpResponse(
+      JSON.stringify(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getItemPocketRetrieveResponseMock(),
+      ),
+      { status: 200, headers: { "Content-Type": "application/json" } },
+    );
+  });
+};
+
+export const getLanguageListMockHandler = (
+  overrideResponse?:
+    | PaginatedLanguageSummaryList
+    | ((
+        info: Parameters<Parameters<typeof http.get>[1]>[0],
+      ) =>
+        | Promise<PaginatedLanguageSummaryList>
+        | PaginatedLanguageSummaryList),
+) => {
+  return http.get("*/api/v2/language", async (info) => {
+    await delay(1000);
+
+    return new HttpResponse(
+      JSON.stringify(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getLanguageListResponseMock(),
+      ),
+      { status: 200, headers: { "Content-Type": "application/json" } },
+    );
+  });
+};
+
+export const getLanguageRetrieveMockHandler = (
+  overrideResponse?:
+    | LanguageDetail
+    | ((
+        info: Parameters<Parameters<typeof http.get>[1]>[0],
+      ) => Promise<LanguageDetail> | LanguageDetail),
+) => {
+  return http.get("*/api/v2/language/:id", async (info) => {
+    await delay(1000);
+
+    return new HttpResponse(
+      JSON.stringify(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getLanguageRetrieveResponseMock(),
+      ),
+      { status: 200, headers: { "Content-Type": "application/json" } },
+    );
+  });
+};
+
+export const getLocationListMockHandler = (
+  overrideResponse?:
+    | PaginatedLocationSummaryList
+    | ((
+        info: Parameters<Parameters<typeof http.get>[1]>[0],
+      ) =>
+        | Promise<PaginatedLocationSummaryList>
+        | PaginatedLocationSummaryList),
+) => {
+  return http.get("*/api/v2/location", async (info) => {
+    await delay(1000);
+
+    return new HttpResponse(
+      JSON.stringify(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getLocationListResponseMock(),
+      ),
+      { status: 200, headers: { "Content-Type": "application/json" } },
+    );
+  });
+};
+
+export const getLocationRetrieveMockHandler = (
+  overrideResponse?:
+    | LocationDetail
+    | ((
+        info: Parameters<Parameters<typeof http.get>[1]>[0],
+      ) => Promise<LocationDetail> | LocationDetail),
+) => {
+  return http.get("*/api/v2/location/:id", async (info) => {
+    await delay(1000);
+
+    return new HttpResponse(
+      JSON.stringify(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getLocationRetrieveResponseMock(),
+      ),
+      { status: 200, headers: { "Content-Type": "application/json" } },
+    );
+  });
+};
+
+export const getLocationAreaListMockHandler = (
+  overrideResponse?:
+    | PaginatedLocationAreaSummaryList
+    | ((
+        info: Parameters<Parameters<typeof http.get>[1]>[0],
+      ) =>
+        | Promise<PaginatedLocationAreaSummaryList>
+        | PaginatedLocationAreaSummaryList),
+) => {
+  return http.get("*/api/v2/location-area", async (info) => {
+    await delay(1000);
+
+    return new HttpResponse(
+      JSON.stringify(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getLocationAreaListResponseMock(),
+      ),
+      { status: 200, headers: { "Content-Type": "application/json" } },
+    );
+  });
+};
+
+export const getLocationAreaRetrieveMockHandler = (
+  overrideResponse?:
+    | LocationAreaDetail
+    | ((
+        info: Parameters<Parameters<typeof http.get>[1]>[0],
+      ) => Promise<LocationAreaDetail> | LocationAreaDetail),
+) => {
+  return http.get("*/api/v2/location-area/:id", async (info) => {
+    await delay(1000);
+
+    return new HttpResponse(
+      JSON.stringify(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getLocationAreaRetrieveResponseMock(),
+      ),
+      { status: 200, headers: { "Content-Type": "application/json" } },
+    );
+  });
+};
+
+export const getMachineListMockHandler = (
+  overrideResponse?:
+    | PaginatedMachineSummaryList
+    | ((
+        info: Parameters<Parameters<typeof http.get>[1]>[0],
+      ) => Promise<PaginatedMachineSummaryList> | PaginatedMachineSummaryList),
+) => {
+  return http.get("*/api/v2/machine", async (info) => {
+    await delay(1000);
+
+    return new HttpResponse(
+      JSON.stringify(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getMachineListResponseMock(),
+      ),
+      { status: 200, headers: { "Content-Type": "application/json" } },
+    );
+  });
+};
+
+export const getMachineRetrieveMockHandler = (
+  overrideResponse?:
+    | MachineDetail
+    | ((
+        info: Parameters<Parameters<typeof http.get>[1]>[0],
+      ) => Promise<MachineDetail> | MachineDetail),
+) => {
+  return http.get("*/api/v2/machine/:id", async (info) => {
+    await delay(1000);
+
+    return new HttpResponse(
+      JSON.stringify(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getMachineRetrieveResponseMock(),
+      ),
+      { status: 200, headers: { "Content-Type": "application/json" } },
+    );
+  });
+};
+
+export const getMoveListMockHandler = (
+  overrideResponse?:
+    | PaginatedMoveSummaryList
+    | ((
+        info: Parameters<Parameters<typeof http.get>[1]>[0],
+      ) => Promise<PaginatedMoveSummaryList> | PaginatedMoveSummaryList),
+) => {
+  return http.get("*/api/v2/move", async (info) => {
+    await delay(1000);
+
+    return new HttpResponse(
+      JSON.stringify(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getMoveListResponseMock(),
+      ),
+      { status: 200, headers: { "Content-Type": "application/json" } },
+    );
+  });
+};
+
+export const getMoveRetrieveMockHandler = (
+  overrideResponse?:
+    | MoveDetail
+    | ((
+        info: Parameters<Parameters<typeof http.get>[1]>[0],
+      ) => Promise<MoveDetail> | MoveDetail),
+) => {
+  return http.get("*/api/v2/move/:id", async (info) => {
+    await delay(1000);
+
+    return new HttpResponse(
+      JSON.stringify(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getMoveRetrieveResponseMock(),
+      ),
+      { status: 200, headers: { "Content-Type": "application/json" } },
+    );
+  });
+};
+
+export const getMoveAilmentListMockHandler = (
+  overrideResponse?:
+    | PaginatedMoveMetaAilmentSummaryList
+    | ((
+        info: Parameters<Parameters<typeof http.get>[1]>[0],
+      ) =>
+        | Promise<PaginatedMoveMetaAilmentSummaryList>
+        | PaginatedMoveMetaAilmentSummaryList),
+) => {
+  return http.get("*/api/v2/move-ailment", async (info) => {
+    await delay(1000);
+
+    return new HttpResponse(
+      JSON.stringify(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getMoveAilmentListResponseMock(),
+      ),
+      { status: 200, headers: { "Content-Type": "application/json" } },
+    );
+  });
+};
+
+export const getMoveAilmentRetrieveMockHandler = (
+  overrideResponse?:
+    | MoveMetaAilmentDetail
+    | ((
+        info: Parameters<Parameters<typeof http.get>[1]>[0],
+      ) => Promise<MoveMetaAilmentDetail> | MoveMetaAilmentDetail),
+) => {
+  return http.get("*/api/v2/move-ailment/:id", async (info) => {
+    await delay(1000);
+
+    return new HttpResponse(
+      JSON.stringify(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getMoveAilmentRetrieveResponseMock(),
+      ),
+      { status: 200, headers: { "Content-Type": "application/json" } },
+    );
+  });
+};
+
+export const getMoveBattleStyleListMockHandler = (
+  overrideResponse?:
+    | PaginatedMoveBattleStyleSummaryList
+    | ((
+        info: Parameters<Parameters<typeof http.get>[1]>[0],
+      ) =>
+        | Promise<PaginatedMoveBattleStyleSummaryList>
+        | PaginatedMoveBattleStyleSummaryList),
+) => {
+  return http.get("*/api/v2/move-battle-style", async (info) => {
+    await delay(1000);
+
+    return new HttpResponse(
+      JSON.stringify(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getMoveBattleStyleListResponseMock(),
+      ),
+      { status: 200, headers: { "Content-Type": "application/json" } },
+    );
+  });
+};
+
+export const getMoveBattleStyleRetrieveMockHandler = (
+  overrideResponse?:
+    | MoveBattleStyleDetail
+    | ((
+        info: Parameters<Parameters<typeof http.get>[1]>[0],
+      ) => Promise<MoveBattleStyleDetail> | MoveBattleStyleDetail),
+) => {
+  return http.get("*/api/v2/move-battle-style/:id", async (info) => {
+    await delay(1000);
+
+    return new HttpResponse(
+      JSON.stringify(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getMoveBattleStyleRetrieveResponseMock(),
+      ),
+      { status: 200, headers: { "Content-Type": "application/json" } },
+    );
+  });
+};
+
+export const getMoveCategoryListMockHandler = (
+  overrideResponse?:
+    | PaginatedMoveMetaCategorySummaryList
+    | ((
+        info: Parameters<Parameters<typeof http.get>[1]>[0],
+      ) =>
+        | Promise<PaginatedMoveMetaCategorySummaryList>
+        | PaginatedMoveMetaCategorySummaryList),
+) => {
+  return http.get("*/api/v2/move-category", async (info) => {
+    await delay(1000);
+
+    return new HttpResponse(
+      JSON.stringify(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getMoveCategoryListResponseMock(),
+      ),
+      { status: 200, headers: { "Content-Type": "application/json" } },
+    );
+  });
+};
+
+export const getMoveCategoryRetrieveMockHandler = (
+  overrideResponse?:
+    | MoveMetaCategoryDetail
+    | ((
+        info: Parameters<Parameters<typeof http.get>[1]>[0],
+      ) => Promise<MoveMetaCategoryDetail> | MoveMetaCategoryDetail),
+) => {
+  return http.get("*/api/v2/move-category/:id", async (info) => {
+    await delay(1000);
+
+    return new HttpResponse(
+      JSON.stringify(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getMoveCategoryRetrieveResponseMock(),
+      ),
+      { status: 200, headers: { "Content-Type": "application/json" } },
+    );
+  });
+};
+
+export const getMoveDamageClassListMockHandler = (
+  overrideResponse?:
+    | PaginatedMoveDamageClassSummaryList
+    | ((
+        info: Parameters<Parameters<typeof http.get>[1]>[0],
+      ) =>
+        | Promise<PaginatedMoveDamageClassSummaryList>
+        | PaginatedMoveDamageClassSummaryList),
+) => {
+  return http.get("*/api/v2/move-damage-class", async (info) => {
+    await delay(1000);
+
+    return new HttpResponse(
+      JSON.stringify(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getMoveDamageClassListResponseMock(),
+      ),
+      { status: 200, headers: { "Content-Type": "application/json" } },
+    );
+  });
+};
+
+export const getMoveDamageClassRetrieveMockHandler = (
+  overrideResponse?:
+    | MoveDamageClassDetail
+    | ((
+        info: Parameters<Parameters<typeof http.get>[1]>[0],
+      ) => Promise<MoveDamageClassDetail> | MoveDamageClassDetail),
+) => {
+  return http.get("*/api/v2/move-damage-class/:id", async (info) => {
+    await delay(1000);
+
+    return new HttpResponse(
+      JSON.stringify(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getMoveDamageClassRetrieveResponseMock(),
+      ),
+      { status: 200, headers: { "Content-Type": "application/json" } },
+    );
+  });
+};
+
+export const getMoveLearnMethodListMockHandler = (
+  overrideResponse?:
+    | PaginatedMoveLearnMethodSummaryList
+    | ((
+        info: Parameters<Parameters<typeof http.get>[1]>[0],
+      ) =>
+        | Promise<PaginatedMoveLearnMethodSummaryList>
+        | PaginatedMoveLearnMethodSummaryList),
+) => {
+  return http.get("*/api/v2/move-learn-method", async (info) => {
+    await delay(1000);
+
+    return new HttpResponse(
+      JSON.stringify(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getMoveLearnMethodListResponseMock(),
+      ),
+      { status: 200, headers: { "Content-Type": "application/json" } },
+    );
+  });
+};
+
+export const getMoveLearnMethodRetrieveMockHandler = (
+  overrideResponse?:
+    | MoveLearnMethodDetail
+    | ((
+        info: Parameters<Parameters<typeof http.get>[1]>[0],
+      ) => Promise<MoveLearnMethodDetail> | MoveLearnMethodDetail),
+) => {
+  return http.get("*/api/v2/move-learn-method/:id", async (info) => {
+    await delay(1000);
+
+    return new HttpResponse(
+      JSON.stringify(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getMoveLearnMethodRetrieveResponseMock(),
+      ),
+      { status: 200, headers: { "Content-Type": "application/json" } },
+    );
+  });
+};
+
+export const getMoveTargetListMockHandler = (
+  overrideResponse?:
+    | PaginatedMoveTargetSummaryList
+    | ((
+        info: Parameters<Parameters<typeof http.get>[1]>[0],
+      ) =>
+        | Promise<PaginatedMoveTargetSummaryList>
+        | PaginatedMoveTargetSummaryList),
+) => {
+  return http.get("*/api/v2/move-target", async (info) => {
+    await delay(1000);
+
+    return new HttpResponse(
+      JSON.stringify(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getMoveTargetListResponseMock(),
+      ),
+      { status: 200, headers: { "Content-Type": "application/json" } },
+    );
+  });
+};
+
+export const getMoveTargetRetrieveMockHandler = (
+  overrideResponse?:
+    | MoveTargetDetail
+    | ((
+        info: Parameters<Parameters<typeof http.get>[1]>[0],
+      ) => Promise<MoveTargetDetail> | MoveTargetDetail),
+) => {
+  return http.get("*/api/v2/move-target/:id", async (info) => {
+    await delay(1000);
+
+    return new HttpResponse(
+      JSON.stringify(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getMoveTargetRetrieveResponseMock(),
+      ),
+      { status: 200, headers: { "Content-Type": "application/json" } },
+    );
+  });
+};
+
+export const getNatureListMockHandler = (
+  overrideResponse?:
+    | PaginatedNatureSummaryList
+    | ((
+        info: Parameters<Parameters<typeof http.get>[1]>[0],
+      ) => Promise<PaginatedNatureSummaryList> | PaginatedNatureSummaryList),
+) => {
+  return http.get("*/api/v2/nature", async (info) => {
+    await delay(1000);
+
+    return new HttpResponse(
+      JSON.stringify(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getNatureListResponseMock(),
+      ),
+      { status: 200, headers: { "Content-Type": "application/json" } },
+    );
+  });
+};
+
+export const getNatureRetrieveMockHandler = (
+  overrideResponse?:
+    | NatureDetail
+    | ((
+        info: Parameters<Parameters<typeof http.get>[1]>[0],
+      ) => Promise<NatureDetail> | NatureDetail),
+) => {
+  return http.get("*/api/v2/nature/:id", async (info) => {
+    await delay(1000);
+
+    return new HttpResponse(
+      JSON.stringify(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getNatureRetrieveResponseMock(),
+      ),
+      { status: 200, headers: { "Content-Type": "application/json" } },
+    );
+  });
+};
+
+export const getPalParkAreaListMockHandler = (
+  overrideResponse?:
+    | PaginatedPalParkAreaSummaryList
+    | ((
+        info: Parameters<Parameters<typeof http.get>[1]>[0],
+      ) =>
+        | Promise<PaginatedPalParkAreaSummaryList>
+        | PaginatedPalParkAreaSummaryList),
+) => {
+  return http.get("*/api/v2/pal-park-area", async (info) => {
+    await delay(1000);
+
+    return new HttpResponse(
+      JSON.stringify(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getPalParkAreaListResponseMock(),
+      ),
+      { status: 200, headers: { "Content-Type": "application/json" } },
+    );
+  });
+};
+
+export const getPalParkAreaRetrieveMockHandler = (
+  overrideResponse?:
+    | PalParkAreaDetail
+    | ((
+        info: Parameters<Parameters<typeof http.get>[1]>[0],
+      ) => Promise<PalParkAreaDetail> | PalParkAreaDetail),
+) => {
+  return http.get("*/api/v2/pal-park-area/:id", async (info) => {
+    await delay(1000);
+
+    return new HttpResponse(
+      JSON.stringify(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getPalParkAreaRetrieveResponseMock(),
+      ),
+      { status: 200, headers: { "Content-Type": "application/json" } },
+    );
+  });
+};
+
+export const getPokedexListMockHandler = (
+  overrideResponse?:
+    | PaginatedPokedexSummaryList
+    | ((
+        info: Parameters<Parameters<typeof http.get>[1]>[0],
+      ) => Promise<PaginatedPokedexSummaryList> | PaginatedPokedexSummaryList),
+) => {
+  return http.get("*/api/v2/pokedex", async (info) => {
+    await delay(1000);
+
+    return new HttpResponse(
+      JSON.stringify(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getPokedexListResponseMock(),
+      ),
+      { status: 200, headers: { "Content-Type": "application/json" } },
+    );
+  });
+};
+
+export const getPokedexRetrieveMockHandler = (
+  overrideResponse?:
+    | PokedexDetail
+    | ((
+        info: Parameters<Parameters<typeof http.get>[1]>[0],
+      ) => Promise<PokedexDetail> | PokedexDetail),
+) => {
+  return http.get("*/api/v2/pokedex/:id", async (info) => {
+    await delay(1000);
+
+    return new HttpResponse(
+      JSON.stringify(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getPokedexRetrieveResponseMock(),
+      ),
+      { status: 200, headers: { "Content-Type": "application/json" } },
+    );
+  });
+};
+
+export const getPokemonListMockHandler = (
+  overrideResponse?:
+    | PaginatedPokemonSummaryList
+    | ((
+        info: Parameters<Parameters<typeof http.get>[1]>[0],
+      ) => Promise<PaginatedPokemonSummaryList> | PaginatedPokemonSummaryList),
+) => {
+  return http.get("*/api/v2/pokemon", async (info) => {
+    await delay(1000);
+
+    return new HttpResponse(
+      JSON.stringify(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getPokemonListResponseMock(),
+      ),
+      { status: 200, headers: { "Content-Type": "application/json" } },
+    );
+  });
+};
+
+export const getPokemonRetrieveMockHandler = (
+  overrideResponse?:
+    | PokemonDetail
+    | ((
+        info: Parameters<Parameters<typeof http.get>[1]>[0],
+      ) => Promise<PokemonDetail> | PokemonDetail),
+) => {
+  return http.get("*/api/v2/pokemon/:id", async (info) => {
+    await delay(1000);
+
+    return new HttpResponse(
+      JSON.stringify(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getPokemonRetrieveResponseMock(),
+      ),
+      { status: 200, headers: { "Content-Type": "application/json" } },
+    );
+  });
+};
+
+export const getPokemonColorListMockHandler = (
+  overrideResponse?:
+    | PaginatedPokemonColorSummaryList
+    | ((
+        info: Parameters<Parameters<typeof http.get>[1]>[0],
+      ) =>
+        | Promise<PaginatedPokemonColorSummaryList>
+        | PaginatedPokemonColorSummaryList),
+) => {
+  return http.get("*/api/v2/pokemon-color", async (info) => {
+    await delay(1000);
+
+    return new HttpResponse(
+      JSON.stringify(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getPokemonColorListResponseMock(),
+      ),
+      { status: 200, headers: { "Content-Type": "application/json" } },
+    );
+  });
+};
+
+export const getPokemonColorRetrieveMockHandler = (
+  overrideResponse?:
+    | PokemonColorDetail
+    | ((
+        info: Parameters<Parameters<typeof http.get>[1]>[0],
+      ) => Promise<PokemonColorDetail> | PokemonColorDetail),
+) => {
+  return http.get("*/api/v2/pokemon-color/:id", async (info) => {
+    await delay(1000);
+
+    return new HttpResponse(
+      JSON.stringify(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getPokemonColorRetrieveResponseMock(),
+      ),
+      { status: 200, headers: { "Content-Type": "application/json" } },
+    );
+  });
+};
+
+export const getPokemonFormListMockHandler = (
+  overrideResponse?:
+    | PaginatedPokemonFormSummaryList
+    | ((
+        info: Parameters<Parameters<typeof http.get>[1]>[0],
+      ) =>
+        | Promise<PaginatedPokemonFormSummaryList>
+        | PaginatedPokemonFormSummaryList),
+) => {
+  return http.get("*/api/v2/pokemon-form", async (info) => {
+    await delay(1000);
+
+    return new HttpResponse(
+      JSON.stringify(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getPokemonFormListResponseMock(),
+      ),
+      { status: 200, headers: { "Content-Type": "application/json" } },
+    );
+  });
+};
+
+export const getPokemonFormRetrieveMockHandler = (
+  overrideResponse?:
+    | PokemonFormDetail
+    | ((
+        info: Parameters<Parameters<typeof http.get>[1]>[0],
+      ) => Promise<PokemonFormDetail> | PokemonFormDetail),
+) => {
+  return http.get("*/api/v2/pokemon-form/:id", async (info) => {
+    await delay(1000);
+
+    return new HttpResponse(
+      JSON.stringify(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getPokemonFormRetrieveResponseMock(),
+      ),
+      { status: 200, headers: { "Content-Type": "application/json" } },
+    );
+  });
+};
+
+export const getPokemonHabitatListMockHandler = (
+  overrideResponse?:
+    | PaginatedPokemonHabitatSummaryList
+    | ((
+        info: Parameters<Parameters<typeof http.get>[1]>[0],
+      ) =>
+        | Promise<PaginatedPokemonHabitatSummaryList>
+        | PaginatedPokemonHabitatSummaryList),
+) => {
+  return http.get("*/api/v2/pokemon-habitat", async (info) => {
+    await delay(1000);
+
+    return new HttpResponse(
+      JSON.stringify(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getPokemonHabitatListResponseMock(),
+      ),
+      { status: 200, headers: { "Content-Type": "application/json" } },
+    );
+  });
+};
+
+export const getPokemonHabitatRetrieveMockHandler = (
+  overrideResponse?:
+    | PokemonHabitatDetail
+    | ((
+        info: Parameters<Parameters<typeof http.get>[1]>[0],
+      ) => Promise<PokemonHabitatDetail> | PokemonHabitatDetail),
+) => {
+  return http.get("*/api/v2/pokemon-habitat/:id", async (info) => {
+    await delay(1000);
+
+    return new HttpResponse(
+      JSON.stringify(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getPokemonHabitatRetrieveResponseMock(),
+      ),
+      { status: 200, headers: { "Content-Type": "application/json" } },
+    );
+  });
+};
+
+export const getPokemonShapeListMockHandler = (
+  overrideResponse?:
+    | PaginatedPokemonShapeSummaryList
+    | ((
+        info: Parameters<Parameters<typeof http.get>[1]>[0],
+      ) =>
+        | Promise<PaginatedPokemonShapeSummaryList>
+        | PaginatedPokemonShapeSummaryList),
+) => {
+  return http.get("*/api/v2/pokemon-shape", async (info) => {
+    await delay(1000);
+
+    return new HttpResponse(
+      JSON.stringify(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getPokemonShapeListResponseMock(),
+      ),
+      { status: 200, headers: { "Content-Type": "application/json" } },
+    );
+  });
+};
+
+export const getPokemonShapeRetrieveMockHandler = (
+  overrideResponse?:
+    | PokemonShapeDetail
+    | ((
+        info: Parameters<Parameters<typeof http.get>[1]>[0],
+      ) => Promise<PokemonShapeDetail> | PokemonShapeDetail),
+) => {
+  return http.get("*/api/v2/pokemon-shape/:id", async (info) => {
+    await delay(1000);
+
+    return new HttpResponse(
+      JSON.stringify(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getPokemonShapeRetrieveResponseMock(),
+      ),
+      { status: 200, headers: { "Content-Type": "application/json" } },
+    );
+  });
+};
+
+export const getPokemonSpeciesListMockHandler = (
+  overrideResponse?:
+    | PaginatedPokemonSpeciesSummaryList
+    | ((
+        info: Parameters<Parameters<typeof http.get>[1]>[0],
+      ) =>
+        | Promise<PaginatedPokemonSpeciesSummaryList>
+        | PaginatedPokemonSpeciesSummaryList),
+) => {
+  return http.get("*/api/v2/pokemon-species", async (info) => {
+    await delay(1000);
+
+    return new HttpResponse(
+      JSON.stringify(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getPokemonSpeciesListResponseMock(),
+      ),
+      { status: 200, headers: { "Content-Type": "application/json" } },
+    );
+  });
+};
+
+export const getPokemonSpeciesRetrieveMockHandler = (
+  overrideResponse?:
+    | PokemonSpeciesDetail
+    | ((
+        info: Parameters<Parameters<typeof http.get>[1]>[0],
+      ) => Promise<PokemonSpeciesDetail> | PokemonSpeciesDetail),
+) => {
+  return http.get("*/api/v2/pokemon-species/:id", async (info) => {
+    await delay(1000);
+
+    return new HttpResponse(
+      JSON.stringify(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getPokemonSpeciesRetrieveResponseMock(),
+      ),
+      { status: 200, headers: { "Content-Type": "application/json" } },
+    );
+  });
+};
+
+export const getPokeathlonStatListMockHandler = (
+  overrideResponse?:
+    | PaginatedPokeathlonStatSummaryList
+    | ((
+        info: Parameters<Parameters<typeof http.get>[1]>[0],
+      ) =>
+        | Promise<PaginatedPokeathlonStatSummaryList>
+        | PaginatedPokeathlonStatSummaryList),
+) => {
+  return http.get("*/api/v2/pokeathlon-stat", async (info) => {
+    await delay(1000);
+
+    return new HttpResponse(
+      JSON.stringify(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getPokeathlonStatListResponseMock(),
+      ),
+      { status: 200, headers: { "Content-Type": "application/json" } },
+    );
+  });
+};
+
+export const getPokeathlonStatRetrieveMockHandler = (
+  overrideResponse?:
+    | PokeathlonStatDetail
+    | ((
+        info: Parameters<Parameters<typeof http.get>[1]>[0],
+      ) => Promise<PokeathlonStatDetail> | PokeathlonStatDetail),
+) => {
+  return http.get("*/api/v2/pokeathlon-stat/:id", async (info) => {
+    await delay(1000);
+
+    return new HttpResponse(
+      JSON.stringify(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getPokeathlonStatRetrieveResponseMock(),
+      ),
+      { status: 200, headers: { "Content-Type": "application/json" } },
+    );
+  });
+};
+
+export const getRegionListMockHandler = (
+  overrideResponse?:
+    | PaginatedRegionSummaryList
+    | ((
+        info: Parameters<Parameters<typeof http.get>[1]>[0],
+      ) => Promise<PaginatedRegionSummaryList> | PaginatedRegionSummaryList),
+) => {
+  return http.get("*/api/v2/region", async (info) => {
+    await delay(1000);
+
+    return new HttpResponse(
+      JSON.stringify(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getRegionListResponseMock(),
+      ),
+      { status: 200, headers: { "Content-Type": "application/json" } },
+    );
+  });
+};
+
+export const getRegionRetrieveMockHandler = (
+  overrideResponse?:
+    | RegionDetail
+    | ((
+        info: Parameters<Parameters<typeof http.get>[1]>[0],
+      ) => Promise<RegionDetail> | RegionDetail),
+) => {
+  return http.get("*/api/v2/region/:id", async (info) => {
+    await delay(1000);
+
+    return new HttpResponse(
+      JSON.stringify(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getRegionRetrieveResponseMock(),
+      ),
+      { status: 200, headers: { "Content-Type": "application/json" } },
+    );
+  });
+};
+
+export const getStatListMockHandler = (
+  overrideResponse?:
+    | PaginatedStatSummaryList
+    | ((
+        info: Parameters<Parameters<typeof http.get>[1]>[0],
+      ) => Promise<PaginatedStatSummaryList> | PaginatedStatSummaryList),
+) => {
+  return http.get("*/api/v2/stat", async (info) => {
+    await delay(1000);
+
+    return new HttpResponse(
+      JSON.stringify(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getStatListResponseMock(),
+      ),
+      { status: 200, headers: { "Content-Type": "application/json" } },
+    );
+  });
+};
+
+export const getStatRetrieveMockHandler = (
+  overrideResponse?:
+    | StatDetail
+    | ((
+        info: Parameters<Parameters<typeof http.get>[1]>[0],
+      ) => Promise<StatDetail> | StatDetail),
+) => {
+  return http.get("*/api/v2/stat/:id", async (info) => {
+    await delay(1000);
+
+    return new HttpResponse(
+      JSON.stringify(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getStatRetrieveResponseMock(),
+      ),
+      { status: 200, headers: { "Content-Type": "application/json" } },
+    );
+  });
+};
+
+export const getSuperContestEffectListMockHandler = (
+  overrideResponse?:
+    | PaginatedSuperContestEffectSummaryList
+    | ((
+        info: Parameters<Parameters<typeof http.get>[1]>[0],
+      ) =>
+        | Promise<PaginatedSuperContestEffectSummaryList>
+        | PaginatedSuperContestEffectSummaryList),
+) => {
+  return http.get("*/api/v2/super-contest-effect", async (info) => {
+    await delay(1000);
+
+    return new HttpResponse(
+      JSON.stringify(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getSuperContestEffectListResponseMock(),
+      ),
+      { status: 200, headers: { "Content-Type": "application/json" } },
+    );
+  });
+};
+
+export const getSuperContestEffectRetrieveMockHandler = (
+  overrideResponse?:
+    | SuperContestEffectDetail
+    | ((
+        info: Parameters<Parameters<typeof http.get>[1]>[0],
+      ) => Promise<SuperContestEffectDetail> | SuperContestEffectDetail),
+) => {
+  return http.get("*/api/v2/super-contest-effect/:id", async (info) => {
+    await delay(1000);
+
+    return new HttpResponse(
+      JSON.stringify(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getSuperContestEffectRetrieveResponseMock(),
+      ),
+      { status: 200, headers: { "Content-Type": "application/json" } },
+    );
+  });
+};
+
+export const getTypeListMockHandler = (
+  overrideResponse?:
+    | PaginatedTypeSummaryList
+    | ((
+        info: Parameters<Parameters<typeof http.get>[1]>[0],
+      ) => Promise<PaginatedTypeSummaryList> | PaginatedTypeSummaryList),
+) => {
+  return http.get("*/api/v2/type", async (info) => {
+    await delay(1000);
+
+    return new HttpResponse(
+      JSON.stringify(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getTypeListResponseMock(),
+      ),
+      { status: 200, headers: { "Content-Type": "application/json" } },
+    );
+  });
+};
+
+export const getTypeRetrieveMockHandler = (
+  overrideResponse?:
+    | TypeDetail
+    | ((
+        info: Parameters<Parameters<typeof http.get>[1]>[0],
+      ) => Promise<TypeDetail> | TypeDetail),
+) => {
+  return http.get("*/api/v2/type/:id", async (info) => {
+    await delay(1000);
+
+    return new HttpResponse(
+      JSON.stringify(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getTypeRetrieveResponseMock(),
+      ),
+      { status: 200, headers: { "Content-Type": "application/json" } },
+    );
+  });
+};
+
+export const getVersionListMockHandler = (
+  overrideResponse?:
+    | PaginatedVersionSummaryList
+    | ((
+        info: Parameters<Parameters<typeof http.get>[1]>[0],
+      ) => Promise<PaginatedVersionSummaryList> | PaginatedVersionSummaryList),
+) => {
+  return http.get("*/api/v2/version", async (info) => {
+    await delay(1000);
+
+    return new HttpResponse(
+      JSON.stringify(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getVersionListResponseMock(),
+      ),
+      { status: 200, headers: { "Content-Type": "application/json" } },
+    );
+  });
+};
+
+export const getVersionRetrieveMockHandler = (
+  overrideResponse?:
+    | VersionDetail
+    | ((
+        info: Parameters<Parameters<typeof http.get>[1]>[0],
+      ) => Promise<VersionDetail> | VersionDetail),
+) => {
+  return http.get("*/api/v2/version/:id", async (info) => {
+    await delay(1000);
+
+    return new HttpResponse(
+      JSON.stringify(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getVersionRetrieveResponseMock(),
+      ),
+      { status: 200, headers: { "Content-Type": "application/json" } },
+    );
+  });
+};
+
+export const getVersionGroupListMockHandler = (
+  overrideResponse?:
+    | PaginatedVersionGroupSummaryList
+    | ((
+        info: Parameters<Parameters<typeof http.get>[1]>[0],
+      ) =>
+        | Promise<PaginatedVersionGroupSummaryList>
+        | PaginatedVersionGroupSummaryList),
+) => {
+  return http.get("*/api/v2/version-group", async (info) => {
+    await delay(1000);
+
+    return new HttpResponse(
+      JSON.stringify(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getVersionGroupListResponseMock(),
+      ),
+      { status: 200, headers: { "Content-Type": "application/json" } },
+    );
+  });
+};
+
+export const getVersionGroupRetrieveMockHandler = (
+  overrideResponse?:
+    | VersionGroupDetail
+    | ((
+        info: Parameters<Parameters<typeof http.get>[1]>[0],
+      ) => Promise<VersionGroupDetail> | VersionGroupDetail),
+) => {
+  return http.get("*/api/v2/version-group/:id", async (info) => {
+    await delay(1000);
+
+    return new HttpResponse(
+      JSON.stringify(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getVersionGroupRetrieveResponseMock(),
+      ),
+      { status: 200, headers: { "Content-Type": "application/json" } },
+    );
+  });
+};
+
+export const getPokemonEncountersRetrieveMockHandler = (
+  overrideResponse?:
+    | PokemonEncountersRetrieve200Item[]
+    | ((
+        info: Parameters<Parameters<typeof http.get>[1]>[0],
+      ) =>
+        | Promise<PokemonEncountersRetrieve200Item[]>
+        | PokemonEncountersRetrieve200Item[]),
+) => {
+  return http.get("*/api/v2/pokemon/:pokemonId/encounters", async (info) => {
+    await delay(1000);
+
+    return new HttpResponse(
+      JSON.stringify(
+        overrideResponse !== undefined
+          ? typeof overrideResponse === "function"
+            ? await overrideResponse(info)
+            : overrideResponse
+          : getPokemonEncountersRetrieveResponseMock(),
+      ),
+      { status: 200, headers: { "Content-Type": "application/json" } },
+    );
+  });
+};
 export const getPokéAPIMock = () => [
   getAbilityListMockHandler(),
   getAbilityRetrieveMockHandler(),
@@ -1587,5 +5681,5 @@ export const getPokéAPIMock = () => [
   getVersionRetrieveMockHandler(),
   getVersionGroupListMockHandler(),
   getVersionGroupRetrieveMockHandler(),
-  getPokemonEncountersRetrieveMockHandler()
-]
+  getPokemonEncountersRetrieveMockHandler(),
+];

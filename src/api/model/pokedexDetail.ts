@@ -20,11 +20,11 @@ Created by [**Paul Hallett**](https://github.com/phalt) and other [**PokéAPI co
     
  * OpenAPI spec version: 2.7.0
  */
-import type { PokedexDescription } from './pokedexDescription';
-import type { PokedexName } from './pokedexName';
-import type { PokedexDetailPokemonEntriesItem } from './pokedexDetailPokemonEntriesItem';
-import type { RegionSummary } from './regionSummary';
-import type { PokedexDetailVersionGroupsItem } from './pokedexDetailVersionGroupsItem';
+import type { PokedexDescription } from "./pokedexDescription";
+import type { PokedexName } from "./pokedexName";
+import type { PokedexDetailPokemonEntriesItem } from "./pokedexDetailPokemonEntriesItem";
+import type { RegionSummary } from "./regionSummary";
+import type { PokedexDetailVersionGroupsItem } from "./pokedexDetailVersionGroupsItem";
 
 export interface PokedexDetail {
   readonly id: number;

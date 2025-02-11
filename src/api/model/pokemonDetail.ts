@@ -20,22 +20,22 @@ Created by [**Paul Hallett**](https://github.com/phalt) and other [**PokéAPI co
     
  * OpenAPI spec version: 2.7.0
  */
-import type { PokemonDetailBaseExperience } from './pokemonDetailBaseExperience';
-import type { PokemonDetailHeight } from './pokemonDetailHeight';
-import type { PokemonDetailOrder } from './pokemonDetailOrder';
-import type { PokemonDetailWeight } from './pokemonDetailWeight';
-import type { PokemonDetailAbilitiesItem } from './pokemonDetailAbilitiesItem';
-import type { PokemonDetailPastAbilitiesItem } from './pokemonDetailPastAbilitiesItem';
-import type { PokemonFormSummary } from './pokemonFormSummary';
-import type { PokemonGameIndex } from './pokemonGameIndex';
-import type { PokemonDetailHeldItems } from './pokemonDetailHeldItems';
-import type { PokemonDetailMovesItem } from './pokemonDetailMovesItem';
-import type { PokemonSpeciesSummary } from './pokemonSpeciesSummary';
-import type { PokemonDetailSprites } from './pokemonDetailSprites';
-import type { PokemonDetailCries } from './pokemonDetailCries';
-import type { PokemonStat } from './pokemonStat';
-import type { PokemonDetailTypesItem } from './pokemonDetailTypesItem';
-import type { PokemonDetailPastTypesItem } from './pokemonDetailPastTypesItem';
+import type { PokemonDetailBaseExperience } from "./pokemonDetailBaseExperience";
+import type { PokemonDetailHeight } from "./pokemonDetailHeight";
+import type { PokemonDetailOrder } from "./pokemonDetailOrder";
+import type { PokemonDetailWeight } from "./pokemonDetailWeight";
+import type { PokemonDetailAbilitiesItem } from "./pokemonDetailAbilitiesItem";
+import type { PokemonDetailPastAbilitiesItem } from "./pokemonDetailPastAbilitiesItem";
+import type { PokemonFormSummary } from "./pokemonFormSummary";
+import type { PokemonGameIndex } from "./pokemonGameIndex";
+import type { PokemonDetailHeldItems } from "./pokemonDetailHeldItems";
+import type { PokemonDetailMovesItem } from "./pokemonDetailMovesItem";
+import type { PokemonSpeciesSummary } from "./pokemonSpeciesSummary";
+import type { PokemonDetailSprites } from "./pokemonDetailSprites";
+import type { PokemonDetailCries } from "./pokemonDetailCries";
+import type { PokemonStat } from "./pokemonStat";
+import type { PokemonDetailTypesItem } from "./pokemonDetailTypesItem";
+import type { PokemonDetailPastTypesItem } from "./pokemonDetailPastTypesItem";
 
 export interface PokemonDetail {
   readonly id: number;

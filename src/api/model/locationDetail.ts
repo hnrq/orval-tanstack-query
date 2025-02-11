@@ -20,10 +20,10 @@ Created by [**Paul Hallett**](https://github.com/phalt) and other [**PokéAPI co
     
  * OpenAPI spec version: 2.7.0
  */
-import type { RegionSummary } from './regionSummary';
-import type { LocationName } from './locationName';
-import type { LocationGameIndex } from './locationGameIndex';
-import type { LocationAreaSummary } from './locationAreaSummary';
+import type { RegionSummary } from "./regionSummary";
+import type { LocationName } from "./locationName";
+import type { LocationGameIndex } from "./locationGameIndex";
+import type { LocationAreaSummary } from "./locationAreaSummary";
 
 export interface LocationDetail {
   readonly id: number;

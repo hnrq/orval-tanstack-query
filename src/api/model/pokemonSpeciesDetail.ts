@@ -20,26 +20,26 @@ Created by [**Paul Hallett**](https://github.com/phalt) and other [**PokéAPI co
     
  * OpenAPI spec version: 2.7.0
  */
-import type { PokemonSpeciesDetailOrder } from './pokemonSpeciesDetailOrder';
-import type { PokemonSpeciesDetailGenderRate } from './pokemonSpeciesDetailGenderRate';
-import type { PokemonSpeciesDetailCaptureRate } from './pokemonSpeciesDetailCaptureRate';
-import type { PokemonSpeciesDetailBaseHappiness } from './pokemonSpeciesDetailBaseHappiness';
-import type { PokemonSpeciesDetailHatchCounter } from './pokemonSpeciesDetailHatchCounter';
-import type { GrowthRateSummary } from './growthRateSummary';
-import type { PokemonDexEntry } from './pokemonDexEntry';
-import type { PokemonSpeciesDetailEggGroupsItem } from './pokemonSpeciesDetailEggGroupsItem';
-import type { PokemonColorSummary } from './pokemonColorSummary';
-import type { PokemonShapeSummary } from './pokemonShapeSummary';
-import type { PokemonSpeciesSummary } from './pokemonSpeciesSummary';
-import type { EvolutionChainSummary } from './evolutionChainSummary';
-import type { PokemonHabitatSummary } from './pokemonHabitatSummary';
-import type { GenerationSummary } from './generationSummary';
-import type { PokemonSpeciesDetailNamesItem } from './pokemonSpeciesDetailNamesItem';
-import type { PokemonSpeciesDetailPalParkEncountersItem } from './pokemonSpeciesDetailPalParkEncountersItem';
-import type { PokemonSpeciesDescription } from './pokemonSpeciesDescription';
-import type { PokemonSpeciesFlavorText } from './pokemonSpeciesFlavorText';
-import type { PokemonSpeciesDetailGeneraItem } from './pokemonSpeciesDetailGeneraItem';
-import type { PokemonSpeciesDetailVarietiesItem } from './pokemonSpeciesDetailVarietiesItem';
+import type { PokemonSpeciesDetailOrder } from "./pokemonSpeciesDetailOrder";
+import type { PokemonSpeciesDetailGenderRate } from "./pokemonSpeciesDetailGenderRate";
+import type { PokemonSpeciesDetailCaptureRate } from "./pokemonSpeciesDetailCaptureRate";
+import type { PokemonSpeciesDetailBaseHappiness } from "./pokemonSpeciesDetailBaseHappiness";
+import type { PokemonSpeciesDetailHatchCounter } from "./pokemonSpeciesDetailHatchCounter";
+import type { GrowthRateSummary } from "./growthRateSummary";
+import type { PokemonDexEntry } from "./pokemonDexEntry";
+import type { PokemonSpeciesDetailEggGroupsItem } from "./pokemonSpeciesDetailEggGroupsItem";
+import type { PokemonColorSummary } from "./pokemonColorSummary";
+import type { PokemonShapeSummary } from "./pokemonShapeSummary";
+import type { PokemonSpeciesSummary } from "./pokemonSpeciesSummary";
+import type { EvolutionChainSummary } from "./evolutionChainSummary";
+import type { PokemonHabitatSummary } from "./pokemonHabitatSummary";
+import type { GenerationSummary } from "./generationSummary";
+import type { PokemonSpeciesDetailNamesItem } from "./pokemonSpeciesDetailNamesItem";
+import type { PokemonSpeciesDetailPalParkEncountersItem } from "./pokemonSpeciesDetailPalParkEncountersItem";
+import type { PokemonSpeciesDescription } from "./pokemonSpeciesDescription";
+import type { PokemonSpeciesFlavorText } from "./pokemonSpeciesFlavorText";
+import type { PokemonSpeciesDetailGeneraItem } from "./pokemonSpeciesDetailGeneraItem";
+import type { PokemonSpeciesDetailVarietiesItem } from "./pokemonSpeciesDetailVarietiesItem";
 
 export interface PokemonSpeciesDetail {
   readonly id: number;

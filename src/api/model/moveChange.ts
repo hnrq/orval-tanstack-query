@@ -20,12 +20,12 @@ Created by [**Paul Hallett**](https://github.com/phalt) and other [**PokéAPI co
     
  * OpenAPI spec version: 2.7.0
  */
-import type { MoveChangeAccuracy } from './moveChangeAccuracy';
-import type { MoveChangePower } from './moveChangePower';
-import type { MoveChangePp } from './moveChangePp';
-import type { MoveChangeEffectEntriesItem } from './moveChangeEffectEntriesItem';
-import type { TypeSummary } from './typeSummary';
-import type { VersionGroupSummary } from './versionGroupSummary';
+import type { MoveChangeAccuracy } from "./moveChangeAccuracy";
+import type { MoveChangePower } from "./moveChangePower";
+import type { MoveChangePp } from "./moveChangePp";
+import type { MoveChangeEffectEntriesItem } from "./moveChangeEffectEntriesItem";
+import type { TypeSummary } from "./typeSummary";
+import type { VersionGroupSummary } from "./versionGroupSummary";
 
 export interface MoveChange {
   accuracy?: MoveChangeAccuracy;

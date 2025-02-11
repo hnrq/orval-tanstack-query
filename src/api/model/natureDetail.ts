@@ -20,12 +20,12 @@ Created by [**Paul Hallett**](https://github.com/phalt) and other [**PokéAPI co
     
  * OpenAPI spec version: 2.7.0
  */
-import type { StatSummary } from './statSummary';
-import type { BerryFlavorSummary } from './berryFlavorSummary';
-import type { BerrySummary } from './berrySummary';
-import type { NatureDetailPokeathlonStatChangesItem } from './natureDetailPokeathlonStatChangesItem';
-import type { NatureBattleStylePreference } from './natureBattleStylePreference';
-import type { NatureName } from './natureName';
+import type { StatSummary } from "./statSummary";
+import type { BerryFlavorSummary } from "./berryFlavorSummary";
+import type { BerrySummary } from "./berrySummary";
+import type { NatureDetailPokeathlonStatChangesItem } from "./natureDetailPokeathlonStatChangesItem";
+import type { NatureBattleStylePreference } from "./natureBattleStylePreference";
+import type { NatureName } from "./natureName";
 
 export interface NatureDetail {
   readonly id: number;

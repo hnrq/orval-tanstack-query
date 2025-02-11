@@ -20,27 +20,27 @@ Created by [**Paul Hallett**](https://github.com/phalt) and other [**PokéAPI co
     
  * OpenAPI spec version: 2.7.0
  */
-import type { MoveDetailAccuracy } from './moveDetailAccuracy';
-import type { MoveDetailPp } from './moveDetailPp';
-import type { MoveDetailPriority } from './moveDetailPriority';
-import type { MoveDetailPower } from './moveDetailPower';
-import type { MoveDetailContestCombos } from './moveDetailContestCombos';
-import type { ContestTypeSummary } from './contestTypeSummary';
-import type { ContestEffectSummary } from './contestEffectSummary';
-import type { MoveDamageClassSummary } from './moveDamageClassSummary';
-import type { MoveDetailEffectEntriesItem } from './moveDetailEffectEntriesItem';
-import type { MoveDetailEffectChangesItem } from './moveDetailEffectChangesItem';
-import type { GenerationSummary } from './generationSummary';
-import type { MoveMeta } from './moveMeta';
-import type { MoveName } from './moveName';
-import type { MoveChange } from './moveChange';
-import type { MoveDetailStatChangesItem } from './moveDetailStatChangesItem';
-import type { SuperContestEffectSummary } from './superContestEffectSummary';
-import type { MoveTargetSummary } from './moveTargetSummary';
-import type { TypeSummary } from './typeSummary';
-import type { MoveDetailMachinesItem } from './moveDetailMachinesItem';
-import type { MoveFlavorText } from './moveFlavorText';
-import type { MoveDetailLearnedByPokemonItem } from './moveDetailLearnedByPokemonItem';
+import type { MoveDetailAccuracy } from "./moveDetailAccuracy";
+import type { MoveDetailPp } from "./moveDetailPp";
+import type { MoveDetailPriority } from "./moveDetailPriority";
+import type { MoveDetailPower } from "./moveDetailPower";
+import type { MoveDetailContestCombos } from "./moveDetailContestCombos";
+import type { ContestTypeSummary } from "./contestTypeSummary";
+import type { ContestEffectSummary } from "./contestEffectSummary";
+import type { MoveDamageClassSummary } from "./moveDamageClassSummary";
+import type { MoveDetailEffectEntriesItem } from "./moveDetailEffectEntriesItem";
+import type { MoveDetailEffectChangesItem } from "./moveDetailEffectChangesItem";
+import type { GenerationSummary } from "./generationSummary";
+import type { MoveMeta } from "./moveMeta";
+import type { MoveName } from "./moveName";
+import type { MoveChange } from "./moveChange";
+import type { MoveDetailStatChangesItem } from "./moveDetailStatChangesItem";
+import type { SuperContestEffectSummary } from "./superContestEffectSummary";
+import type { MoveTargetSummary } from "./moveTargetSummary";
+import type { TypeSummary } from "./typeSummary";
+import type { MoveDetailMachinesItem } from "./moveDetailMachinesItem";
+import type { MoveFlavorText } from "./moveFlavorText";
+import type { MoveDetailLearnedByPokemonItem } from "./moveDetailLearnedByPokemonItem";
 
 export interface MoveDetail {
   readonly id: number;

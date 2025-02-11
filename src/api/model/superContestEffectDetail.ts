@@ -20,8 +20,8 @@ Created by [**Paul Hallett**](https://github.com/phalt) and other [**PokéAPI co
     
  * OpenAPI spec version: 2.7.0
  */
-import type { SuperContestEffectFlavorText } from './superContestEffectFlavorText';
-import type { MoveSummary } from './moveSummary';
+import type { SuperContestEffectFlavorText } from "./superContestEffectFlavorText";
+import type { MoveSummary } from "./moveSummary";
 
 export interface SuperContestEffectDetail {
   readonly id: number;

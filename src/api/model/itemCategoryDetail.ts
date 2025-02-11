@@ -20,9 +20,9 @@ Created by [**Paul Hallett**](https://github.com/phalt) and other [**PokéAPI co
     
  * OpenAPI spec version: 2.7.0
  */
-import type { ItemSummary } from './itemSummary';
-import type { ItemCategoryName } from './itemCategoryName';
-import type { ItemPocketSummary } from './itemPocketSummary';
+import type { ItemSummary } from "./itemSummary";
+import type { ItemCategoryName } from "./itemCategoryName";
+import type { ItemPocketSummary } from "./itemPocketSummary";
 
 export interface ItemCategoryDetail {
   readonly id: number;

@@ -20,9 +20,9 @@ Created by [**Paul Hallett**](https://github.com/phalt) and other [**PokéAPI co
     
  * OpenAPI spec version: 2.7.0
  */
-import type { ItemSummary } from './itemSummary';
-import type { VersionGroupSummary } from './versionGroupSummary';
-import type { MoveSummary } from './moveSummary';
+import type { ItemSummary } from "./itemSummary";
+import type { VersionGroupSummary } from "./versionGroupSummary";
+import type { MoveSummary } from "./moveSummary";
 
 export interface MachineDetail {
   readonly id: number;

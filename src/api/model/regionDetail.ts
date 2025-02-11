@@ -20,11 +20,11 @@ Created by [**Paul Hallett**](https://github.com/phalt) and other [**PokéAPI co
     
  * OpenAPI spec version: 2.7.0
  */
-import type { LocationSummary } from './locationSummary';
-import type { GenerationSummary } from './generationSummary';
-import type { RegionName } from './regionName';
-import type { PokedexSummary } from './pokedexSummary';
-import type { RegionDetailVersionGroupsItem } from './regionDetailVersionGroupsItem';
+import type { LocationSummary } from "./locationSummary";
+import type { GenerationSummary } from "./generationSummary";
+import type { RegionName } from "./regionName";
+import type { PokedexSummary } from "./pokedexSummary";
+import type { RegionDetailVersionGroupsItem } from "./regionDetailVersionGroupsItem";
 
 export interface RegionDetail {
   readonly id: number;

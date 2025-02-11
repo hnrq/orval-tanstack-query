@@ -20,8 +20,8 @@ Created by [**Paul Hallett**](https://github.com/phalt) and other [**PokéAPI co
     
  * OpenAPI spec version: 2.7.0
  */
-import type { PokemonDetailMovesItemMove } from './pokemonDetailMovesItemMove';
-import type { PokemonDetailMovesItemVersionGroupDetailsItem } from './pokemonDetailMovesItemVersionGroupDetailsItem';
+import type { PokemonDetailMovesItemMove } from "./pokemonDetailMovesItemMove";
+import type { PokemonDetailMovesItemVersionGroupDetailsItem } from "./pokemonDetailMovesItemVersionGroupDetailsItem";
 
 export type PokemonDetailMovesItem = {
   move: PokemonDetailMovesItemMove;

@@ -20,7 +20,7 @@ Created by [**Paul Hallett**](https://github.com/phalt) and other [**PokéAPI co
     
  * OpenAPI spec version: 2.7.0
  */
-import type { PokemonSummary } from './pokemonSummary';
+import type { PokemonSummary } from "./pokemonSummary";
 
 export interface PaginatedPokemonSummaryList {
   count?: number;

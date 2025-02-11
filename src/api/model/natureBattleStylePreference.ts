@@ -20,7 +20,7 @@ Created by [**Paul Hallett**](https://github.com/phalt) and other [**PokéAPI co
     
  * OpenAPI spec version: 2.7.0
  */
-import type { MoveBattleStyleSummary } from './moveBattleStyleSummary';
+import type { MoveBattleStyleSummary } from "./moveBattleStyleSummary";
 
 export interface NatureBattleStylePreference {
   low_hp_preference: number;

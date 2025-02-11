@@ -20,8 +20,8 @@ Created by [**Paul Hallett**](https://github.com/phalt) and other [**PokéAPI co
     
  * OpenAPI spec version: 2.7.0
  */
-import type { MoveDetailMachinesItemMachine } from './moveDetailMachinesItemMachine';
-import type { MoveDetailMachinesItemVersionGroup } from './moveDetailMachinesItemVersionGroup';
+import type { MoveDetailMachinesItemMachine } from "./moveDetailMachinesItemMachine";
+import type { MoveDetailMachinesItemVersionGroup } from "./moveDetailMachinesItemVersionGroup";
 
 export type MoveDetailMachinesItem = {
   machine: MoveDetailMachinesItemMachine;

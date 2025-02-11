@@ -20,12 +20,12 @@ Created by [**Paul Hallett**](https://github.com/phalt) and other [**PokéAPI co
     
  * OpenAPI spec version: 2.7.0
  */
-import type { TypeDetailPastDamageRelationsItemDamageRelationsNoDamageToItem } from './typeDetailPastDamageRelationsItemDamageRelationsNoDamageToItem';
-import type { TypeDetailPastDamageRelationsItemDamageRelationsHalfDamageToItem } from './typeDetailPastDamageRelationsItemDamageRelationsHalfDamageToItem';
-import type { TypeDetailPastDamageRelationsItemDamageRelationsDoubleDamageToItem } from './typeDetailPastDamageRelationsItemDamageRelationsDoubleDamageToItem';
-import type { TypeDetailPastDamageRelationsItemDamageRelationsNoDamageFromItem } from './typeDetailPastDamageRelationsItemDamageRelationsNoDamageFromItem';
-import type { TypeDetailPastDamageRelationsItemDamageRelationsHalfDamageFromItem } from './typeDetailPastDamageRelationsItemDamageRelationsHalfDamageFromItem';
-import type { TypeDetailPastDamageRelationsItemDamageRelationsDoubleDamageFromItem } from './typeDetailPastDamageRelationsItemDamageRelationsDoubleDamageFromItem';
+import type { TypeDetailPastDamageRelationsItemDamageRelationsNoDamageToItem } from "./typeDetailPastDamageRelationsItemDamageRelationsNoDamageToItem";
+import type { TypeDetailPastDamageRelationsItemDamageRelationsHalfDamageToItem } from "./typeDetailPastDamageRelationsItemDamageRelationsHalfDamageToItem";
+import type { TypeDetailPastDamageRelationsItemDamageRelationsDoubleDamageToItem } from "./typeDetailPastDamageRelationsItemDamageRelationsDoubleDamageToItem";
+import type { TypeDetailPastDamageRelationsItemDamageRelationsNoDamageFromItem } from "./typeDetailPastDamageRelationsItemDamageRelationsNoDamageFromItem";
+import type { TypeDetailPastDamageRelationsItemDamageRelationsHalfDamageFromItem } from "./typeDetailPastDamageRelationsItemDamageRelationsHalfDamageFromItem";
+import type { TypeDetailPastDamageRelationsItemDamageRelationsDoubleDamageFromItem } from "./typeDetailPastDamageRelationsItemDamageRelationsDoubleDamageFromItem";
 
 export type TypeDetailPastDamageRelationsItemDamageRelations = {
   no_damage_to: TypeDetailPastDamageRelationsItemDamageRelationsNoDamageToItem[];

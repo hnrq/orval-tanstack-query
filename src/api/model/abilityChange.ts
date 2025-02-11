@@ -20,8 +20,8 @@ Created by [**Paul Hallett**](https://github.com/phalt) and other [**PokéAPI co
     
  * OpenAPI spec version: 2.7.0
  */
-import type { VersionGroupSummary } from './versionGroupSummary';
-import type { AbilityChangeEffectText } from './abilityChangeEffectText';
+import type { VersionGroupSummary } from "./versionGroupSummary";
+import type { AbilityChangeEffectText } from "./abilityChangeEffectText";
 
 export interface AbilityChange {
   version_group: VersionGroupSummary;

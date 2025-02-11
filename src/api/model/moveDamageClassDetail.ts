@@ -20,9 +20,9 @@ Created by [**Paul Hallett**](https://github.com/phalt) and other [**PokéAPI co
     
  * OpenAPI spec version: 2.7.0
  */
-import type { MoveDamageClassDescription } from './moveDamageClassDescription';
-import type { MoveSummary } from './moveSummary';
-import type { MoveDamageClassName } from './moveDamageClassName';
+import type { MoveDamageClassDescription } from "./moveDamageClassDescription";
+import type { MoveSummary } from "./moveSummary";
+import type { MoveDamageClassName } from "./moveDamageClassName";
 
 export interface MoveDamageClassDetail {
   readonly id: number;

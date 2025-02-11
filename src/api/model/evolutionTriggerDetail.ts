@@ -20,8 +20,8 @@ Created by [**Paul Hallett**](https://github.com/phalt) and other [**PokéAPI co
     
  * OpenAPI spec version: 2.7.0
  */
-import type { EvolutionTriggerName } from './evolutionTriggerName';
-import type { EvolutionTriggerDetailPokemonSpeciesItem } from './evolutionTriggerDetailPokemonSpeciesItem';
+import type { EvolutionTriggerName } from "./evolutionTriggerName";
+import type { EvolutionTriggerDetailPokemonSpeciesItem } from "./evolutionTriggerDetailPokemonSpeciesItem";
 
 export interface EvolutionTriggerDetail {
   readonly id: number;

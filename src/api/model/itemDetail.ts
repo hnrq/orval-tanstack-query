@@ -20,19 +20,19 @@ Created by [**Paul Hallett**](https://github.com/phalt) and other [**PokéAPI co
     
  * OpenAPI spec version: 2.7.0
  */
-import type { ItemDetailCost } from './itemDetailCost';
-import type { ItemDetailFlingPower } from './itemDetailFlingPower';
-import type { ItemFlingEffectSummary } from './itemFlingEffectSummary';
-import type { ItemDetailAttributesItem } from './itemDetailAttributesItem';
-import type { ItemCategorySummary } from './itemCategorySummary';
-import type { ItemEffectText } from './itemEffectText';
-import type { ItemFlavorText } from './itemFlavorText';
-import type { ItemGameIndex } from './itemGameIndex';
-import type { ItemName } from './itemName';
-import type { ItemDetailHeldByPokemonItem } from './itemDetailHeldByPokemonItem';
-import type { ItemDetailSprites } from './itemDetailSprites';
-import type { ItemDetailBabyTriggerFor } from './itemDetailBabyTriggerFor';
-import type { ItemDetailMachinesItem } from './itemDetailMachinesItem';
+import type { ItemDetailCost } from "./itemDetailCost";
+import type { ItemDetailFlingPower } from "./itemDetailFlingPower";
+import type { ItemFlingEffectSummary } from "./itemFlingEffectSummary";
+import type { ItemDetailAttributesItem } from "./itemDetailAttributesItem";
+import type { ItemCategorySummary } from "./itemCategorySummary";
+import type { ItemEffectText } from "./itemEffectText";
+import type { ItemFlavorText } from "./itemFlavorText";
+import type { ItemGameIndex } from "./itemGameIndex";
+import type { ItemName } from "./itemName";
+import type { ItemDetailHeldByPokemonItem } from "./itemDetailHeldByPokemonItem";
+import type { ItemDetailSprites } from "./itemDetailSprites";
+import type { ItemDetailBabyTriggerFor } from "./itemDetailBabyTriggerFor";
+import type { ItemDetailMachinesItem } from "./itemDetailMachinesItem";
 
 export interface ItemDetail {
   readonly id: number;

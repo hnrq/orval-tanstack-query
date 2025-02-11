@@ -20,7 +20,7 @@ Created by [**Paul Hallett**](https://github.com/phalt) and other [**PokéAPI co
     
  * OpenAPI spec version: 2.7.0
  */
-import type { AbilityDetailPokemonItemPokemon } from './abilityDetailPokemonItemPokemon';
+import type { AbilityDetailPokemonItemPokemon } from "./abilityDetailPokemonItemPokemon";
 
 export type AbilityDetailPokemonItem = {
   is_hidden: boolean;

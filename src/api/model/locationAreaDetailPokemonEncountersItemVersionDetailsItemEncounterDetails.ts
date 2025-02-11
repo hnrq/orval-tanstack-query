@@ -20,13 +20,14 @@ Created by [**Paul Hallett**](https://github.com/phalt) and other [**PokéAPI co
     
  * OpenAPI spec version: 2.7.0
  */
-import type { LocationAreaDetailPokemonEncountersItemVersionDetailsItemEncounterDetailsConditionValues } from './locationAreaDetailPokemonEncountersItemVersionDetailsItemEncounterDetailsConditionValues';
-import type { LocationAreaDetailPokemonEncountersItemVersionDetailsItemEncounterDetailsMethod } from './locationAreaDetailPokemonEncountersItemVersionDetailsItemEncounterDetailsMethod';
+import type { LocationAreaDetailPokemonEncountersItemVersionDetailsItemEncounterDetailsConditionValues } from "./locationAreaDetailPokemonEncountersItemVersionDetailsItemEncounterDetailsConditionValues";
+import type { LocationAreaDetailPokemonEncountersItemVersionDetailsItemEncounterDetailsMethod } from "./locationAreaDetailPokemonEncountersItemVersionDetailsItemEncounterDetailsMethod";
 
-export type LocationAreaDetailPokemonEncountersItemVersionDetailsItemEncounterDetails = {
-  min_level: number;
-  max_level: number;
-  condition_values?: LocationAreaDetailPokemonEncountersItemVersionDetailsItemEncounterDetailsConditionValues;
-  chance: number;
-  method: LocationAreaDetailPokemonEncountersItemVersionDetailsItemEncounterDetailsMethod;
-};
+export type LocationAreaDetailPokemonEncountersItemVersionDetailsItemEncounterDetails =
+  {
+    min_level: number;
+    max_level: number;
+    condition_values?: LocationAreaDetailPokemonEncountersItemVersionDetailsItemEncounterDetailsConditionValues;
+    chance: number;
+    method: LocationAreaDetailPokemonEncountersItemVersionDetailsItemEncounterDetailsMethod;
+  };

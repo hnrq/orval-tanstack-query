@@ -20,8 +20,8 @@ Created by [**Paul Hallett**](https://github.com/phalt) and other [**PokéAPI co
     
  * OpenAPI spec version: 2.7.0
  */
-import type { StatSummary } from './statSummary';
-import type { CharacteristicDescription } from './characteristicDescription';
+import type { StatSummary } from "./statSummary";
+import type { CharacteristicDescription } from "./characteristicDescription";
 
 export interface CharacteristicDetail {
   readonly id: number;

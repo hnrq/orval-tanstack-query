@@ -20,12 +20,12 @@ Created by [**Paul Hallett**](https://github.com/phalt) and other [**PokéAPI co
     
  * OpenAPI spec version: 2.7.0
  */
-import type { TypeDetailDamageRelationsNoDamageToItem } from './typeDetailDamageRelationsNoDamageToItem';
-import type { TypeDetailDamageRelationsHalfDamageToItem } from './typeDetailDamageRelationsHalfDamageToItem';
-import type { TypeDetailDamageRelationsDoubleDamageToItem } from './typeDetailDamageRelationsDoubleDamageToItem';
-import type { TypeDetailDamageRelationsNoDamageFromItem } from './typeDetailDamageRelationsNoDamageFromItem';
-import type { TypeDetailDamageRelationsHalfDamageFromItem } from './typeDetailDamageRelationsHalfDamageFromItem';
-import type { TypeDetailDamageRelationsDoubleDamageFromItem } from './typeDetailDamageRelationsDoubleDamageFromItem';
+import type { TypeDetailDamageRelationsNoDamageToItem } from "./typeDetailDamageRelationsNoDamageToItem";
+import type { TypeDetailDamageRelationsHalfDamageToItem } from "./typeDetailDamageRelationsHalfDamageToItem";
+import type { TypeDetailDamageRelationsDoubleDamageToItem } from "./typeDetailDamageRelationsDoubleDamageToItem";
+import type { TypeDetailDamageRelationsNoDamageFromItem } from "./typeDetailDamageRelationsNoDamageFromItem";
+import type { TypeDetailDamageRelationsHalfDamageFromItem } from "./typeDetailDamageRelationsHalfDamageFromItem";
+import type { TypeDetailDamageRelationsDoubleDamageFromItem } from "./typeDetailDamageRelationsDoubleDamageFromItem";
 
 export type TypeDetailDamageRelations = {
   readonly no_damage_to: TypeDetailDamageRelationsNoDamageToItem[];

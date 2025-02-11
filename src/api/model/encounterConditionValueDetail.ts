@@ -20,8 +20,8 @@ Created by [**Paul Hallett**](https://github.com/phalt) and other [**PokéAPI co
     
  * OpenAPI spec version: 2.7.0
  */
-import type { EncounterConditionSummary } from './encounterConditionSummary';
-import type { EncounterConditionValueName } from './encounterConditionValueName';
+import type { EncounterConditionSummary } from "./encounterConditionSummary";
+import type { EncounterConditionValueName } from "./encounterConditionValueName";
 
 export interface EncounterConditionValueDetail {
   readonly id: number;

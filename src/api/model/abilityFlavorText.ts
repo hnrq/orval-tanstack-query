@@ -20,8 +20,8 @@ Created by [**Paul Hallett**](https://github.com/phalt) and other [**PokéAPI co
     
  * OpenAPI spec version: 2.7.0
  */
-import type { LanguageSummary } from './languageSummary';
-import type { VersionGroupSummary } from './versionGroupSummary';
+import type { LanguageSummary } from "./languageSummary";
+import type { VersionGroupSummary } from "./versionGroupSummary";
 
 export interface AbilityFlavorText {
   flavor_text: string;

@@ -20,7 +20,7 @@ Created by [**Paul Hallett**](https://github.com/phalt) and other [**PokéAPI co
     
  * OpenAPI spec version: 2.7.0
  */
-import type { PokeathlonStatDetailAffectingNaturesDecreaseItemNature } from './pokeathlonStatDetailAffectingNaturesDecreaseItemNature';
+import type { PokeathlonStatDetailAffectingNaturesDecreaseItemNature } from "./pokeathlonStatDetailAffectingNaturesDecreaseItemNature";
 
 export type PokeathlonStatDetailAffectingNaturesDecreaseItem = {
   /** @maximum -1 */

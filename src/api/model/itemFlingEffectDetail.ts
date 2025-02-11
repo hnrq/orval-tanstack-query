@@ -20,8 +20,8 @@ Created by [**Paul Hallett**](https://github.com/phalt) and other [**PokéAPI co
     
  * OpenAPI spec version: 2.7.0
  */
-import type { ItemFlingEffectEffectText } from './itemFlingEffectEffectText';
-import type { ItemSummary } from './itemSummary';
+import type { ItemFlingEffectEffectText } from "./itemFlingEffectEffectText";
+import type { ItemSummary } from "./itemSummary";
 
 export interface ItemFlingEffectDetail {
   readonly id: number;

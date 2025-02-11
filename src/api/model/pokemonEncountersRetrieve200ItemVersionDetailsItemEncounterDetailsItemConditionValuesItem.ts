@@ -21,7 +21,8 @@ Created by [**Paul Hallett**](https://github.com/phalt) and other [**PokéAPI co
  * OpenAPI spec version: 2.7.0
  */
 
-export type PokemonEncountersRetrieve200ItemVersionDetailsItemEncounterDetailsItemConditionValuesItem = {
-  name: string;
-  url: string;
-};
+export type PokemonEncountersRetrieve200ItemVersionDetailsItemEncounterDetailsItemConditionValuesItem =
+  {
+    name: string;
+    url: string;
+  };

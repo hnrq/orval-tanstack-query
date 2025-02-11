@@ -20,13 +20,13 @@ Created by [**Paul Hallett**](https://github.com/phalt) and other [**PokéAPI co
     
  * OpenAPI spec version: 2.7.0
  */
-import type { AbilitySummary } from './abilitySummary';
-import type { RegionSummary } from './regionSummary';
-import type { MoveSummary } from './moveSummary';
-import type { GenerationName } from './generationName';
-import type { PokemonSpeciesSummary } from './pokemonSpeciesSummary';
-import type { TypeSummary } from './typeSummary';
-import type { VersionGroupSummary } from './versionGroupSummary';
+import type { AbilitySummary } from "./abilitySummary";
+import type { RegionSummary } from "./regionSummary";
+import type { MoveSummary } from "./moveSummary";
+import type { GenerationName } from "./generationName";
+import type { PokemonSpeciesSummary } from "./pokemonSpeciesSummary";
+import type { TypeSummary } from "./typeSummary";
+import type { VersionGroupSummary } from "./versionGroupSummary";
 
 export interface GenerationDetail {
   readonly id: number;

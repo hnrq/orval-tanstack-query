@@ -20,11 +20,11 @@ Created by [**Paul Hallett**](https://github.com/phalt) and other [**PokéAPI co
     
  * OpenAPI spec version: 2.7.0
  */
-import type { StatDetailAffectingMoves } from './statDetailAffectingMoves';
-import type { StatDetailAffectingNatures } from './statDetailAffectingNatures';
-import type { CharacteristicSummary } from './characteristicSummary';
-import type { MoveDamageClassSummary } from './moveDamageClassSummary';
-import type { StatName } from './statName';
+import type { StatDetailAffectingMoves } from "./statDetailAffectingMoves";
+import type { StatDetailAffectingNatures } from "./statDetailAffectingNatures";
+import type { CharacteristicSummary } from "./characteristicSummary";
+import type { MoveDamageClassSummary } from "./moveDamageClassSummary";
+import type { StatName } from "./statName";
 
 export interface StatDetail {
   readonly id: number;

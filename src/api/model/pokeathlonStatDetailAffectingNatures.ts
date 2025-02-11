@@ -20,8 +20,8 @@ Created by [**Paul Hallett**](https://github.com/phalt) and other [**PokéAPI co
     
  * OpenAPI spec version: 2.7.0
  */
-import type { PokeathlonStatDetailAffectingNaturesDecreaseItem } from './pokeathlonStatDetailAffectingNaturesDecreaseItem';
-import type { PokeathlonStatDetailAffectingNaturesIncreaseItem } from './pokeathlonStatDetailAffectingNaturesIncreaseItem';
+import type { PokeathlonStatDetailAffectingNaturesDecreaseItem } from "./pokeathlonStatDetailAffectingNaturesDecreaseItem";
+import type { PokeathlonStatDetailAffectingNaturesIncreaseItem } from "./pokeathlonStatDetailAffectingNaturesIncreaseItem";
 
 export type PokeathlonStatDetailAffectingNatures = {
   readonly decrease: PokeathlonStatDetailAffectingNaturesDecreaseItem[];

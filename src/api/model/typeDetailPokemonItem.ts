@@ -20,7 +20,7 @@ Created by [**Paul Hallett**](https://github.com/phalt) and other [**PokéAPI co
     
  * OpenAPI spec version: 2.7.0
  */
-import type { TypeDetailPokemonItemPokemon } from './typeDetailPokemonItemPokemon';
+import type { TypeDetailPokemonItemPokemon } from "./typeDetailPokemonItemPokemon";
 
 export type TypeDetailPokemonItem = {
   slot?: number;

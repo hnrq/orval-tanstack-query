@@ -20,13 +20,14 @@ Created by [**Paul Hallett**](https://github.com/phalt) and other [**PokéAPI co
     
  * OpenAPI spec version: 2.7.0
  */
-import type { PokemonEncountersRetrieve200ItemVersionDetailsItemEncounterDetailsItemConditionValuesItem } from './pokemonEncountersRetrieve200ItemVersionDetailsItemEncounterDetailsItemConditionValuesItem';
-import type { PokemonEncountersRetrieve200ItemVersionDetailsItemEncounterDetailsItemMethod } from './pokemonEncountersRetrieve200ItemVersionDetailsItemEncounterDetailsItemMethod';
+import type { PokemonEncountersRetrieve200ItemVersionDetailsItemEncounterDetailsItemConditionValuesItem } from "./pokemonEncountersRetrieve200ItemVersionDetailsItemEncounterDetailsItemConditionValuesItem";
+import type { PokemonEncountersRetrieve200ItemVersionDetailsItemEncounterDetailsItemMethod } from "./pokemonEncountersRetrieve200ItemVersionDetailsItemEncounterDetailsItemMethod";
 
-export type PokemonEncountersRetrieve200ItemVersionDetailsItemEncounterDetailsItem = {
-  chance: number;
-  condition_values: PokemonEncountersRetrieve200ItemVersionDetailsItemEncounterDetailsItemConditionValuesItem[];
-  max_level: number;
-  method: PokemonEncountersRetrieve200ItemVersionDetailsItemEncounterDetailsItemMethod;
-  min_level: number;
-};
+export type PokemonEncountersRetrieve200ItemVersionDetailsItemEncounterDetailsItem =
+  {
+    chance: number;
+    condition_values: PokemonEncountersRetrieve200ItemVersionDetailsItemEncounterDetailsItemConditionValuesItem[];
+    max_level: number;
+    method: PokemonEncountersRetrieve200ItemVersionDetailsItemEncounterDetailsItemMethod;
+    min_level: number;
+  };

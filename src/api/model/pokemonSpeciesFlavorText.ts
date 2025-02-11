@@ -20,8 +20,8 @@ Created by [**Paul Hallett**](https://github.com/phalt) and other [**PokéAPI co
     
  * OpenAPI spec version: 2.7.0
  */
-import type { LanguageSummary } from './languageSummary';
-import type { VersionSummary } from './versionSummary';
+import type { LanguageSummary } from "./languageSummary";
+import type { VersionSummary } from "./versionSummary";
 
 export interface PokemonSpeciesFlavorText {
   flavor_text: string;

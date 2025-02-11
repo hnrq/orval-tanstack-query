@@ -20,7 +20,7 @@ Created by [**Paul Hallett**](https://github.com/phalt) and other [**PokéAPI co
     
  * OpenAPI spec version: 2.7.0
  */
-import type { ContestEffectSummary } from './contestEffectSummary';
+import type { ContestEffectSummary } from "./contestEffectSummary";
 
 export interface PaginatedContestEffectSummaryList {
   count?: number;

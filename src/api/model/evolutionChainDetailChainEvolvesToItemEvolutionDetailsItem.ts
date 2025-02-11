@@ -20,13 +20,13 @@ Created by [**Paul Hallett**](https://github.com/phalt) and other [**PokéAPI co
     
  * OpenAPI spec version: 2.7.0
  */
-import type { EvolutionChainDetailChainEvolvesToItemEvolutionDetailsItemGender } from './evolutionChainDetailChainEvolvesToItemEvolutionDetailsItemGender';
-import type { EvolutionChainDetailChainEvolvesToItemEvolutionDetailsItemHeldItem } from './evolutionChainDetailChainEvolvesToItemEvolutionDetailsItemHeldItem';
-import type { EvolutionChainDetailChainEvolvesToItemEvolutionDetailsItemItem } from './evolutionChainDetailChainEvolvesToItemEvolutionDetailsItemItem';
-import type { EvolutionChainDetailChainEvolvesToItemEvolutionDetailsItemKnownMove } from './evolutionChainDetailChainEvolvesToItemEvolutionDetailsItemKnownMove';
-import type { EvolutionChainDetailChainEvolvesToItemEvolutionDetailsItemKnownMoveType } from './evolutionChainDetailChainEvolvesToItemEvolutionDetailsItemKnownMoveType';
-import type { EvolutionChainDetailChainEvolvesToItemEvolutionDetailsItemLocation } from './evolutionChainDetailChainEvolvesToItemEvolutionDetailsItemLocation';
-import type { EvolutionChainDetailChainEvolvesToItemEvolutionDetailsItemTrigger } from './evolutionChainDetailChainEvolvesToItemEvolutionDetailsItemTrigger';
+import type { EvolutionChainDetailChainEvolvesToItemEvolutionDetailsItemGender } from "./evolutionChainDetailChainEvolvesToItemEvolutionDetailsItemGender";
+import type { EvolutionChainDetailChainEvolvesToItemEvolutionDetailsItemHeldItem } from "./evolutionChainDetailChainEvolvesToItemEvolutionDetailsItemHeldItem";
+import type { EvolutionChainDetailChainEvolvesToItemEvolutionDetailsItemItem } from "./evolutionChainDetailChainEvolvesToItemEvolutionDetailsItemItem";
+import type { EvolutionChainDetailChainEvolvesToItemEvolutionDetailsItemKnownMove } from "./evolutionChainDetailChainEvolvesToItemEvolutionDetailsItemKnownMove";
+import type { EvolutionChainDetailChainEvolvesToItemEvolutionDetailsItemKnownMoveType } from "./evolutionChainDetailChainEvolvesToItemEvolutionDetailsItemKnownMoveType";
+import type { EvolutionChainDetailChainEvolvesToItemEvolutionDetailsItemLocation } from "./evolutionChainDetailChainEvolvesToItemEvolutionDetailsItemLocation";
+import type { EvolutionChainDetailChainEvolvesToItemEvolutionDetailsItemTrigger } from "./evolutionChainDetailChainEvolvesToItemEvolutionDetailsItemTrigger";
 
 export type EvolutionChainDetailChainEvolvesToItemEvolutionDetailsItem = {
   /** @nullable */

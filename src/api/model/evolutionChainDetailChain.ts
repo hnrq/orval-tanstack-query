@@ -20,8 +20,8 @@ Created by [**Paul Hallett**](https://github.com/phalt) and other [**PokéAPI co
     
  * OpenAPI spec version: 2.7.0
  */
-import type { EvolutionChainDetailChainEvolvesToItem } from './evolutionChainDetailChainEvolvesToItem';
-import type { EvolutionChainDetailChainSpecies } from './evolutionChainDetailChainSpecies';
+import type { EvolutionChainDetailChainEvolvesToItem } from "./evolutionChainDetailChainEvolvesToItem";
+import type { EvolutionChainDetailChainSpecies } from "./evolutionChainDetailChainSpecies";
 
 export type EvolutionChainDetailChain = {
   readonly evolution_details: unknown[];

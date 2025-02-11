@@ -20,9 +20,9 @@ Created by [**Paul Hallett**](https://github.com/phalt) and other [**PokéAPI co
     
  * OpenAPI spec version: 2.7.0
  */
-import type { GrowthRateDescription } from './growthRateDescription';
-import type { Experience } from './experience';
-import type { PokemonSpeciesSummary } from './pokemonSpeciesSummary';
+import type { GrowthRateDescription } from "./growthRateDescription";
+import type { Experience } from "./experience";
+import type { PokemonSpeciesSummary } from "./pokemonSpeciesSummary";
 
 export interface GrowthRateDetail {
   readonly id: number;
